@@ -1,6 +1,6 @@
 # Pessimistic plugin for slither
 
-This repository contains an example of plugin for Slither.
+Some detectors to help with code review and audit process.
 
 See the [detector documentation](https://github.com/trailofbits/slither/wiki/Adding-a-new-detector).
 
