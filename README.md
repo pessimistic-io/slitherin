@@ -6,6 +6,8 @@ See the [detector documentation](https://github.com/trailofbits/slither/wiki/Add
 
 ## Installation
 
+Имея установленный slither, запускаем в папке репозитория команду
+
 ```bash
-python setup.py develop
+python3 setup.py develop
 ```
