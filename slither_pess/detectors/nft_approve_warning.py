@@ -33,8 +33,12 @@ class NftApproveWarning(AbstractDetector):
         ]
         all_library_calls = [f_called[1].solidity_signature for f_called in f.library_calls]
         if (
-            "transferFrom(address,address,uint256)" in all_high_level_calls
-            or "safeTransferFrom(address,address,address,uint256)" in all_library_calls
+            "transferFrom(address,address,uint256)" in all_high_level_calls 
+            or "transferFrom(address,address,uint256)" in all_library_calls
+            or "safeTransferFrom(address,address,uint256,bytes)" in all_high_level_calls
+            or "safeTransferFrom(address,address,uint256,bytes)" in all_library_calls
+            or "safeTransferFrom(address,address,uint256)" in all_high_level_calls
+            or "safeTransferFrom(address,address,uint256)" in all_library_calls
         ):
             x = NftApproveWarning._arbitrary_from(f.nodes)
             return x
@@ -45,29 +49,9 @@ class NftApproveWarning(AbstractDetector):
         irList = []
         for node in nodes:
             for ir in node.irs:
-                if (ir.function.solidity_signature == "transferFrom(address,address,uint256)"):
+                if (ir.function.solidity_signature == "transferFrom(address,address,uint256)" or ir.function.solidity_signature == "safeTransferFrom(address,address,uint256,bytes)" or ir.function.solidity_signature == "safeTransferFrom(address,address,uint256)"):
                     if(is_dependent(ir.arguments[0], SolidityVariableComposed("msg.sender"),node.function.contract) == False or is_dependent(ir.arguments[0], SolidityVariable("this"), node.function.contract) == False):
                         irList.append(ir.node)
-                        #return ir.node
-                elif (
-                    isinstance(ir, LibraryCall)
-                    and ir.function.solidity_signature
-                    == "safeTransferFrom(address,address,address,uint256)"
-                    and not (
-                        is_dependent(
-                            ir.arguments[1],
-                            SolidityVariableComposed("msg.sender"),
-                            node.function.contract,
-                        )
-                        or is_dependent(
-                            ir.arguments[1],
-                            SolidityVariable("this"),
-                            node.function.contract,
-                        )
-                    )
-                ):
-                    #return ir.node
-                    irList.append(ir.node)
         return irList
 
     def _detect(self):
