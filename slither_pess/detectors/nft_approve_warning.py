@@ -24,6 +24,8 @@ class NftApproveWarning(AbstractDetector):
     WIKI_EXPLOIT_SCENARIO = 'Атакующий мог забрать любые nft, на который пользователь дал апрув протоколу. Причина: оптимистичный код erc721.safeTransferFrom(erc721.ownerOf(id),...) вместо erc721.safeTransferFrom(msg.sender,...) '
     WIKI_RECOMMENDATION = 'Параметр from должен быть msg.sender'
 
+    _signatures=["transferFrom(address,address,uint256)", "safeTransferFrom(address,address,uint256,bytes)", "safeTransferFrom(address,address,uint256)"]
+
 
     def _detect_arbitrary_from(self, f: Function):
         all_high_level_calls = [
@@ -32,40 +34,34 @@ class NftApproveWarning(AbstractDetector):
             if isinstance(f_called[1], Function)
         ]
         all_library_calls = [f_called[1].solidity_signature for f_called in f.library_calls]
-        if (
-            "transferFrom(address,address,uint256)" in all_high_level_calls 
-            or "transferFrom(address,address,uint256)" in all_library_calls
-            or "safeTransferFrom(address,address,uint256,bytes)" in all_high_level_calls
-            or "safeTransferFrom(address,address,uint256,bytes)" in all_library_calls
-            or "safeTransferFrom(address,address,uint256)" in all_high_level_calls
-            or "safeTransferFrom(address,address,uint256)" in all_library_calls
-        ):
-            x = NftApproveWarning._arbitrary_from(f.nodes)
-            return x
 
-    @staticmethod
-    def _arbitrary_from(nodes: List[Node]):
+        all_calls = all_high_level_calls + all_library_calls
+
+        if (any(map(lambda s: s in all_calls, self._signatures))):
+            return self._arbitrary_from(f.nodes)
+        else:
+            return []
+
+    def _arbitrary_from(self, nodes: List[Node]):
         """Finds instances of (safe)transferFrom that do not use msg.sender or address(this) as from parameter."""
         irList = []
         for node in nodes:
             for ir in node.irs:
-                if (ir.function.solidity_signature == "transferFrom(address,address,uint256)" or ir.function.solidity_signature == "safeTransferFrom(address,address,uint256,bytes)" or ir.function.solidity_signature == "safeTransferFrom(address,address,uint256)"):
-                    if(is_dependent(ir.arguments[0], SolidityVariableComposed("msg.sender"),node.function.contract) == False or is_dependent(ir.arguments[0], SolidityVariable("this"), node.function.contract) == False):
+                if (ir.function.solidity_signature in self._signatures):
+                    is_from_sender = is_dependent(ir.arguments[0], SolidityVariableComposed("msg.sender"), node.function.contract)
+                    # is_from_self = is_dependent(ir.arguments[0], SolidityVariable("this"), node.function.contract)
+                    if (not is_from_sender): # and not is_from_self
+                        # print('DETECTION')
                         irList.append(ir.node)
         return irList
+
 
     def _detect(self):
         """Detect transfers that use arbitrary `from` parameter."""
         res = []
-        i = 0
         for c in self.compilation_unit.contracts_derived:
             for f in c.functions:
-                x = self._detect_arbitrary_from(f)
-                if(x != None):
-                    xLen = len(x)
-                    while(i < xLen):
-                        res.append(self.generate_result([f.contract_declarer.name, ' ',f.name, ' parameter from is not related to msg.sender ', x[i], '\n']))
-                        i = i+1
-                        print(res)
+                for d in self._arbitrary_from(f.nodes):
+                    res.append(self.generate_result([f.contract_declarer.name, ' ',f.name, ' parameter from is not related to msg.sender ', d, '\n']))
 
         return res
