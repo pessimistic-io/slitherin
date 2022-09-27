@@ -11,3 +11,10 @@ See the [detector documentation](https://github.com/trailofbits/slither/wiki/Add
 ```bash
 python3 setup.py develop
 ```
+
+## Development
+
+1. Вносим изменения в код детектора
+2. Запускаем `slither` на тестовом файле, указав через флаг `--detect` название детектора.
+
+Переустанавливать пагин каждый раз не нужно
