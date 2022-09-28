@@ -35,7 +35,6 @@ class StrangeSetter(AbstractDetector):
                             if '.' in left: continue
                             if '[' in left: continue
                             if right==str(p):
-                                print(left) 
                                 return left # присваеваем аргумент функции напрямую в сторадж
 
         # TODO: непрямые присваивания
@@ -49,7 +48,6 @@ class StrangeSetter(AbstractDetector):
             for f in contract.functions:
                 if(f.name.startswith("set")):
                     x = self.is_strange_setter(f)
-                    print(x)
                     if (x == "None"):
                         res.append(self.generate_result([
                             f.contract_declarer.name, ' ',
