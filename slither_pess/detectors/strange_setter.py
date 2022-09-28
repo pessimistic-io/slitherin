@@ -19,7 +19,7 @@ class StrangeSetter(AbstractDetector):
     WIKI_RECOMMENDATION = 'Fix setter function'
 
 
-    def is_setter(self, fun, params=None):
+    def is_strange_setter(self, fun, params=None):
 
         if not params:
             params = fun.parameters # параметры функции
@@ -34,10 +34,12 @@ class StrangeSetter(AbstractDetector):
                         for p in params:
                             if '.' in left: continue
                             if '[' in left: continue
-                            if right==str(p): return left # присваеваем аргумент функции напрямую в сторадж
+                            if right==str(p):
+                                print(left) 
+                                return left # присваеваем аргумент функции напрямую в сторадж
 
         # TODO: непрямые присваивания
-        return None
+        return "None"
 
     def _detect(self):
 
@@ -45,14 +47,14 @@ class StrangeSetter(AbstractDetector):
 
         for contract in self.compilation_unit.contracts_derived:
             for f in contract.functions:
-                if not self.has_access_control(f):
-                    x = self.is_setter(f)
-                    if (x!= None):
-                        # print()
+                if(f.name.startswith("set")):
+                    x = self.is_strange_setter(f)
+                    print(x)
+                    if (x == "None"):
                         res.append(self.generate_result([
                             f.contract_declarer.name, ' ',
-                            f.name, ' is a non-protected setter ',
-                            x, ' is written'
+                            f.name, ' is a strange setter ',
+                            x, ' is set'
                             '\n']))
 
 
