@@ -1,11 +1,6 @@
-from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
+from slither.core.cfg.node import NodeType
 
-from typing import List
-from slither.core.cfg.node import Node
-from slither.core.declarations.solidity_variables import SolidityVariable
-from slither.slithir.operations import LibraryCall
-from slither.core.declarations import Contract, Function, SolidityVariableComposed
-from slither.analyses.data_dependency.data_dependency import is_dependent
+from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
 
 
 class InconsistentNonreentrant(AbstractDetector):
@@ -14,7 +9,7 @@ class InconsistentNonreentrant(AbstractDetector):
     """
 
     ARGUMENT = 'inconsistent-nonreentrant' # slither will launch the detector with slither.py --detect inconsistent-nonreentrant
-    HELP = 'function ... (), function ... () nonreentrant'
+    HELP = 'function ... (), function ... () nonReentrant'
     IMPACT = DetectorClassification.MEDIUM
     CONFIDENCE = DetectorClassification.MEDIUM
 
@@ -25,3 +20,27 @@ class InconsistentNonreentrant(AbstractDetector):
     WIKI_RECOMMENDATION = 'Убедиться, что все non-view функции используют non-reentrant'
 
 
+    def has_nonreentrant(self, fun):
+
+        if fun.view:
+            return True
+
+        for m in fun.modifiers:
+            for m.name in 'nonReentrant':
+                return True
+
+        return fun.is_protected()
+
+    def _detect(self):
+
+        res = []
+
+        for contract in self.compilation_unit.contracts_derived:
+            for f in contract.functions:
+                if not self.has_nonreentrant(f):
+                    res.append(self.generate_result([
+                        f.contract_declarer.name, ' ',
+                        f.name, ' is a non-view function without nonReentrant modifier'
+                        '\n']))
+
+        return res
