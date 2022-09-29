@@ -29,7 +29,7 @@ class InconsistentNonreentrant(AbstractDetector):
             for m.name in 'nonReentrant':
                 return True
 
-        return fun.is_protected()
+        return False
 
     def _detect(self):
 
