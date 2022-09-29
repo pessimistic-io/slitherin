@@ -5,6 +5,8 @@ contract inconsistent_nonreentrant_test {
     uint256 private _guardCounter;
     uint256 a;
 
+    event OK();
+
     modifier nonReentrant() {
         _guardCounter += 1;
         uint256 localCounter = _guardCounter;
@@ -12,12 +14,17 @@ contract inconsistent_nonreentrant_test {
         require(localCounter == _guardCounter);
     }
 
-    function nonReentrantFunc_ok(uint256 b) external nonReentrant {
+    function nonReentrantFunc_ok(uint256 b) external {
         a = b;
+        _nonReentrantInternal();
     }
 
     function nonReentrantFunc_vulnerable(uint256 b) external {
         a = b;
+    }
+
+    function _nonReentrantInternal() internal {
+        emit OK();
     }
 
     function nonReentrantViewFunc_ok(uint256 b)
@@ -27,4 +34,25 @@ contract inconsistent_nonreentrant_test {
     {
         return a + b;
     }
+}
+
+// В этом контракте нет nonReentrant ни на одной функции, здесь детектор отрабатывать не должен
+contract inconsistent_nonreentrant_false_test {
+
+    mapping (address=>uint) a;
+
+    address immutable self;
+
+    constructor (){
+        self=address(this);
+    }
+
+    function markMe(uint256 b) external {
+        a[msg.sender] = b;
+    }
+
+    function markYou(uint256 b) external {
+        a[self] = b;
+    }
+
 }
