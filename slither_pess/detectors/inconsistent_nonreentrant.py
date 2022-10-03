@@ -34,13 +34,19 @@ class InconsistentNonreentrant(AbstractDetector):
     def _detect(self):
 
         res = []
-
+        contractF = []
         for contract in self.compilation_unit.contracts_derived:
             for f in contract.functions:
-                if not self.has_nonreentrant(f):
-                    res.append(self.generate_result([
-                        f.contract_declarer.name, ' ',
-                        f.name, ' is a non-view function without nonReentrant modifier'
-                        '\n']))
+                if(f.name != "constructor"):
+                    contractF.append(f)
+                    if not self.has_nonreentrant(f):
+                        res.append(self.generate_result([
+                            f.contract_declarer.name, ' ',
+                            f.name, ' is a non-view function without nonReentrant modifier'
+                            '\n']))
 
+            if(len(contractF) != len(res)):
+                return res
+
+        res.clear()
         return res

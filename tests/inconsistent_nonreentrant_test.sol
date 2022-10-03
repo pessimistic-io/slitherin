@@ -14,7 +14,7 @@ contract inconsistent_nonreentrant_test {
         require(localCounter == _guardCounter);
     }
 
-    function nonReentrantFunc_ok(uint256 b) external {
+    function nonReentrantFunc_vuln(uint256 b) external {
         a = b;
         _nonReentrantInternal();
     }
