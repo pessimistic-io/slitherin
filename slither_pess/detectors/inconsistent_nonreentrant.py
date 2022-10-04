@@ -25,6 +25,9 @@ class InconsistentNonreentrant(AbstractDetector):
         if fun.view:
             return True
 
+        if fun.visibility in ['private', 'internal']:
+            return True
+
         for m in fun.modifiers:
             for m.name in 'nonReentrant':
                 return True
