@@ -47,6 +47,7 @@ class NftApproveWarning(AbstractDetector):
         irList = []
         for node in nodes:
             for ir in node.irs:
+                if not hasattr(ir.function, 'solidity_signature'): continue
                 if (ir.function.solidity_signature in self._signatures):
                     is_from_sender = is_dependent(ir.arguments[0], SolidityVariableComposed("msg.sender"), node.function.contract)
                     # is_from_self = is_dependent(ir.arguments[0], SolidityVariable("this"), node.function.contract)
@@ -61,7 +62,7 @@ class NftApproveWarning(AbstractDetector):
         res = []
         for c in self.compilation_unit.contracts_derived:
             for f in c.functions:
-                for d in self._arbitrary_from(f.nodes):
+                for d in self._detect_arbitrary_from(f):
                     res.append(self.generate_result([f.contract_declarer.name, ' ',f.name, ' parameter from is not related to msg.sender ', d, '\n']))
 
         return res
