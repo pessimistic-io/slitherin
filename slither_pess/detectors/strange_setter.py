@@ -50,8 +50,8 @@ class StrangeSetter(AbstractDetector):
                     x = self.is_strange_setter(f)
                     if (x == "None"):
                         res.append(self.generate_result([
-                            f.contract_declarer.name, ' ',
-                            f.name, ' is a strange setter ',
+                            "Function", ' ',
+                            f, ' is a strange setter ',
                             x, ' is set'
                             '\n']))
 
