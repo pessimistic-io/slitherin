@@ -20,9 +20,22 @@ class StrangeSetter(AbstractDetector):
 
 
     def is_strange_setter(self, fun, params=None):
-
         if not params:
             params = fun.parameters # параметры функции
+    
+        for fin in fun.internal_calls: #проверяем внутренние вызовы сеттера
+            for n in fin.nodes:
+                if(n.type==NodeType.EXPRESSION):
+                    for v in n.state_variables_written:
+                        lr = str(n.expression).split(' = ')
+                        # print(lr)
+                        if len(lr)>1:
+                            left = lr[0]
+                            right = lr[1]
+                            for p in fin.parameters:
+                                if '.' in left: continue
+                                if right==str(p):
+                                    return left # присваеваем аргумент функции напрямую в сторадж
 
         for n in fun.nodes: # в первом приближении нода это строчка
             if(n.type==NodeType.EXPRESSION):
@@ -33,7 +46,6 @@ class StrangeSetter(AbstractDetector):
                         right = lr[1]
                         for p in params:
                             if '.' in left: continue
-                            if '[' in left: continue
                             if right==str(p):
                                 return left # присваеваем аргумент функции напрямую в сторадж
 
