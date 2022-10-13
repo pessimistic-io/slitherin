@@ -16,6 +16,9 @@ contract StrangeSetter {
     }
 
     function setBuilder(bytes32 nameHash, address builder) public onlyOwner{
+        s_builders[nameHash] = builder;
+    }
+    function setWithInt(bytes32 nameHash, address builder) public onlyOwner{
         uint256 x = 0;
         vulnurable_internal(x);
     }
