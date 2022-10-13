@@ -28,7 +28,7 @@ class StrangeSetter(AbstractDetector):
                 if(n.type==NodeType.EXPRESSION):
                     for v in n.state_variables_written:
                         lr = str(n.expression).split(' = ')
-                        print(lr)
+                        # print(lr)
                         if len(lr)>1:
                             left = lr[0]
                             right = lr[1]
