@@ -2,9 +2,7 @@ from slither.detectors.abstract_detector import AbstractDetector, DetectorClassi
 
 from typing import List
 from slither.core.cfg.node import Node
-from slither.core.declarations.solidity_variables import SolidityVariable
-from slither.slithir.operations import LibraryCall
-from slither.core.declarations import Contract, Function, SolidityVariableComposed
+from slither.core.declarations import Function, SolidityVariableComposed
 from slither.analyses.data_dependency.data_dependency import is_dependent
 
 

@@ -4,7 +4,7 @@ from slither.detectors.abstract_detector import AbstractDetector, DetectorClassi
 
 class StrangeSetter(AbstractDetector):
     """
-    Sees if contract contains a setter, that does not change contract storage variables
+    Sees if contract contains a setter, that does not change contract storage variables.
     """
 
     ARGUMENT = 'strange-setter' # slither will launch the detector with slither.py --detect mydetector
