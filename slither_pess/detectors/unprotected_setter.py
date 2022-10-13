@@ -68,8 +68,8 @@ class UnprotectedSetter(AbstractDetector):
                     if (x!= None):
                         # print()
                         res.append(self.generate_result([
-                            f.contract_declarer.name, ' ',
-                            f.name, ' is a non-protected setter ',
+                            "Function", ' ',
+                            f, ' is a non-protected setter ',
                             x, ' is written'
                             '\n']))
 
