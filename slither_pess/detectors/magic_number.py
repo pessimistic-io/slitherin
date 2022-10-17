@@ -20,20 +20,19 @@ class MagicNumber(AbstractDetector):
     WIKI_RECOMMENDATION = 'присваивать значения в константные переменные'
 
 
+    EXCEPTION = ["0","1","2","1000","1e18"]
+
     
-    def hasLiteral(self, fun, params=None):
-        x = "False"
+    def getLiterals(self, fun, params=None):
+        res = []
+
         for n in fun.nodes: # в первом приближении нода это строчка
             nodeString = str(n)
-            lit = re.search(r'\d+', nodeString)
-            if(lit != None):
-                if(lit[0] != "0" and lit[0] != "1" and lit[0] != "2" and lit[0] != "1000" and lit[0] != "1e18"):
-                    print(lit[0])
-                    pattern = re.compile('([^!=] = \d+)|(([^!=]=\d+))|([^!=] = -\d+)|(([^!=]=-\d+))')
-                    x = pattern.match(nodeString)
-                    if(x != True):
-                        return "True"
-        return "False"
+            lit = re.search(r'\d+e\d+|\d+', nodeString)
+            if lit and not lit[0] in self.EXCEPTION:
+                res.append(lit[0])
+
+        return res
 
     def _detect(self):
 
@@ -41,11 +40,14 @@ class MagicNumber(AbstractDetector):
 
         for contract in self.compilation_unit.contracts_derived:
             for f in contract.functions:
-                x = self.hasLiteral(f)
-                if (x != "False"):
+                x = self.getLiterals(f)
+                if x:
+                    pre = "magic number"
+                    s = "s" if len(x)>1 else ""
+
                     res.append(self.generate_result([
                             "Function", ' ',
-                            f, ' has a int/uint value which is not assigned to a variable'
+                            f, ' contains ' + pre + s + ': ' + ", ".join(x),
                             '\n']))
 
 
