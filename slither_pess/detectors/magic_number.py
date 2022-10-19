@@ -15,7 +15,7 @@ class MagicNumber(AbstractDetector):
 
     WIKI = '-'
     WIKI_TITLE = 'Magic Number'
-    WIKI_DESCRIPTION = "не должно быть числовых литералов без присваивания в переменные"
+    WIKI_DESCRIPTION = "не должно быть числовых литералов без присваивания в константные переменные"
     WIKI_EXPLOIT_SCENARIO = 'N/A'
     WIKI_RECOMMENDATION = 'присваивать значения в константные переменные'
 
@@ -25,12 +25,12 @@ class MagicNumber(AbstractDetector):
     
     def getLiterals(self, fun, params=None):
         res = []
-
-        for n in fun.nodes: # в первом приближении нода это строчка
-            nodeString = str(n)
-            lit = re.search(r'\d+e\d+|\d+', nodeString)
-            if lit and not lit[0] in self.EXCEPTION:
-                res.append(lit[0])
+        if(fun.name != "slitherConstructorConstantVariables"):
+            for n in fun.nodes: # в первом приближении нода это строчка
+                nodeString = str(n)
+                lit = re.search(r'\d+e\d+|\d+', nodeString)
+                if lit and not lit[0] in self.EXCEPTION:
+                    res.append(lit[0])
 
         return res
 
