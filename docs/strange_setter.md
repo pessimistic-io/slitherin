@@ -11,7 +11,7 @@ Setter functions MUST change values of storage variables.
 Setter functions which do not modify storage variables may lead to contract misfunctions.
 
 ## Exploit Scenario
-[Exploit](tests\strange_setter_test.sol)
+[Exploit](../tests/strange_setter_test.sol)
 
 ## Recommendation
 Make sure that setter functions modify states of storage variables.
