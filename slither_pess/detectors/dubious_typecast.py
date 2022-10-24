@@ -3,6 +3,23 @@ from slither.detectors.abstract_detector import AbstractDetector, DetectorClassi
 from slither.core.declarations import Contract, Function, SolidityVariableComposed
 from slither.analyses.data_dependency.data_dependency import is_dependent
 
+from slither.slithir.operations import TypeConversion
+
+def _getType(ir): # returns the last word of ir: "... type conversion to TYPENAME"
+    return str(ir).split(" ")[-1]
+
+def get_first_double_typecast_index(irs): # returns number
+
+    for i in range(1,len(irs)):
+        a=irs[i-1]
+        b=irs[i]
+        check = isinstance(a,TypeConversion) and isinstance(b, TypeConversion)
+        # print(check)
+        if check:
+            return i-1
+
+    return -1
+
 
 class DubiousTypecast(AbstractDetector):
     """
@@ -14,24 +31,24 @@ class DubiousTypecast(AbstractDetector):
     IMPACT = DetectorClassification.LOW
     CONFIDENCE = DetectorClassification.MEDIUM
 
-    WIKI = '-'
+    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/dubious_typecast.md'
     WIKI_TITLE = 'Dubious Typecast'
     WIKI_DESCRIPTION = "Constant variables should not be typecasted more than once"
-    WIKI_EXPLOIT_SCENARIO = 'Makes contract logic more complex'
-    WIKI_RECOMMENDATION = 'Use clear constant variables'
+    WIKI_EXPLOIT_SCENARIO = 'Makes contract logic more complex, wich leads to error probability increment and make integration more difficult'
+    WIKI_RECOMMENDATION = 'Use clear constants'
 
-    TYPECASTS = ["int","uint","bytes"]
-    def hasDT(self, fun, params=None):
-        # constVar = []
+    def getDT(self, fun, params=None):
+
+        res = []
+
         for n in fun.nodes: # в первом приближении нода это строчка
-            # if(fun.name == "slitherConstructorConstantVariables"):
-            #     constVar.append(n.state_variables_written)
-            for i in self.TYPECASTS:    
-                for num in range(8, 128):
-                    if(str(n).__contains__(f'{i}{num}(')):
-                        return "True"
 
-        return "False"
+            r = get_first_double_typecast_index(n.irs)
+
+            if r>-1:
+                res.append(_getType(n.irs[r+1])+'<='+_getType(n.irs[r]))
+
+        return res
 
     def _detect(self):
 
@@ -39,12 +56,13 @@ class DubiousTypecast(AbstractDetector):
 
         for contract in self.compilation_unit.contracts_derived:
             for f in contract.functions:
-                x = self.hasDT(f)
-                if (x != "False"):
-                    res.append(self.generate_result([
-                        'Function ',
-                        f, ' has a dubious typecast '
-                        '\n']))
+                x = self.getDT(f)
+                if x:
+                    for j in x:
+                        res.append(self.generate_result([
+                            'Function ',
+                            f, ' has a dubious typecast: ', j,
+                            '\n']))
 
 
         return res
