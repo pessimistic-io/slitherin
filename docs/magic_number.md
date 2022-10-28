@@ -9,7 +9,7 @@
 Highlights values which are not assigned to a variable. Such expressions decrease code quality of contracts. 
 
 ## Exploit Scenario
-[Exploit](tests\magic_number_test.sol) 
+[Exploit](../tests/magic_number_test.sol) 
 
 ## Related attack
 N/A
