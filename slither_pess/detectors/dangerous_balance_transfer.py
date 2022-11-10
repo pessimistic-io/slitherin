@@ -1,6 +1,6 @@
-from pyclbr import Function
-from typing import List
+from slither.core.declarations import Function
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
+from typing import List
 
 
 class DangerousBalanceTransfer(AbstractDetector):
@@ -19,47 +19,41 @@ class DangerousBalanceTransfer(AbstractDetector):
     WIKI_EXPLOIT_SCENARIO = 'Contract transfers all its balance to a malicious address'
     WIKI_RECOMMENDATION = 'Be careful with contract balance transfers'
 
-    def is_dangerous_balance_transfer(self, fun) -> str:
-        _signatures = ["transfer(address,uint256)","transferFrom(address,address,uint256)","safeTransfer(IERC20,address,uint256)","safeTransferFrom(IERC20,address,address,uint256)"]
+    def _is_dangerous_balance_transfer(self, fun: Function) -> bool:
+        signatures = {"transfer(address,uint256)","transferFrom(address,address,uint256)","safeTransfer(IERC20,address,uint256)","safeTransferFrom(IERC20,address,address,uint256)"}
         for n in fun.nodes:
             for ir in n.irs:
-                if ir.function.solidity_signature in _signatures:
-                        if not self.has_access_control(fun) and str(n).__contains__("balanceOf" or "this"):
-                            return "True"
-                        if not self.has_access_control(fun) and self.amount_is_not_limited(fun):
-                            return "True"
-        return "False"
+                if ir.function.solidity_signature in signatures:
+                        if not self._has_access_control(fun) and "balanceOf" in str(n) or "this" in str(n):
+                            print(fun)
+                            return True
+                        if not self._has_access_control(fun) and self._amount_is_not_limited(fun):
+                            return True
+        return False
 
-    def has_access_control(self, fun: Function) -> bool:
+    def _has_access_control(self, fun: Function) -> bool:
         for m in fun.modifiers:
-            for m.name in ['initializer', 'onlyOwner']:
+            if m.name is 'initializer' or 'onlyOwner':
                 return True
 
-    def amount_is_not_limited(self, fun: Function) -> bool:
+    def _amount_is_not_limited(self, fun: Function) -> bool:
         for function_parameter in fun.parameters:
             if str(function_parameter.type) == "uint256":
                 num_changes = 0
                 for n in fun.nodes:
-                    print(n)
-                    print(function_parameter)
-                    if str(n).__contains__(str(function_parameter)):
-                        num_changes = num_changes+1
+                    if str(function_parameter) in str(n):
+                        num_changes = num_changes + 1
                     if num_changes >= 2:
                         return False
-        print(fun)
         return True
 
     def _detect(self) -> List:
-
         res = []
-
         for contract in self.compilation_unit.contracts_derived:
             for f in contract.functions:
-                x = self.is_dangerous_balance_transfer(f)
-                if (x == "True"):
+                x = self._is_dangerous_balance_transfer(f)
+                if x is True:
                     res.append(self.generate_result([
                         f, ' can transfer contract balance'
                         '\n']))
-
-
         return res
