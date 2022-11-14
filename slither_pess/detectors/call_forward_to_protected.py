@@ -1,6 +1,7 @@
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
 from slither.slithir.operations import LowLevelCall
 from slither.core.declarations import Function
+from slither.utils.output import Output
 from typing import List
 
 
@@ -21,16 +22,13 @@ class CallForwardToProtected(AbstractDetector):
     WIKI_RECOMMENDATION = 'Do not let calls to project contracts or do not give rights to a contract which can perform calls'
 
     
-    @staticmethod
-    def _contains_low_level_calls(node) -> bool:
+    def _contains_low_level_calls(self, node) -> bool:
         return any(isinstance(ir, LowLevelCall) for ir in node.irs)
 
     def _detect_low_level_custom_address_call(self, fun: Function) -> bool:
-        address_parameters = []
-        for parameter in fun.parameters:
-            if str(parameter.type) == "address":
-                address_parameters.append(parameter)
-
+        address_parameters = [
+            parameter for parameter in fun.parameters if str(parameter.type) == "address"
+        ]
         for node in fun.nodes:
             if self._contains_low_level_calls(node):
                 for address_parameter in address_parameters:
@@ -38,12 +36,12 @@ class CallForwardToProtected(AbstractDetector):
                         return True
         return False
 
-    def _detect(self) -> List:
+    def _detect(self) -> List[Output]:
         res = []
         for contract in self.compilation_unit.contracts_derived:
             for f in contract.functions:
                 x = self._detect_low_level_custom_address_call(f)
-                if x is True:
+                if x:
                     res.append(self.generate_result([
                             "Function", ' ',
                             f, ' contains a low level call to a custom address',

@@ -9,7 +9,16 @@ from slither_pess.detectors.call_forward_to_protected import CallForwardToProtec
 
 
 def make_plugin():
-    plugin_detectors = [DoubleEntryTokenPossiblity,UnprotectedSetter, NftApproveWarning, InconsistentNonreentrant, StrangeSetter, OnlyEOACheck, MagicNumber, CallForwardToProtected]
+    plugin_detectors = [
+        DoubleEntryTokenPossiblity,
+        UnprotectedSetter,
+        NftApproveWarning,
+        InconsistentNonreentrant,
+        StrangeSetter,
+        OnlyEOACheck,
+        MagicNumber,
+        CallForwardToProtected
+    ]
     plugin_printers = []
 
     return plugin_detectors, plugin_printers

@@ -6,4 +6,9 @@ contract call_forward_to_protected_test {
         (bool success, bytes memory data) = customAddress.call("");
         return success;
     }
+    
+    function set_vulnurable2(address customAddress) public returns (bool){
+        (bool success, bytes memory data) = customAddress.staticcall("");
+        return success;
+    }
 }
