@@ -3,6 +3,9 @@ from slither.core.cfg.node import NodeType
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
 
 
+exceptions = ["0","1","2","1000","1e18"]
+
+
 class MagicNumber(AbstractDetector):
     """
     Shows int/uint values which are not assigned to variables
@@ -19,18 +22,17 @@ class MagicNumber(AbstractDetector):
     WIKI_EXPLOIT_SCENARIO = 'N/A'
     WIKI_RECOMMENDATION = 'присваивать значения в константные переменные'
 
-
-    EXCEPTION = ["0","1","2","1000","1e18"]
-
     
     def getLiterals(self, fun, params=None):
         res = []
         if(fun.name != "slitherConstructorConstantVariables"):
-            for n in fun.nodes: # в первом приближении нода это строчка
+            for n in fun.nodes:
                 nodeString = str(n)
-                lit = re.search(r'\d+e\d+|\d+', nodeString)
-                if lit and not lit[0] in self.EXCEPTION:
-                    res.append(lit[0])
+                m = re.search(r'\s\d+e\d+|\s\d+', nodeString)
+                if m:
+                    digits = m[0].strip()
+                    if digits not in exceptions:
+                        res.append(digits)
 
         return res
 

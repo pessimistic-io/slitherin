@@ -22,6 +22,11 @@ contract magic_number_test {
     }
 
     function magic_num_ok() public{
+
+        uint256 uniswapv3_marker;
+        uint256 sqRoot96;
+
+
         uint256 x = 0;
         if(x != 0){
             toSet = x;
