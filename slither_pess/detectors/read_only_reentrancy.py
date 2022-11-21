@@ -180,8 +180,8 @@ Only report reentrancy that acts as a double call (see `reentrancy-eth`, `reentr
 
     STANDARD_JSON = False
 
-    vulnarable_functions: Dict[Function, Set[Variable]] = defaultdict(set)
-    externally_written_in: Dict[Variable, Set[Contract]] = defaultdict(set)
+    contracts_read_variable: Dict[Variable, Set[Contract]] = defaultdict(set)
+    contracts_written_variable: Dict[Variable, Set[Contract]] = defaultdict(set)
 
     def _explore(self, node, visited, skip_father=None):
         """
@@ -231,10 +231,8 @@ Only report reentrancy that acts as a double call (see `reentrancy-eth`, `reentr
             self._explore(son, visited)
 
     def find_writes_after_reentrancy(self):
-        written_after_reentrancy: Dict[Variable, List[Function]] = defaultdict(list)
-        written_after_reentrancy_external: Dict[Variable, List[Function]] = defaultdict(
-            list
-        )
+        written_after_reentrancy: Dict[Variable, Set[Node]] = defaultdict(set)
+        written_after_reentrancy_external: Dict[Variable, Set[Node]] = defaultdict(set)
         for contract in self.contracts:
             for f in contract.functions_and_modifiers_declared:
                 for node in f.nodes:
@@ -246,26 +244,19 @@ Only report reentrancy that acts as a double call (see `reentrancy-eth`, `reentr
                             continue
                         # TODO: check if written items exist
                         for v, nodes in node.context[self.KEY].written.items():
-                            written_after_reentrancy[v].append(nodes)
+                            written_after_reentrancy[v].add(node)
+                            self.contracts_written_variable[v].add(contract)
                         for v, nodes in node.context[self.KEY].written_external.items():
-                            written_after_reentrancy_external[v].append(nodes)
-                            self.externally_written_in[v].add(contract)
+                            written_after_reentrancy_external[v].add(node)
+                            self.contracts_written_variable[v].add(contract)
 
         return written_after_reentrancy, written_after_reentrancy_external
 
-    def _explore_functions(self, function, visited):
-        if function in visited:
-            return
-        print("WTF")
-        visited.add(function)
-        for node in function.nodes:
-            if self.KEY not in node.context:
-                continue
-            if node.context[self.KEY].calls:
-                for c in node.context[self.KEY].calls:
-                    print(f"{function.name} calls {c}")
-                    # self._explore(c.function, visited)
-
+    def _get_intersection(
+        writes: Dict[Variable, Set[Node]], reads: Dict[Variable, Set[Node]]
+    ):
+        # for variable_read, nodes in reads.items():
+        #     if variable_read in
         pass
 
     # IMPORTANT:
