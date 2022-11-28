@@ -88,11 +88,19 @@ contract Reeentrant {
 }
 
 contract Victim {
-    function vulnarableVictimGetter(address reentrant)
-        public
-        view
-        returns (uint256)
-    {
+    function vulnarableVictimGetter(
+        address reentrant
+    ) public view returns (uint256) {
+        return Reeentrant(reentrant).vulnarableGetter();
+    }
+
+    function vulnarableVictimGetter2(
+        address reentrant
+    ) public view returns (uint256) {
+        return internalRead(reentrant);
+    }
+
+    function internalRead(address reentrant) internal view returns (uint256) {
         return Reeentrant(reentrant).vulnarableGetter();
     }
 
@@ -104,22 +112,21 @@ contract Victim {
     function vulnarableFunction(address reentrant) public {
         Reeentrant reentrant = Reeentrant(reentrant);
         uint256 x;
-        x = reentrant.vulnarableGetter();
-        x = reentrant.vulnarableGetter();
+        reentrant.notVulnarableGetter();
+        reentrant.notVulnarableGetter2();
+        reentrant.notVulnarableGetter3(1);
+
+        reentrant.vulnarableGetter();
         x = reentrant.vulnarableGetter2();
         x = reentrant.vulnarableGetter3();
         x = reentrant.vulnarableGetter4();
         x = reentrant.vulnarableGetter5();
-        x = reentrant.notVulnarableGetter();
-        x = reentrant.notVulnarableGetter2();
-        x = reentrant.notVulnarableGetter3(1);
-        x = reentrant.notVulnarableGetter4();
+        reentrant.notVulnarableGetter4();
     }
 
-    function vulnarableFunctionWithModifier(address reentrant)
-        public
-        vulnarableVictimModifier(reentrant)
-    {}
+    function vulnarableFunctionWithModifier(
+        address reentrant
+    ) public vulnarableVictimModifier(reentrant) {}
 
     function notVulnarableFunction(Reeentrant reentrant) public {
         uint256 x;
@@ -130,11 +137,19 @@ contract Victim {
 contract SecondaryVictim {
     uint256 private _numberS;
 
-    function vulnarableSecondaryVictim(address victim, address reentrant)
-        public
-        returns (uint256)
-    {
+    function vulnarableSecondaryVictim(
+        address victim,
+        address reentrant
+    ) public returns (uint256) {
         _numberS = Victim(victim).vulnarableVictimGetter(reentrant);
+        return _numberS;
+    }
+
+    function vulnarableSecondaryVictim2(
+        address victim,
+        address reentrant
+    ) public returns (uint256) {
+        _numberS = Victim(victim).vulnarableVictimGetter2(reentrant);
         return _numberS;
     }
 }
@@ -183,10 +198,9 @@ contract ReentrantComplex {
 contract VictimForComplex {
     uint256 private _x;
 
-    function vulnaravleComplexVictim(address reentrant)
-        public
-        returns (uint256)
-    {
+    function vulnarableComplexVictim(
+        address reentrant
+    ) public returns (uint256) {
         _x = ReentrantComplex(reentrant).getVirtualPrice();
         return _x;
     }

@@ -29,25 +29,43 @@ class ReadOnlyReentrancyState(AbstractState):
     def __init__(self):
         super().__init__()
         self._reads_external: Dict[Variable, Set[Node]] = defaultdict(set)
+        self._reads_external_contract_list: Dict[Variable, Set[Contract]] = defaultdict(
+            set
+        )
         self._written_external: Dict[Variable, Set[Node]] = defaultdict(set)
+        self._written: Dict[Variable, Set[Node]] = defaultdict(set)
 
     @property
     def reads_external(self) -> Dict[Variable, Set[Node]]:
         return self._reads_external
 
     @property
+    def reads_external_contract_list(self) -> Dict[Variable, Set[Contract]]:
+        return self._reads_external_contract_list
+
+    @property
     def written_external(self) -> Dict[Variable, Set[Node]]:
         return self._written_external
+
+    @property
+    def written(self) -> Dict[Variable, Set[Node]]:
+        return self._written
 
     def add(self, fathers):
         super().add(fathers)
         self._reads_external = union_dict(self._reads_external, fathers.reads_external)
+        self._reads_external_contract_list = union_dict(
+            self._reads_external_contract_list, fathers.reads_external_contract_list
+        )
 
     def does_not_bring_new_info(self, new_info):
         return (
             super().does_not_bring_new_info(new_info)
-            and dict_are_equal(self._reads_external, new_info.reads_external)
-            and dict_are_equal(self._written_external, new_info.written_external)
+            and is_subset(new_info.reads_external, self._reads_external)
+            and is_subset(
+                new_info.reads_external_contract_list,
+                self._reads_external_contract_list,
+            )
         )
 
     def merge_fathers(self, node, skip_father, detector):
@@ -69,16 +87,20 @@ class ReadOnlyReentrancyState(AbstractState):
                         if key != skip_father
                     },
                 )
-                self._reads = union_dict(
-                    self._reads, father.context[detector.KEY].reads
-                )
-                self._reads_prior_calls = union_dict(
-                    self.reads_prior_calls,
-                    father.context[detector.KEY].reads_prior_calls,
-                )
-                self._reads_external = union_dict(
-                    self._reads_external, father.context[detector.KEY].reads_external
-                )
+                # self._reads = union_dict(
+                #     self._reads, father.context[detector.KEY].reads
+                # )
+                # self._reads_prior_calls = union_dict(
+                #     self.reads_prior_calls,
+                #     father.context[detector.KEY].reads_prior_calls,
+                # )
+                # self._reads_external = union_dict(
+                #     self._reads_external, father.context[detector.KEY].reads_external
+                # )
+                # self._reads_external_contract_list = union_dict(
+                #     self._reads_external_contract_list,
+                #     father.context[detector.KEY].reads_external_contract_list,
+                # )
 
     def analyze_node(self, node: Node, detector):
         state_vars_read: Dict[Variable, Set[Node]] = defaultdict(
@@ -92,6 +114,9 @@ class ReadOnlyReentrancyState(AbstractState):
 
         external_state_vars_read: Dict[Variable, Set[Node]] = defaultdict(set)
         external_state_vars_written: Dict[Variable, Set[Node]] = defaultdict(set)
+        external_state_vars_read_contract_list: Dict[
+            Variable, Set[Contract]
+        ] = defaultdict(set)
 
         slithir_operations = []
         # Add the state variables written in internal calls
@@ -106,17 +131,20 @@ class ReadOnlyReentrancyState(AbstractState):
                 slithir_operations += internal_call.all_slithir_operations()
 
         for contract, v in node.high_level_calls:
-            print(f"External call to {contract.name}.{v.name}")
             for internal_node in v.all_nodes():
                 for read in internal_node.state_variables_read:
-                    print(f"External read of {contract.name}.{read}")
+                    if contract.name == "Victim":
+                        print(f"External read {v} : {internal_node} -> {read}")
                     external_state_vars_read[read].add(internal_node)
+                    external_state_vars_read_contract_list[read].add(contract)
+
                 if internal_node.context[detector.KEY]:
                     for r in internal_node.context[detector.KEY].reads_external:
-                        print(f"Secondarly External read of {contract.name}.{r}")
+                        if contract.name == "Victim":
+                            print(f"External read {v} : {internal_node} -> {r}")
                         external_state_vars_read[r].add(internal_node)
+                        external_state_vars_read_contract_list[r].add(contract)
                 for write in internal_node.state_variables_written:
-                    print(f"External write of {contract.name}.{write}")
                     external_state_vars_written[write].add(internal_node)
 
         contains_call = False
@@ -126,11 +154,6 @@ class ReadOnlyReentrancyState(AbstractState):
         for ir in node.irs + slithir_operations:
             if detector.can_callback(ir):
                 self._calls[node] |= {ir.node}
-                self._reads_prior_calls[node] = set(
-                    self._reads_prior_calls.get(node, set())
-                    | set(node.context[detector.KEY].reads.keys())
-                    | set(state_vars_read.keys())
-                )
                 contains_call = True
 
             if detector.can_send_eth(ir):
@@ -142,6 +165,9 @@ class ReadOnlyReentrancyState(AbstractState):
         self._reads = union_dict(self._reads, state_vars_read)
         self._reads_external = union_dict(
             self._reads_external, external_state_vars_read
+        )
+        self._reads_external_contract_list = union_dict(
+            self._reads_external_contract_list, external_state_vars_read_contract_list
         )
 
         return contains_call
@@ -181,7 +207,9 @@ Only report reentrancy that acts as a double call (see `reentrancy-eth`, `reentr
     STANDARD_JSON = False
 
     contracts_read_variable: Dict[Variable, Set[Contract]] = defaultdict(set)
-    contracts_written_variable: Dict[Variable, Set[Contract]] = defaultdict(set)
+    contracts_written_variable_after_reentrancy: Dict[
+        Variable, Set[Contract]
+    ] = defaultdict(set)
 
     def _explore(self, node, visited, skip_father=None):
         """
@@ -245,10 +273,14 @@ Only report reentrancy that acts as a double call (see `reentrancy-eth`, `reentr
                         # TODO: check if written items exist
                         for v, nodes in node.context[self.KEY].written.items():
                             written_after_reentrancy[v].add(node)
-                            self.contracts_written_variable[v].add(contract)
+                            self.contracts_written_variable_after_reentrancy[v].add(
+                                contract
+                            )
                         for v, nodes in node.context[self.KEY].written_external.items():
                             written_after_reentrancy_external[v].add(node)
-                            self.contracts_written_variable[v].add(contract)
+                            self.contracts_written_variable_after_reentrancy[v].add(
+                                contract
+                            )
 
         return written_after_reentrancy, written_after_reentrancy_external
 
@@ -274,9 +306,6 @@ Only report reentrancy that acts as a double call (see `reentrancy-eth`, `reentr
 
                     if self.KEY not in node.context:
                         continue
-                    if contract.name == "SecondaryVictim":
-                        for r, _ in node.context[self.KEY].reads.items():
-                            print(f"SECONDARY VICTIM READ {r}")
                     for r, nodes in node.context[self.KEY].reads.items():
                         if r.contract == f.contract and not f.view:
                             continue
@@ -288,12 +317,24 @@ Only report reentrancy that acts as a double call (see `reentrancy-eth`, `reentr
 
                     for r, nodes in node.context[self.KEY].reads_external.items():
                         if r in written_after_reentrancy_external:
-                            print(
-                                f"{f.name} is vulnerable, external reads {r}, which is external written after reentrancy"
+                            isVulnarable = any(
+                                c in self.contracts_written_variable_after_reentrancy[r]
+                                for c in node.context[
+                                    self.KEY
+                                ].reads_external_contract_list[r]
                             )
+                            if isVulnarable:
+                                print(
+                                    f"{f.name} is vulnerable, reads {r}, which is written after reentrancy. in {node}"
+                                )
+                            # else:
+                            #     print(
+                            #         f"FALSE POS:{f.name} is vulnerable, reads {r}, which is written after reentrancy. in {node} "
+                            #     )
+
                         if r in written_after_reentrancy:
                             print(
-                                f"{f.name} is vulnerable, external reads {r}, which is written after reentrancy"
+                                f"{f.name} is vulnerable, external reads {r}, which is written after reentrancy. in {node}"
                             )
 
     def _detect(self):  # pylint: disable=too-many-branches
