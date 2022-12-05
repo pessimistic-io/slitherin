@@ -19,7 +19,7 @@ contract inconsistent_nonreentrant_test {
         _nonReentrantInternal();
     }
 
-    function nonReentrantFunc_vulnerable(uint256 b) external {
+    function nonReentrantFunc_ok(uint256 b) nonReentrant external {
         a = b;
     }
 
