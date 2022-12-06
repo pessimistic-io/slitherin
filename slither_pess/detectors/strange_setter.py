@@ -1,4 +1,5 @@
-from slither.core.cfg.node import NodeType
+from typing import List
+from slither.utils.output import Output
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
 from slither.core.declarations import Function
 
@@ -20,54 +21,36 @@ class StrangeSetter(AbstractDetector):
     WIKI_RECOMMENDATION = 'Fix setter function'
 
 
-    def is_strange_setter(self, fun, params=None):
-        if not params:
-            params = fun.parameters  # параметры функции
-    
-        for fin in fun.internal_calls:  # проверяем внутренние вызовы сеттера
-            if isinstance(fin, Function): 
-                for n in fin.nodes:
-                    if(n.type==NodeType.EXPRESSION):
-                        for v in n.state_variables_written:
-                            lr = str(n.expression).split(' = ')
-                            if len(lr)>1:
-                                left = lr[0]
-                                right = lr[1]
-                                for p in fin.parameters:
-                                    if '.' in left: continue
-                                    if right==str(p):
-                                        return left # присваеваем аргумент функции напрямую в сторадж
+    def _is_strange_setter(self, fun: Function) -> bool: 
+        """Checks if setter sets smth to a storage variable and if function parameters are used when setting"""
+        for fin in fun.internal_calls:  # branch with for-loop for setters in internal calls
+            if isinstance(fin, Function):   # check for a correct function type
+                for param in fin.parameters:
+                    for n in fin.nodes:
+                            if n.state_variables_written and str(param) in str(n):  # check if there's a state variable setter using function parameters
+                                    return False
+        if isinstance(fun, Function):   # check for a correct function type
+            for param in fun.parameters: 
+                for n in fun.nodes:
+                    if n.state_variables_written and str(param) in str(n):  # check if there's a state variable setter using function parameters
+                            return False
+        return True
 
-        for n in fun.nodes: # в первом приближении нода это строчка
-            if isinstance(fun, Function): 
-                if(n.type==NodeType.EXPRESSION):
-                    for v in n.state_variables_written:
-                        lr = str(n.expression).split(' = ')
-                        if len(lr)>1:
-                            left = lr[0]
-                            right = lr[1]
-                            for p in params:
-                                if '.' in left: continue
-                                if right==str(p):
-                                    return left # присваеваем аргумент функции напрямую в сторадж
 
-        # TODO: непрямые присваивания
-        return "None"
-
-    def _detect(self):
-
+    def _detect(self) -> List[Output]:
+        """Main function"""
         res = []
-
         for contract in self.compilation_unit.contracts_derived:
-            for f in contract.functions:
-                if(f.name.startswith("set")):
-                    x = self.is_strange_setter(f)
-                    if (x == "None"):
-                        res.append(self.generate_result([
-                            "Function", ' ',
-                            f, ' is a strange setter ',
-                            x, ' is set'
-                            '\n']))
-
-
+            if not contract.is_interface:
+                overriden_funtions = [] # functions that are overridden
+                for f in contract.functions:
+                    overriden_funtions.append(contract.get_functions_overridden_by(f))  # adding functions to an overridden list 
+                    if f.name.startswith("set") and not f in overriden_funtions and len(f.nodes) != 0:  # check if setter starts with 'set', is not overriden and is not empty 
+                        x = self._is_strange_setter(f)
+                        if x:
+                            res.append(self.generate_result([
+                                "Function", ' ',
+                                f, ' is a strange setter. ',
+                                'Nothing is set or set without using function parameters'
+                                '\n']))
         return res
