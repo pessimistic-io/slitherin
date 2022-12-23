@@ -8,7 +8,7 @@ class DoubleEntryTokenPossiblity(AbstractDetector):
     Sees if contract contains a function wich is vulnurable to double-entry tokens attack
     """
 
-    ARGUMENT = 'double-entry-token-alert' # slither will launch the detector with slither.py --detect mydetector
+    ARGUMENT = 'pess-double-entry-token-alert' # slither will launch the detector with slither.py --detect mydetector
     HELP = 'The function might be sensitive to double entry token usage'
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.LOW

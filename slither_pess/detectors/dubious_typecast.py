@@ -26,7 +26,7 @@ class DubiousTypecast(AbstractDetector):
     Shows constant variables which are typecasted more than once.
     """
 
-    ARGUMENT = 'dubious-typecast' # slither will launch the detector with slither.py --detect mydetector
+    ARGUMENT = 'pess-dubious-typecast' # slither will launch the detector with slither.py --detect mydetector
     HELP = 'uint8 = uint8(uint256)'
     IMPACT = DetectorClassification.LOW
     CONFIDENCE = DetectorClassification.MEDIUM

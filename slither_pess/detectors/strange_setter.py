@@ -9,7 +9,7 @@ class StrangeSetter(AbstractDetector):
     Sees if contract contains a setter, that does not change contract storage variables.
     """
 
-    ARGUMENT = 'strange-setter' # slither will launch the detector with slither.py --detect mydetector
+    ARGUMENT = 'pess-strange-setter' # slither will launch the detector with slither.py --detect mydetector
     HELP = 'Contract storage parameter is not changed by setter'
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.MEDIUM

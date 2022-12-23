@@ -8,7 +8,7 @@ class UnprotectedSetter(AbstractDetector):
     Sees if contract contains a setter, that changes contract paramater without modifier protection or access control inside the function
     """
 
-    ARGUMENT = 'unprotected-setter' # slither will launch the detector with slither.py --detect mydetector
+    ARGUMENT = 'pess-unprotected-setter' # slither will launch the detector with slither.py --detect mydetector
     HELP = 'Contract parameter might be changed be anyone'
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.MEDIUM
