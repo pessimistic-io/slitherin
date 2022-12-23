@@ -11,7 +11,7 @@ class NftApproveWarning(AbstractDetector):
     Sees if contract contains erc721.[safe]TransferFrom(from, ...) where from parameter is not related to msg.sender
     """
 
-    ARGUMENT = 'nft-approve-warning' # slither will launch the detector with slither.py --detect nft-approve-warning
+    ARGUMENT = 'pess-nft-approve-warning' # slither will launch the detector with slither.py --detect nft-approve-warning
     HELP = '[safe]TransferFrom(from,...) - from parameter is not related to msg.sender'
     IMPACT = DetectorClassification.MEDIUM
     CONFIDENCE = DetectorClassification.HIGH

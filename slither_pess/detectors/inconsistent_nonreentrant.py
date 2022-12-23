@@ -9,7 +9,7 @@ class InconsistentNonreentrant(AbstractDetector):
     Sees if contract non-view functions do not have "nonreentrant" modifier while other functions have it.
     """
 
-    ARGUMENT = 'inconsistent-nonreentrant' # slither will launch the detector with slither.py --detect inconsistent-nonreentrant
+    ARGUMENT = 'pess-inconsistent-nonreentrant' # slither will launch the detector with slither.py --detect inconsistent-nonreentrant
     HELP = 'function ... (), function ... () nonReentrant'
     IMPACT = DetectorClassification.MEDIUM
     CONFIDENCE = DetectorClassification.MEDIUM
