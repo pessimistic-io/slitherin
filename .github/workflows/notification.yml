@@ -14,8 +14,8 @@ jobs:
     - name: send custom message
       uses: appleboy/telegram-action@master
       with:
-        to: ${{ secrets.TELEGRAM_TO_TEST }}
+        to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.BOT_TOKEN }}
         message: |
-          The ${{ github.event_name }} event triggered final step.
-          echo This event is a pull request that had an assignee removed.
+          Произошёл ${{ github.event_name }} в репозиторий наших слизер-детекторов (custom_detectors).
+          Самое время перейти в папку репозитория и сделать `git pull`.
