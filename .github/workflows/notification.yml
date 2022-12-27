@@ -17,5 +17,5 @@ jobs:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.BOT_TOKEN }}
         message: |
-          Произошёл ${{ github.event_name }} в репозиторий наших слизер-детекторов (custom_detectors).
+          Произошёл ${{ github.event_name }} в репозиторий наших слизер-детекторов (https://github.com/pessimistic-io/custom_detectors).
           Самое время перейти в папку репозитория и сделать `git pull`.
