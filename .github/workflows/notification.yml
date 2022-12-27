@@ -15,7 +15,7 @@ jobs:
       uses: appleboy/telegram-action@master
       with:
         to: ${{ secrets.TELEGRAM_TO_TEST }}
-        token: ${{ secrets.TELEGRAM_TOKEN }}
+        token: ${{ secrets.BOT_TOKEN }}
         message: |
           The ${{ github.event_name }} event triggered final step.
           echo This event is a pull request that had an assignee removed.
