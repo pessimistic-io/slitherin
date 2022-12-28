@@ -3,14 +3,14 @@
 ## Configuration
 * Check: `inconsistent-nonreentrant`
 * Severity: `Medium`
-* Confidence: `Medium`
+* Confidence: `High`
 
 ## Description
-Sees if contract non-view functions do not have `nonReentrant` modifier while other functions have it.
-If contract has `nonReentrant` modifier it MUST be present on all non-view methods.
+The detector sees if a contract non-view functions do not have `nonReentrant` modifier while other functions have it.
+If at least one contract non-view function has a `nonReentrant` modifier, it MUST be present on all non-view methods.
 
 ## Exploit Scenario
 [Exploit](../tests/inconsistent_nonreentrant_test.sol)
 
 ## Recommendation
-Make sure that `nonReentrant` modifier usage is consistent.
+Ensure that `nonReentrant` modifier usage is consistent.
