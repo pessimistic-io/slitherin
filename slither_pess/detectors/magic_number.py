@@ -12,7 +12,7 @@ class MagicNumber(AbstractDetector):
 
     ARGUMENT = 'pess-magic-number' # slither will launch the detector with slither.py --detect mydetector
     HELP = 'int/uint values except 0, 1, 2, 1000 and 1e18'
-    IMPACT = DetectorClassification.LOW
+    IMPACT = DetectorClassification.INFORMATIONAL
     CONFIDENCE = DetectorClassification.HIGH
 
     WIKI = '-'

@@ -12,7 +12,7 @@ class InconsistentNonreentrant(AbstractDetector):
     ARGUMENT = 'pess-inconsistent-nonreentrant' # slither will launch the detector with slither.py --detect inconsistent-nonreentrant
     HELP = 'function ... (), function ... () nonReentrant'
     IMPACT = DetectorClassification.MEDIUM
-    CONFIDENCE = DetectorClassification.MEDIUM
+    CONFIDENCE = DetectorClassification.HIGH
 
     WIKI = 'https://workflowy.com/s/40d940743275/G8dJAU9ahhPNuSCY#/b3637d2987cb'
     WIKI_TITLE = 'Inconsistent nonreentrant'
