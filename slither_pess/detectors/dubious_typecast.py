@@ -29,7 +29,7 @@ class DubiousTypecast(AbstractDetector):
     ARGUMENT = 'pess-dubious-typecast' # slither will launch the detector with slither.py --detect mydetector
     HELP = 'uint8 = uint8(uint256)'
     IMPACT = DetectorClassification.LOW
-    CONFIDENCE = DetectorClassification.MEDIUM
+    CONFIDENCE = DetectorClassification.LOW
 
     WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/dubious_typecast.md'
     WIKI_TITLE = 'Dubious Typecast'
