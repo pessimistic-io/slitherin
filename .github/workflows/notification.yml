@@ -1,0 +1,21 @@
+name: notification
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  notifyTelegram:
+    runs-on: ubuntu-latest
+    steps:
+    - name: send custom message
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.BOT_TOKEN }}
+        message: |
+          Произошёл ${{ github.event_name }} в репозиторий наших слизер-детекторов (https://github.com/pessimistic-io/custom_detectors).
+          Самое время перейти в папку репозитория и сделать `git pull`.

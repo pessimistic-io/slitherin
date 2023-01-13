@@ -1,4 +1,5 @@
 from slither_pess.detectors.double_entry_token_possibility import DoubleEntryTokenPossiblity
+from slither_pess.detectors.dubious_typecast import DubiousTypecast
 from slither_pess.detectors.falsy_only_eoa_modifier import OnlyEOACheck
 from slither_pess.detectors.magic_number import MagicNumber
 from slither_pess.detectors.strange_setter import StrangeSetter
@@ -17,6 +18,7 @@ def make_plugin():
         StrangeSetter,
         OnlyEOACheck,
         MagicNumber,
+        DubiousTypecast,
         CallForwardToProtected
     ]
     plugin_printers = []

@@ -2,14 +2,14 @@
 
 ## Configuration
 * Check: `magic-number`
-* Severity: `Low`
+* Severity: `Informational`
 * Confidence: `High`
 
 ## Description
-Highlights values which are not assigned to a variable. Such expressions decrease code quality of contracts. 
+The detector highlights values not assigned to a variable. Such expressions decrease the code quality of contracts. 
 
 ## Exploit Scenario
-[Exploit](tests\magic_number_test.sol) 
+[Exploit](../tests/magic_number_test.sol) 
 
 ## Related attack
 N/A

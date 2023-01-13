@@ -9,7 +9,7 @@ class OnlyEOACheck(AbstractDetector):
     Shows expression msg.sender == tx.origin
     """
 
-    ARGUMENT = 'only-eoa-check' # slither will launch the detector with slither.py --detect mydetector
+    ARGUMENT = 'pess-only-eoa-check' # slither will launch the detector with slither.py --detect mydetector
     HELP = 'msg.sender == tx.origin'
     IMPACT = DetectorClassification.MEDIUM
     CONFIDENCE = DetectorClassification.HIGH
