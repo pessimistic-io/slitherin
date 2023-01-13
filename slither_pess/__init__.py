@@ -6,10 +6,21 @@ from slither_pess.detectors.strange_setter import StrangeSetter
 from slither_pess.detectors.unprotected_setter import UnprotectedSetter
 from slither_pess.detectors.nft_approve_warning import NftApproveWarning
 from slither_pess.detectors.inconsistent_nonreentrant import InconsistentNonreentrant
+from slither_pess.detectors.call_forward_to_protected import CallForwardToProtected
 
 
 def make_plugin():
-    plugin_detectors = [DoubleEntryTokenPossiblity,UnprotectedSetter, NftApproveWarning, InconsistentNonreentrant, StrangeSetter, OnlyEOACheck, MagicNumber, DubiousTypecast]
+    plugin_detectors = [
+        DoubleEntryTokenPossiblity,
+        UnprotectedSetter,
+        NftApproveWarning,
+        InconsistentNonreentrant,
+        StrangeSetter,
+        OnlyEOACheck,
+        MagicNumber,
+        DubiousTypecast,
+        CallForwardToProtected
+    ]
     plugin_printers = []
 
     return plugin_detectors, plugin_printers
