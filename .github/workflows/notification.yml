@@ -3,8 +3,6 @@ name: notification
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
 
@@ -17,5 +15,5 @@ jobs:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.BOT_TOKEN }}
         message: |
-          Произошёл ${{ github.event_name }} в репозиторий наших слизер-детекторов (https://github.com/pessimistic-io/custom_detectors).
-          Самое время перейти в папку репозитория и сделать `git pull`.
+          Обновился master в репозитории наших слизер-детекторов (https://github.com/pessimistic-io/custom_detectors).
+          Cделайте `git pull`.
