@@ -10,7 +10,7 @@ class CallForwardToProtected(AbstractDetector):
     Shows cases when contract calls custom addresses and has contract interactions through access control
     """
 
-    ARGUMENT = 'call-forward-to-protected' # slither will launch the detector with slither.py --detect mydetector
+    ARGUMENT = 'pess-call-forward-to-protected' # slither will launch the detector with slither.py --detect mydetector
     HELP = '-'
     IMPACT = DetectorClassification.MEDIUM
     CONFIDENCE = DetectorClassification.LOW
