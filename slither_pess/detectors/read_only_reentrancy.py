@@ -9,7 +9,7 @@ from slither.core.variables.variable import Variable
 from slither.core.declarations import Function
 from slither.core.cfg.node import NodeType, Node, Contract
 from slither.detectors.abstract_detector import DetectorClassification
-from slither.detectors.reentrancy.reentrancy import (
+from .reentrancy.reentrancy import (
     Reentrancy,
     to_hashable,
     AbstractState,
@@ -21,8 +21,8 @@ from slither.detectors.reentrancy.reentrancy import (
 from slither.slithir.operations import Send, Transfer, EventCall
 from slither.slithir.operations import Call
 
-FindingKey = namedtuple("FindingKey", ["function", "calls", "send_eth"])
-FindingValue = namedtuple("FindingValue", ["variable", "node", "nodes"])
+FindingKey = namedtuple("FindingKey", ["function", "calls"])
+FindingValue = namedtuple("FindingValue", ["variable", "written_at", "node", "nodes"])
 
 
 class ReadOnlyReentrancyState(AbstractState):
@@ -131,21 +131,18 @@ class ReadOnlyReentrancyState(AbstractState):
                 slithir_operations += internal_call.all_slithir_operations()
 
         for contract, v in node.high_level_calls:
-            for internal_node in v.all_nodes():
-                for read in internal_node.state_variables_read:
-                    if contract.name == "Victim":
-                        print(f"External read {v} : {internal_node} -> {read}")
-                    external_state_vars_read[read].add(internal_node)
-                    external_state_vars_read_contract_list[read].add(contract)
+            if isinstance(v, Function):
+                for internal_node in v.all_nodes():
+                    for read in internal_node.state_variables_read:
+                        external_state_vars_read[read].add(internal_node)
+                        external_state_vars_read_contract_list[read].add(contract)
 
-                if internal_node.context[detector.KEY]:
-                    for r in internal_node.context[detector.KEY].reads_external:
-                        if contract.name == "Victim":
-                            print(f"External read {v} : {internal_node} -> {r}")
-                        external_state_vars_read[r].add(internal_node)
-                        external_state_vars_read_contract_list[r].add(contract)
-                for write in internal_node.state_variables_written:
-                    external_state_vars_written[write].add(internal_node)
+                    if internal_node.context.get(detector.KEY):
+                        for r in internal_node.context[detector.KEY].reads_external:
+                            external_state_vars_read[r].add(internal_node)
+                            external_state_vars_read_contract_list[r].add(contract)
+                    for write in internal_node.state_variables_written:
+                        external_state_vars_written[write].add(internal_node)
 
         contains_call = False
 
@@ -179,7 +176,7 @@ class ReadOnlyReentrancy(Reentrancy):
     IMPACT = DetectorClassification.LOW
     CONFIDENCE = DetectorClassification.MEDIUM
 
-    WIKI = "https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2"
+    WIKI = "-"
 
     WIKI_TITLE = "Read-only reentrancy vulnerabilities"
 
@@ -192,19 +189,35 @@ Only report reentrancy that acts as a double call (see `reentrancy-eth`, `reentr
     # region wiki_exploit_scenario
     WIKI_EXPLOIT_SCENARIO = """
 ```solidity
-    function callme(){
-        if( ! (msg.sender.call()() ) ){
-            throw;
-        }
-        counter += 1
-    }   
+    contract MinimalReeentrant {
+    uint256 private _number;
+
+    function vulnarableGetter() public view returns (uint256) {
+        return _number;
+    }
+
+    function reentrancyExploitable() public {
+        msg.sender.call("");
+        _number++;
+    }
+}
+
+contract MinimalVictim {
+    address public reentrant;
+
+    function doSmth() public {
+        MinimalReeentrant reentrant = MinimalReeentrant(reentrant);
+        uint256 x = reentrant.vulnarableGetter() + 1;
+    }
+}
 ```
-`callme` contains a reentrancy. The reentrancy is benign because it's exploitation would have the same effect as two consecutive calls."""
+`_number variable is read when not finalized"""
     # endregion wiki_exploit_scenario
 
     WIKI_RECOMMENDATION = "Apply the [`check-effects-interactions` pattern](http://solidity.readthedocs.io/en/v0.4.21/security-considerations.html#re-entrancy)."
 
     STANDARD_JSON = False
+    KEY = "readonly_reentrancy"
 
     contracts_read_variable: Dict[Variable, Set[Contract]] = defaultdict(set)
     contracts_written_variable_after_reentrancy: Dict[
@@ -212,16 +225,6 @@ Only report reentrancy that acts as a double call (see `reentrancy-eth`, `reentr
     ] = defaultdict(set)
 
     def _explore(self, node, visited, skip_father=None):
-        """
-        Explore the CFG and look for re-entrancy
-        Heuristic: There is a re-entrancy if a state variable is written
-                    after an external call
-
-        node.context will contains the external calls executed
-        It contains the calls executed in father nodes
-
-        if node.context is not empty, and variables are written, a re-entrancy is possible
-        """
         if node in visited:
             return
 
@@ -284,153 +287,162 @@ Only report reentrancy that acts as a double call (see `reentrancy-eth`, `reentr
 
         return written_after_reentrancy, written_after_reentrancy_external
 
-    def _get_intersection(
-        writes: Dict[Variable, Set[Node]], reads: Dict[Variable, Set[Node]]
-    ):
-        # for variable_read, nodes in reads.items():
-        #     if variable_read in
-        pass
-
     # IMPORTANT:
-    # FOR the external reads, that war should be external written in the same contract
+    # FOR the external reads, that var should be external written in the same contract
     def get_readonly_reentrancies(self):
         (
             written_after_reentrancy,
             written_after_reentrancy_external,
         ) = self.find_writes_after_reentrancy()
+        result = defaultdict(set)
         for contract in self.contracts:
             for f in contract.functions_and_modifiers_declared:
-                # if not f.view:
-                #     continue
                 for node in f.nodes:
 
                     if self.KEY not in node.context:
                         continue
+                    vulnerable_variables = set()
                     for r, nodes in node.context[self.KEY].reads.items():
                         if r.contract == f.contract and not f.view:
                             continue
 
                         if r in written_after_reentrancy:
-                            print(
-                                f"{f.name} is vulnerable, reads {r}, which is written after reentrancy"
+                            vulnerable_variables.add(
+                                FindingValue(
+                                    r,
+                                    tuple(
+                                        sorted(
+                                            list(written_after_reentrancy[r]),
+                                            key=lambda x: x.node_id,
+                                        )
+                                    ),
+                                    node,
+                                    tuple(sorted(nodes, key=lambda x: x.node_id)),
+                                )
                             )
 
                     for r, nodes in node.context[self.KEY].reads_external.items():
                         if r in written_after_reentrancy_external:
-                            isVulnarable = any(
+                            isVulnerable = any(
                                 c in self.contracts_written_variable_after_reentrancy[r]
                                 for c in node.context[
                                     self.KEY
                                 ].reads_external_contract_list[r]
                             )
-                            if isVulnarable:
+                            if isVulnerable:
+                                vulnerable_variables.add(
+                                    FindingValue(
+                                        r,
+                                        tuple(
+                                            sorted(
+                                                list(
+                                                    written_after_reentrancy_external[r]
+                                                ),
+                                                key=lambda x: x.node_id,
+                                            )
+                                        ),
+                                        node,
+                                        tuple(sorted(nodes, key=lambda x: x.node_id)),
+                                    )
+                                )
                                 print(
                                     f"{f.name} is vulnerable, reads {r}, which is written after reentrancy. in {node}"
                                 )
-                            # else:
-                            #     print(
-                            #         f"FALSE POS:{f.name} is vulnerable, reads {r}, which is written after reentrancy. in {node} "
-                            #     )
 
                         if r in written_after_reentrancy:
+                            vulnerable_variables.add(
+                                FindingValue(
+                                    r,
+                                    tuple(
+                                        sorted(
+                                            list(written_after_reentrancy[r]),
+                                            key=lambda x: x.node_id,
+                                        )
+                                    ),
+                                    node,
+                                    tuple(sorted(nodes, key=lambda x: x.node_id)),
+                                )
+                            )
                             print(
                                 f"{f.name} is vulnerable, external reads {r}, which is written after reentrancy. in {node}"
                             )
 
+                    if vulnerable_variables:
+                        finding_key = FindingKey(
+                            function=f, calls=to_hashable(node.context[self.KEY].calls)
+                        )
+                        result[finding_key] |= vulnerable_variables
+        return result
+
     def _detect(self):  # pylint: disable=too-many-branches
         """"""
-
-        super()._detect()
-        reentrancies = self.get_readonly_reentrancies()
-
         results = []
+        try:
+            super()._detect()
+            reentrancies = self.get_readonly_reentrancies()
 
-        # # result_sorted = sorted(
-        # #     list(reentrancies.items()), key=lambda x: x[0].function.name
-        # # )
-        # print(f"result_sorted: {result_sorted}")
-        return []
-        varsWritten: List[FindingValue]
-        for (func, calls, send_eth), varsWritten in result_sorted:
-            calls = sorted(list(set(calls)), key=lambda x: x[0].node_id)
-            send_eth = sorted(list(set(send_eth)), key=lambda x: x[0].node_id)
-            varsWritten = sorted(
-                varsWritten, key=lambda x: (x.variable.name, x.node.node_id)
+            result_sorted = sorted(
+                list(reentrancies.items()), key=lambda x: x[0].function.name
             )
 
-            info = ["Reentrancy in ", func, ":\n"]
+            varsRead: List[FindingValue]
+            for (func, calls), varsRead in result_sorted:
 
-            info += ["\tExternal calls:\n"]
-            for (call_info, calls_list) in calls:
-                info += ["\t- ", call_info, "\n"]
-                for call_list_info in calls_list:
-                    if call_list_info != call_info:
-                        info += ["\t\t- ", call_list_info, "\n"]
-            if calls != send_eth and send_eth:
-                info += ["\tExternal calls sending eth:\n"]
-                for (call_info, calls_list) in send_eth:
-                    info += ["\t- ", call_info, "\n"]
-                    for call_list_info in calls_list:
-                        if call_list_info != call_info:
-                            info += ["\t\t- ", call_list_info, "\n"]
-            info += ["\tState variables written after the call(s):\n"]
-            for finding_value in varsWritten:
-                info += ["\t- ", finding_value.node, "\n"]
-                for other_node in finding_value.nodes:
-                    if other_node != finding_value.node:
-                        info += ["\t\t- ", other_node, "\n"]
+                varsRead = sorted(
+                    varsRead, key=lambda x: (x.variable.name, x.node.node_id)
+                )
 
-            # Create our JSON result
-            res = self.generate_result(info)
+                info = ["Readonly-Reentrancy in ", func, ":\n"]
 
-            # Add the function with the re-entrancy first
-            res.add(func)
+                info += [
+                    "\tState variables read that were written after the external call(s):\n"
+                ]
+                for finding_value in varsRead:
+                    info += ["\t- ", finding_value.node, "\n"]
+                    for other_node in finding_value.nodes:
+                        if other_node != finding_value.node:
+                            info += ["\t\t- ", other_node, "\n"]
+                    info += ["\t Written after external call at:\n"]
+                    for other_node in finding_value.written_at:
+                        # info += ["\t- ", call_info, "\n"]
+                        if other_node != finding_value.node:
+                            info += ["\t\t- ", other_node, "\n"]
 
-            # Add all underlying calls in the function which are potentially problematic.
-            for (call_info, calls_list) in calls:
-                res.add(call_info, {"underlying_type": "external_calls"})
-                for call_list_info in calls_list:
-                    if call_list_info != call_info:
-                        res.add(
-                            call_list_info,
-                            {"underlying_type": "external_calls_sending_eth"},
-                        )
+                # Create our JSON result
+                res = self.generate_result(info)
 
-            #
+                res.add(func)
 
-            # If the calls are not the same ones that send eth, add the eth sending nodes.
-            if calls != send_eth:
-                for (call_info, calls_list) in calls:
+                # Add all variables written via nodes which write them.
+                for finding_value in varsRead:
                     res.add(
-                        call_info, {"underlying_type": "external_calls_sending_eth"}
+                        finding_value.node,
+                        {
+                            "underlying_type": "variables_written",
+                            "variable_name": finding_value.variable.name,
+                        },
                     )
-                    for call_list_info in calls_list:
-                        if call_list_info != call_info:
+                    for other_node in finding_value.nodes:
+                        if other_node != finding_value.node:
                             res.add(
-                                call_list_info,
-                                {"underlying_type": "external_calls_sending_eth"},
+                                other_node,
+                                {
+                                    "underlying_type": "variables_written",
+                                    "variable_name": finding_value.variable.name,
+                                },
                             )
 
-            # Add all variables written via nodes which write them.
-            for finding_value in varsWritten:
-                res.add(
-                    finding_value.node,
-                    {
-                        "underlying_type": "variables_written",
-                        "variable_name": finding_value.variable.name,
-                    },
-                )
-                for other_node in finding_value.nodes:
-                    if other_node != finding_value.node:
-                        res.add(
-                            other_node,
-                            {
-                                "underlying_type": "variables_written",
-                                "variable_name": finding_value.variable.name,
-                            },
-                        )
-
-            # Append our result
+                # Append our result
+                results.append(res)
+        except Exception as e:
+            info = [
+                "Error during detection of readonly-reentrancy:\n",
+                "Please inform this to Yhtyyar\n",
+                f"error details:",
+                e,
+            ]
+            res = self.generate_result(info)
             results.append(res)
+            print(e)
 
         return results

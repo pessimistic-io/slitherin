@@ -6,6 +6,28 @@ pragma solidity ^0.8.13;
 // by the state of the contract that was modified after potential reentrant call.
 import "./interfaces/IERC721.sol";
 
+contract MinimalReeentrant {
+    uint256 private _number;
+
+    function vulnarableGetter() public view returns (uint256) {
+        return _number;
+    }
+
+    function reentrancyExploitable() public {
+        msg.sender.call("");
+        _number++;
+    }
+}
+
+contract MinimalVictim {
+    address public reentrant;
+
+    function doSmth() public {
+        MinimalReeentrant reentrant = MinimalReeentrant(reentrant);
+        uint256 x = reentrant.vulnarableGetter() + 1;
+    }
+}
+
 contract Reeentrant {
     mapping(uint256 => uint256) private _mapping;
     uint256 private _number;
