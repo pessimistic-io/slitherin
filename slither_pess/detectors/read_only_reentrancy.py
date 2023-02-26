@@ -87,20 +87,6 @@ class ReadOnlyReentrancyState(AbstractState):
                         if key != skip_father
                     },
                 )
-                # self._reads = union_dict(
-                #     self._reads, father.context[detector.KEY].reads
-                # )
-                # self._reads_prior_calls = union_dict(
-                #     self.reads_prior_calls,
-                #     father.context[detector.KEY].reads_prior_calls,
-                # )
-                # self._reads_external = union_dict(
-                #     self._reads_external, father.context[detector.KEY].reads_external
-                # )
-                # self._reads_external_contract_list = union_dict(
-                #     self._reads_external_contract_list,
-                #     father.context[detector.KEY].reads_external_contract_list,
-                # )
 
     def analyze_node(self, node: Node, detector):
         state_vars_read: Dict[Variable, Set[Node]] = defaultdict(
