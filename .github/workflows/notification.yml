@@ -1,0 +1,19 @@
+name: notification
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+
+  notifyTelegram:
+    runs-on: ubuntu-latest
+    steps:
+    - name: send custom message
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.BOT_TOKEN }}
+        message: |
+          Обновился master в репозитории наших слизер-детекторов (https://github.com/pessimistic-io/custom_detectors).
+          Cделайте `git pull`.

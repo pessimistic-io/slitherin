@@ -8,6 +8,7 @@ from slither_pess.detectors.strange_setter import StrangeSetter
 from slither_pess.detectors.unprotected_setter import UnprotectedSetter
 from slither_pess.detectors.nft_approve_warning import NftApproveWarning
 from slither_pess.detectors.inconsistent_nonreentrant import InconsistentNonreentrant
+from slither_pess.detectors.call_forward_to_protected import CallForwardToProtected
 from slither_pess.detectors.read_only_reentrancy import ReadOnlyReentrancy
 
 
@@ -21,6 +22,7 @@ def make_plugin():
         OnlyEOACheck,
         MagicNumber,
         DubiousTypecast,
+        CallForwardToProtected,
         ReadOnlyReentrancy,
     ]
     plugin_printers = []
