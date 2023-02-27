@@ -2,7 +2,7 @@
 
 ## Configuration
 * Check: `multiple-storage-read`
-* Severity: `Low`
+* Severity: `Optimization`
 * Confidence: `High`
 
 ## Description
