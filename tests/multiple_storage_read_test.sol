@@ -1,4 +1,4 @@
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.13;
 
 contract multiple_storage_read_test {
     uint256 var1 = 100;
@@ -10,7 +10,7 @@ contract multiple_storage_read_test {
 
 
     function calculate_vulnurable() external {
-        result_add = var1 + var2;
+        var1 = var1 + var2;
         result_substract = var2 - var1;
         result_mul = var1*var2;
         result_div = var2/var1;
