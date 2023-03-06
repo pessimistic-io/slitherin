@@ -2,13 +2,13 @@
 
 ## Configuration
 
-- Check: `readonly-reentrancy`
+- Check: `pess-readonly-reentrancy`
 - Severity: `High`
-- Confidence: `Medium`
+- Confidence: `low`
 
 ## Description
 
-Highlights the use of getter functions that returns a value that theoretically could be manipulated during the execution.
+Highlights the use of getter functions that return a value that theoretically could be manipulated during the execution.
 
 ## Exploit Scenario
 
@@ -20,4 +20,4 @@ N/A
 
 ## Recommendation
 
-Be careful while using this getter function.
+Ensure that getter function values aren't crucial and can't be maliciously used in other contract parts during external calls before being updated.

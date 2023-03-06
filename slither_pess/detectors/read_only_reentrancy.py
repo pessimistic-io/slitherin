@@ -157,50 +157,14 @@ class ReadOnlyReentrancyState(AbstractState):
 
 
 class ReadOnlyReentrancy(Reentrancy):
-    ARGUMENT = "readonly-reentrancy"
+    ARGUMENT = "pess-readonly-reentrancy"
     HELP = "Read-only reentrancy vulnerabilities"
-    IMPACT = DetectorClassification.LOW
-    CONFIDENCE = DetectorClassification.MEDIUM
+    IMPACT = DetectorClassification.HIGH
+    CONFIDENCE = DetectorClassification.LOW
 
-    WIKI = "-"
+    WIKI = "https://github.com/pessimistic-io/custom_detectors/blob/master/docs/readonly_reentrancy.md"
 
     WIKI_TITLE = "Read-only reentrancy vulnerabilities"
-
-    # region wiki_description
-    WIKI_DESCRIPTION = """
-Detection of the [reentrancy bug](https://github.com/trailofbits/not-so-smart-contracts/tree/master/reentrancy).
-Only report reentrancy that acts as a double call (see `reentrancy-eth`, `reentrancy-no-eth`)."""
-    # endregion wiki_description
-
-    # region wiki_exploit_scenario
-    WIKI_EXPLOIT_SCENARIO = """
-```solidity
-    contract MinimalReeentrant {
-    uint256 private _number;
-
-    function vulnarableGetter() public view returns (uint256) {
-        return _number;
-    }
-
-    function reentrancyExploitable() public {
-        msg.sender.call("");
-        _number++;
-    }
-}
-
-contract MinimalVictim {
-    address public reentrant;
-
-    function doSmth() public {
-        MinimalReeentrant reentrant = MinimalReeentrant(reentrant);
-        uint256 x = reentrant.vulnarableGetter() + 1;
-    }
-}
-```
-`_number variable is read when not finalized"""
-    # endregion wiki_exploit_scenario
-
-    WIKI_RECOMMENDATION = "Apply the [`check-effects-interactions` pattern](http://solidity.readthedocs.io/en/v0.4.21/security-considerations.html#re-entrancy)."
 
     STANDARD_JSON = False
     KEY = "readonly_reentrancy"
