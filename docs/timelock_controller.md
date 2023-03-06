@@ -12,4 +12,4 @@ The detector sees if a contract contains an openzeppelin timelock-contoller impl
 The deploy address can govern the contract bypassing timelock-controller limitations.
 
 ## Recomendation
-Remove governance role from the deployer address after deploy. 
+Remove Proposer and Executor roles from the deployer address after deploy. 
