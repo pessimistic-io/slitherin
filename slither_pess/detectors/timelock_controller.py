@@ -27,7 +27,7 @@ class TimelockController(AbstractDetector):
             for parameter in fun.parameters:
                 if str(parameter.type) == "TimelockController":
                     return True
-            for n in fun.nodes: # check reads of state variables in nodes
+            for n in fun.nodes: # check every node for a TimelockController
                 if "TimelockController" in str(n):
                     return True
         return False
@@ -35,7 +35,7 @@ class TimelockController(AbstractDetector):
     def _state_var_timelock_controller (self, contract) -> bool:
         """Checks if state var contatins TimelockController"""
         for state_var in contract.state_variables:
-            if str(state_var.type) == "TimelockController": #change
+            if str(state_var.type) == "TimelockController":
                 return True
         return False
 

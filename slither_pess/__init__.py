@@ -9,6 +9,7 @@ from slither_pess.detectors.inconsistent_nonreentrant import InconsistentNonreen
 from slither_pess.detectors.call_forward_to_protected import CallForwardToProtected
 from slither_pess.detectors.multiple_storage_read import MultipleStorageRead
 from slither_pess.detectors.timelock_controller import TimelockController
+from slither_pess.detectors.tx_gasprice_warning import TxGaspriceWarning
 
 
 def make_plugin():
@@ -23,7 +24,8 @@ def make_plugin():
         DubiousTypecast,
         CallForwardToProtected,
         MultipleStorageRead,
-        TimelockController
+        TimelockController,
+        TxGaspriceWarning
     ]
     plugin_printers = []
 
