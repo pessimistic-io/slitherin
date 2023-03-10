@@ -44,10 +44,10 @@ class UnprotectedSetter(AbstractDetector):
 
         for m in fun.modifiers:
             for m.name in ['initializer', 'onlyOwner']:
-                return True;
+                return True
 
         if fun.visibility in ['internal','private']:
-            return True;
+            return True
 
         # или msg.sender внутри функции сверяется напрямую в require
         # for n in fun.nodes:
