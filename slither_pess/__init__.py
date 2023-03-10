@@ -10,6 +10,7 @@ from slither_pess.detectors.call_forward_to_protected import CallForwardToProtec
 from slither_pess.detectors.multiple_storage_read import MultipleStorageRead
 from slither_pess.detectors.timelock_controller import TimelockController
 from slither_pess.detectors.tx_gasprice_warning import TxGaspriceWarning
+from slither_pess.detectors.unprotected_initialize import UnprotectedInitialize
 
 
 def make_plugin():
@@ -25,7 +26,8 @@ def make_plugin():
         CallForwardToProtected,
         MultipleStorageRead,
         TimelockController,
-        TxGaspriceWarning
+        TxGaspriceWarning,
+        UnprotectedInitialize
     ]
     plugin_printers = []
 

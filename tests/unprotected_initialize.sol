@@ -21,18 +21,17 @@ contract unprotected_initialize {
         toSet = setter + a;
     }
 
-    function initialize_ok3 (uint256 setter) external {
-        if(msg.sender == owner) {
-            uint256 a = 10;
-            toSet = setter + a;
-        }
-    }
-
     function initialize_vuln (uint256 setter) external {
         toSet = setter;
     }
 
     function init_ok1 (uint256 setter) external onlyOwner {
+        uint256 a = 10;
+        toSet = setter + a;
+    }
+
+    function init_ok2 (uint256 setter) external {
+        require(msg.sender == owner);
         uint256 a = 10;
         toSet = setter + a;
     }
