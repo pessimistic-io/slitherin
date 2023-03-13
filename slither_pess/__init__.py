@@ -30,7 +30,7 @@ def make_plugin():
         MultipleStorageRead,
         TimelockController,
         TxGaspriceWarning,
-        UnprotectedInitialize
+        UnprotectedInitialize,
         ReadOnlyReentrancy,
     ]
     plugin_printers = []

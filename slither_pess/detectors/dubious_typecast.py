@@ -14,7 +14,6 @@ def get_first_double_typecast_index(irs): # returns number
         a=irs[i-1]
         b=irs[i]
         check = isinstance(a,TypeConversion) and isinstance(b, TypeConversion)
-        # print(check)
         if check:
             return i-1
 

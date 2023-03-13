@@ -221,6 +221,8 @@ def _filter_if(node):
 
 class Reentrancy(AbstractDetector):
     KEY = "REENTRANCY"
+    WIKI_EXPLOIT_SCENARIO = "Check original reentrancy"
+    WIKI_RECOMMENDATION = "Check original reentrancy"
 
     # can_callback and can_send_eth are static method
     # allowing inherited classes to define different behaviors

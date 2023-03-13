@@ -163,8 +163,8 @@ class ReadOnlyReentrancy(Reentrancy):
     CONFIDENCE = DetectorClassification.LOW
 
     WIKI = "https://github.com/pessimistic-io/custom_detectors/blob/master/docs/readonly_reentrancy.md"
-
     WIKI_TITLE = "Read-only reentrancy vulnerabilities"
+    WIKI_DESCRIPTION = "Check docs"
 
     STANDARD_JSON = False
     KEY = "readonly_reentrancy"
@@ -295,9 +295,6 @@ class ReadOnlyReentrancy(Reentrancy):
                                         tuple(sorted(nodes, key=lambda x: x.node_id)),
                                     )
                                 )
-                                print(
-                                    f"{f.name} is vulnerable, reads {r}, which is written after reentrancy. in {node}"
-                                )
 
                         if r in written_after_reentrancy:
                             vulnerable_variables.add(
@@ -312,9 +309,6 @@ class ReadOnlyReentrancy(Reentrancy):
                                     node,
                                     tuple(sorted(nodes, key=lambda x: x.node_id)),
                                 )
-                            )
-                            print(
-                                f"{f.name} is vulnerable, external reads {r}, which is written after reentrancy. in {node}"
                             )
 
                     if vulnerable_variables:
@@ -393,6 +387,5 @@ class ReadOnlyReentrancy(Reentrancy):
             ]
             res = self.generate_result(info)
             results.append(res)
-            print(e)
 
         return results
