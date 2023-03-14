@@ -28,13 +28,24 @@ class StrangeSetter(AbstractDetector):
                 for param in fin.parameters:
                     for n in fin.nodes:
                             if n.state_variables_written and str(param) in str(n):  # check if there's a state variable setter using function parameters
-                                    return False
+                                return False
         if isinstance(fun, Function):   # check for a correct function type
             for param in fun.parameters: 
                 for n in fun.nodes:
                     if n.state_variables_written and str(param) in str(n):  # check if there's a state variable setter using function parameters
-                            return False
+                        return False
         return True
+
+    def _is_strange_constructor(self, fun: Function) -> bool:
+        """Checks if constructor sets nothing"""
+        if isinstance(fun, Function):   # check for a correct function type
+            state_var_internal = {}
+            for fin in fun.internal_calls:
+                if isinstance(fin, Function):
+                    state_var_internal = fin.state_variables_written
+            if not fun.state_variables_written and not state_var_internal: # checks for the state variables written in constructor and via internal calls
+                return True
+        return False
 
 
     def _detect(self) -> List[Output]:
@@ -44,13 +55,16 @@ class StrangeSetter(AbstractDetector):
             if not contract.is_interface:
                 overriden_funtions = [] # functions that are overridden
                 for f in contract.functions:
-                    overriden_funtions.append(contract.get_functions_overridden_by(f))  # adding functions to an overridden list 
+                    x = False
+                    overriden_funtions.append(contract.get_functions_overridden_by(f))  # adding functions to an overridden list
+                    if f.name == "constructor":
+                        x = self._is_strange_constructor(f)
                     if f.name.startswith("set") and not f in overriden_funtions and len(f.nodes) != 0:  # check if setter starts with 'set', is not overriden and is not empty 
                         x = self._is_strange_setter(f)
-                        if x:
-                            res.append(self.generate_result([
-                                "Function", ' ',
-                                f, ' is a strange setter. ',
-                                'Nothing is set or set without using function parameters'
-                                '\n']))
+                    if x:
+                        res.append(self.generate_result([
+                            "Function", ' ',
+                            f, ' is a strange setter. ',
+                            'Nothing is set in constructor or set in a function without using function parameters'
+                            '\n']))
         return res
