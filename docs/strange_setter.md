@@ -1,12 +1,12 @@
 # Strange Setter
 
 ## Configuration
-* Check: `strange-setter`
+* Check: `pess-strange-setter`
 * Severity: `High`
 * Confidence: `Medium`
 
 ## Description
-The detector sees if a contract contains a setter that does not change contract storage variables.
+The detector sees if a contract contains a setter (also constructor) that does not change contract storage variables.
 Setter functions MUST change the values of storage variables.
 Setter functions that do not modify storage variables may lead to contract misfunctions.
 
