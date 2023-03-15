@@ -16,7 +16,7 @@ def parse_args() -> argparse.Namespace:
     """
     parser = argparse.ArgumentParser(
         description="Check integration with projects",
-        usage="slither-integration filename",
+        usage="pess-slither-integration filename",
     )
 
     parser.add_argument("project", help="The target directory/Solidity file.")
@@ -60,7 +60,7 @@ def main() -> None:
     generic_erc_checks(contract, PROJECTS[0], ret) # change function name on actual
 
     if args.json:
-        output_to_json(args.json, None, {"upgradeability-check": ret})
+        output_to_json(args.json, None, {"integration-check": ret})
 
 
 if __name__ == "__main__":

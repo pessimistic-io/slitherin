@@ -4,6 +4,9 @@ pragma solidity ^0.8.0;
 import './interfaces/IUniswapV2Pair.sol';
 import './interfaces/IUniswapV2ERC20.sol';
 
+///TODO Blacklist deflationary and elastic supply tokens
+///TODO MinReturn
+
 /// @notice Contract that uses Pair contract of UniswapV2 directly, uses reserve balance
 contract Bad_UniswapV2_test {
     IUniswapV2Pair uniswap;
@@ -23,18 +26,26 @@ contract Bad_UniswapV2_test {
         uniswap.swap(_amount0Out, _amount1Out, _to, _data);
     }
 
-    /// @notice Checks reserve balance to return certain boolean
+    /// @notice Checks reserve balance to return a certain boolean
     function reserve_balance_used () external returns (bool) {
-        (reserve0,reserve1,blockTimestampLast) = uniswap.getReserves(); // Поиска использования функции getReserves достаточно?
+        (reserve0,reserve1,blockTimestampLast) = uniswap.getReserves(); // TODO find usage of reserve0, reserve1
         if(reserve0 > 100){
             return false;
         }
         return true;
     }
 
-    /// @notice Checks pair token balance to return certain boolea
-    function pair_token_balance_used (address _owner) external returns (bool) {
-        if (token.balanceOf(_owner) > 100){ // Често говоря хз, какую эвристику придумать
+    /// @notice Checks pair token balance to return a certain boolean
+    function pair_token_balance_used (address _uniswap) external returns (bool) {
+        if (token.balanceOf(address(IUniswapV2Pair(_uniswap))) > 100){
+            return false;
+        }
+        return true;
+    }
+
+    /// @notice Checks pair token balance to return a certain boolean
+    function pair_token_balance_used_2 () external returns (bool) {
+        if (token.balanceOf(address(uniswap)) > 100){
             return false;
         }
         return true;

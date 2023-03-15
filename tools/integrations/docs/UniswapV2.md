@@ -1,13 +1,13 @@
 # UniswapV2 Integration
 
 ## Configuration
-* Check: `UniswapV2`
+* Check: `pess-uni-v2`
 * Confidence: `Medium`
 
 ## Description
 Checks the correctness of UniswapV2 integration in the contract. 
 
-## Checklist
+## Detectors
 ### pair-balance-is-not-used
 * Impact - High;
 * Description - The pair balance value (or its' change) can be manipulated with a flashloan or a cyclical swap path.
