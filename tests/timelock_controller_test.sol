@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: SEE LICENSE IN LICENSE
 pragma solidity ^0.8.0;
 import "../node_modules/@openzeppelin/contracts/governance/TimelockController.sol";
-import "./strange_setter_test.sol";
 
-contract timelock_controller_test is StrangeSetter  {
+contract timelock_controller_test {
     TimelockController public timelockController;
     constructor(TimelockController _timelockController){
         timelockController = _timelockController;

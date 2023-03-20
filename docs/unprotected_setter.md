@@ -1,7 +1,7 @@
 # Unprotected Setter
 
 ## Configuration
-* Check: `unprotected-setter`
+* Check: `pess-unprotected-setter`
 * Severity: `High`
 * Confidence: `Medium`
 
