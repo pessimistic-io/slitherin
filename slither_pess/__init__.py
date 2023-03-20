@@ -15,6 +15,7 @@ from slither_pess.detectors.tx_gasprice_warning import TxGaspriceWarning
 from slither_pess.detectors.unprotected_initialize import UnprotectedInitialize
 from slither_pess.detectors.read_only_reentrancy import ReadOnlyReentrancy
 from slither_pess.detectors.event_setter import EventSetter
+from slither_pess.detectors.before_token_transfer import BeforeTokenTransfer
 
 
 def make_plugin():
@@ -34,6 +35,7 @@ def make_plugin():
         UnprotectedInitialize,
         ReadOnlyReentrancy,
         EventSetter,
+        BeforeTokenTransfer,
     ]
     plugin_printers = []
 

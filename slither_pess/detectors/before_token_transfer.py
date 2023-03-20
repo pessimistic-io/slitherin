@@ -21,28 +21,26 @@ class BeforeTokenTransfer(AbstractDetector):
     WIKI_RECOMMENDATION = 'Make sure that beforeTokenTransfer function is used in the correct way.'
 
 
-    def _has_no_virtual (self, fun: Function) -> bool: 
-        """Checks if function does not have virtual modifier"""
-        if isinstance(fun, Function):   # check for a correct function type
-            print(fun.source_mapping) # reads function modifiers
-        return False
+    # def _has_no_virtual (self, fun: Function) -> bool: 
+    #     """Checks if function does not have virtual modifier"""
+    #     if isinstance(fun, Function):   # check for a correct function type
+    #         print(fun.source_mapping) # reads function modifiers
+    #     return False
 
-    def _has_no_super (self, fun: Function) -> bool:
-        """Checks if parent function call has super"""
+    # def _has_no_super (self, fun: Function) -> bool:
+    #     """Checks if parent function call has super"""
 
 
     def _detect(self) -> List[Output]:
         """Main function"""
         res = []
         for contract in self.compilation_unit.contracts_derived:
-            print(contract.modifiers)
             for f in contract.functions_and_modifiers_declared:
-                x = self._has_no_virtual(f)
-                y = self._has_no_super(f)
-                z = True
-                if x or y or z:
+                # x = self._has_no_virtual(f) TODO: add
+                # y = self._has_no_super(f) TODO: add
+                if "beforeTokenTransfer" in f.name:
                     res.append(self.generate_result([
                         "beforeTokenTransfer in ",
-                        f, ' does not have virtual or super.',
+                        f, ' must have virtual and super.',
                         '\n']))
         return res
