@@ -19,7 +19,7 @@ def make_plugin():
         OnlyEOACheck,
         MagicNumber,
         DubiousTypecast,
-        CallForwardToProtected
+        CallForwardToProtected,
     ]
     plugin_printers = []
 
