@@ -7,7 +7,7 @@ from slither_pess.detectors.unprotected_setter import UnprotectedSetter
 from slither_pess.detectors.nft_approve_warning import NftApproveWarning
 from slither_pess.detectors.inconsistent_nonreentrant import InconsistentNonreentrant
 from slither_pess.detectors.call_forward_to_protected import CallForwardToProtected
-from slither_pess.detectors.pess_uni_v2 import UniswapV2
+from slither_pess.detectors.uni_v2 import UniswapV2
 
 
 def make_plugin():
