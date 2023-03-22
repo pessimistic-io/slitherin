@@ -8,22 +8,22 @@
 Checks the correctness of UniswapV2 integration in the contract. 
 
 ## Detectors
-### pair-balance-is-not-used
+### pair-balance-is-used
 * Impact - High;
 * Description - The pair balance value (or its' change) can be manipulated with a flashloan or a cyclical swap path.
 * Recommendation - Do not rely directly on the pair balance value.
 
-### pair-reserve-is-not-used
+### pair-reserve-is-used
 * Impact - High;
 * Description - The pair reserve value (or its' change) can be manipulated with a flashloan or a cyclical swap path.
 * Recommendation - Do not rely directly on the pair balance value.
 
-### router-is-used
+### pair-is-used
 * Impact - Medium;
 * Description - The protocol is secured with the Router contract. The direct usage of the Pair is dangerous due to its complexity.
 * Recommendation - Use the Router contract instead of using the Pair contract directly.
 
-### swap-minReturn-is-not-zero
+### swap-minReturn-is-zero
 * Impact - Medium;
 * Description - All swaps must not have parameter minReturn equal to 0.
 * Recommendation - Put a minReturn parameter of swaps different from 0.

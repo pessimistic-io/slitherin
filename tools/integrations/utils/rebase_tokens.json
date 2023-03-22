@@ -1,0 +1,26 @@
+{
+    "Olympus":{
+        "address": "0x64aa3364f17a4d01c6f1751fd97c2bd3d7e7f1d5"
+    },
+    "TempleDAO":{
+        "address": "0x470ebf5f030ed85fc1ed4c2d36b9dd02e77cf1b7"
+    },
+    "Ampleforth":{
+        "address": "0xd46ba6d942050d489dbd938a2c909a5d5039a161"
+    },
+    "USDX":{
+        "address": "0x2f6081e3552b1c86ce4479b80062a1dda8ef23e3"
+    },
+    "Benchmark Protocol":{
+        "address": "0x67c597624b17b16fb77959217360b7cd18284253"
+    },
+    "Base Protocol":{
+        "address": "0x07150e919b4de5fd6a63de1f9384828396f25fdc"
+    },
+    "Seigniorage Shares":{
+        "address": "0x39795344cbcc76cc3fb94b9d1b15c23c2070c66d"
+    },
+    "Auric Network":{
+        "address": "0x1c7bbadc81e18f7177a95eb1593e5f5f35861b10"
+    }
+}

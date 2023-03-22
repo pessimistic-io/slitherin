@@ -16,7 +16,7 @@ def parse_args() -> argparse.Namespace:
     """
     parser = argparse.ArgumentParser(
         description="Check integration with projects",
-        usage="pess-slither-integration filename",
+        usage="pess-slither-integration path",
     )
 
     parser.add_argument("project", help="The target directory/Solidity file.")
