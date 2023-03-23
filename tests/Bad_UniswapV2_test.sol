@@ -50,6 +50,15 @@ contract Bad_UniswapV2_test {
         }
         return true;
     }
+
+    /// @notice Checks pair token balance to return a certain boolean
+    function pair_token_balance_used_3 () external returns (bool) {
+        address new_uni = address(uniswap);
+        if (token.balanceOf(new_uni) > 100){
+            return false;
+        }
+        return true;
+    }
     
     /// @notice Uses functions where amountOutMin must be more than 0
     function amount_min_return_zero_router01 (uint amountIn, address[] calldata path, address to, uint deadline) external { // amountOutMin > 0

@@ -1,5 +1,7 @@
 # UniswapV2 Integration
 
+Disabled by default. Use `--detect pess-uni-v2` to enable the detector. 
+
 ## Configuration
 * Check: `pess-uni-v2`
 * Confidence: `Medium`

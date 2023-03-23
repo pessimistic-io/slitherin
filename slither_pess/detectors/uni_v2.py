@@ -3,6 +3,7 @@ from typing import List
 from slither.utils.output import Output
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
 from slither.core.declarations import Function
+from slither.core.expressions.type_conversion import TypeConversion
 
 
 class UniswapV2(AbstractDetector):
@@ -22,10 +23,25 @@ class UniswapV2(AbstractDetector):
     WIKI_RECOMMENDATION = 'Follow UniswapV2 integration checklist'
 
     
-    def _pair_balance_used(self, fun: Function) -> List[str]:
+    #TODO детектить предварительные присваивания. См. test - pair_token_balance_used_3
+    def _pair_balance_used(self, fun: Function) -> bool:
         """Checks if a function a uses pair balance"""
-        res = []
-        return res
+        mb_pair_vars = []
+        for node in fun.nodes:
+            if node.state_variables_read or node.local_variables_read:  # Check if IUniswapV2Pair type is in local/storage vars
+                for node_var in node.state_variables_read:
+                    if str(node_var.type) == "IUniswapV2Pair":
+                        mb_pair_vars.append(str(node_var))
+                for node_var in node.local_variables_read:
+                    if str(node_var.type) == "IUniswapV2Pair":
+                        mb_pair_vars.append(str(node_var))
+            for external_call in node.external_calls_as_expressions:    # Check external calls for expressions with balanceOf
+                if "balanceOf" in str(external_call):
+                    for call_arg in external_call.arguments:
+                        if isinstance(call_arg, TypeConversion):
+                            if str(call_arg.expression) in mb_pair_vars or "IUniswapV2Pair" in str(call_arg.expression):    # Check if IUniswapV2Pair is used in balanceOf
+                                return True
+        return False
 
     def _pair_reserve_used(self, fun: Function) -> List[str]:
         """Checks if a function uses pair reserves"""
@@ -57,13 +73,13 @@ class UniswapV2(AbstractDetector):
         res = []
         if "pess-uni-v2" in sys.argv:
             for contract in self.compilation_unit.contracts_derived:
-                pair_balance_used = self._pair_balance_used
-                pair_reserve_used = self._pair_reserve_used
-                pair_used = self._pair_used
-                minReturn_zero = self._minReturn_zero
-                maxReturn_max = self._maxReturn_max
-                has_bad_token = self._has_bad_token
                 for f in contract.functions:
+                    pair_balance_used = self._pair_balance_used(f)
+                    pair_reserve_used = self._pair_reserve_used(f)
+                    pair_used = self._pair_used(f)
+                    minReturn_zero = self._minReturn_zero(f)
+                    maxReturn_max = self._maxReturn_max(f)
+                    has_bad_token = self._has_bad_token(f)
                     if pair_balance_used:
                         res.append(self.generate_result(['Function ',f, ' uses pair balance.''\n']))
                     if pair_reserve_used:

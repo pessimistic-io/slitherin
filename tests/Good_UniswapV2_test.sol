@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 import './interfaces/IUniswapV2Router02.sol';
 
+//TODO Finish good UniV2 integration
 /// @notice Contract that uses Router contract of UniswapV2 instead of Pair
 contract Good_UniswapV2_Integration_1 {
     IUniswapV2Router02 uniswap;
