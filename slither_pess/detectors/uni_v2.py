@@ -44,9 +44,15 @@ class UniswapV2(AbstractDetector):
         return False
 
     def _pair_reserve_used(self, fun: Function) -> List[str]:
-        """Checks if a function uses pair reserves"""
-        res = []
-        return res
+        """Checks if a function uses getReserves function of the Pair contract"""
+        for external_call in fun.external_calls_as_expressions:
+            if (
+                "getReserves" in str(external_call) and
+                "tuple" in external_call.type_call and 
+                "function () view external returns (uint112,uint112,uint32)" in external_call.called.type
+            ): 
+                return True
+        return False
 
     def _pair_used(self, fun: Function) -> List[str]:
         """Checks if a pair contract is used"""
@@ -83,13 +89,13 @@ class UniswapV2(AbstractDetector):
                     if pair_balance_used:
                         res.append(self.generate_result(['Function ',f, ' uses pair balance.''\n']))
                     if pair_reserve_used:
-                        res.append(self.generate_result({'Function ',f,' uses pair reserves.''\n' }))
+                        res.append(self.generate_result(['Function ',f,' uses pair reserves.''\n']))
                     if pair_used:
-                        res.append(self.generate_result({'Contract ',contract,' uses pair contract directly.''\n' }))
+                        res.append(self.generate_result(['Contract ',contract,' uses pair contract directly.''\n']))
                     if minReturn_zero:
-                        res.append(self.generate_result({'Function ',f,' has a call of a swap with "min" parameter. Min parameter must not be 0''\n' }))
+                        res.append(self.generate_result(['Function ',f,' has a call of a swap with "min" parameter. Min parameter must not be 0''\n']))
                     if maxReturn_max:
-                        res.append(self.generate_result({'Function ',f,' has a call of a swap with "max" parameter. Max parameter must not be infinity''\n' }))
+                        res.append(self.generate_result(['Function ',f,' has a call of a swap with "max" parameter. Max parameter must not be infinity''\n']))
                     if has_bad_token:
-                        res.append(self.generate_result({'Function ',f,' uses deflationary or rebase token''\n' }))                  
+                        res.append(self.generate_result(['Function ',f,' uses deflationary or rebase token''\n']))                  
         return res
