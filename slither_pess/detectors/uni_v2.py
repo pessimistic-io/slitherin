@@ -2,7 +2,7 @@ import sys
 from typing import List
 from slither.utils.output import Output
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
-from slither.core.declarations import Function
+from slither.core.declarations import Function, Contract
 from slither.core.expressions.type_conversion import TypeConversion
 
 
@@ -28,22 +28,26 @@ class UniswapV2(AbstractDetector):
         """Checks if a function a uses pair balance"""
         mb_pair_vars = []
         for node in fun.nodes:
-            if node.state_variables_read or node.local_variables_read:  # Check if IUniswapV2Pair type is in local/storage vars
+            if node.state_variables_read or node.local_variables_read:  # Checks if IUniswapV2Pair type is in local/storage vars
                 for node_var in node.state_variables_read:
                     if str(node_var.type) == "IUniswapV2Pair":
                         mb_pair_vars.append(str(node_var))
                 for node_var in node.local_variables_read:
                     if str(node_var.type) == "IUniswapV2Pair":
                         mb_pair_vars.append(str(node_var))
-            for external_call in node.external_calls_as_expressions:    # Check external calls for expressions with balanceOf
+            for external_call in node.external_calls_as_expressions:    # Checks external calls for expressions with balanceOf
                 if "balanceOf" in str(external_call):
                     for call_arg in external_call.arguments:
                         if isinstance(call_arg, TypeConversion):
-                            if str(call_arg.expression) in mb_pair_vars or "IUniswapV2Pair" in str(call_arg.expression):    # Check if IUniswapV2Pair is used in balanceOf
+                            if (    # Checks if IUniswapV2Pair is used in balanceOf
+                                str(call_arg.expression) in mb_pair_vars or 
+                                "IUniswapV2Pair" in str(call_arg.expression)
+                            ):
                                 return True
         return False
 
-    def _pair_reserve_used(self, fun: Function) -> List[str]:
+    #TODO детектить использование первого return параметра
+    def _pair_reserve_used(self, fun: Function) -> bool:
         """Checks if a function uses getReserves function of the Pair contract"""
         for external_call in fun.external_calls_as_expressions:
             if (
@@ -54,22 +58,28 @@ class UniswapV2(AbstractDetector):
                 return True
         return False
 
-    def _pair_used(self, fun: Function) -> List[str]:
-        """Checks if a pair contract is used"""
-        res = []
-        return res
+    def _pair_used(self, contract: Contract) -> bool:
+        """Checks if a Pair contract is used"""
+        for var in contract.variables:  # Looking for a IUniswapV2Pair type var
+            if str(var.type) == "IUniswapV2Pair":
+                return True
+        for function in contract.functions:
+            for node in function.nodes:
+                if "IUniswapV2Pair" in str(node):   # Looking for IUniswapV2Pair in functions
+                    return True
+        return False
 
-    def _minReturn_zero(self, fun: Function) -> List[str]:
+
+    def _minReturn_zero(self, fun: Function) -> bool:
         """Checks if a minReturn parameter equals zero"""
-        res = []
-        return res  
+        print(fun.external_call)
 
-    def _maxReturn_max(self, fun: Function) -> List[str]:
+    def _maxReturn_max(self, fun: Function) -> bool:
         """Checks if a maxReturn parameter equals infinity"""
         res = []
         return res     
 
-    def _has_bad_token(self, fun: Function) -> List[str]:
+    def _has_bad_token(self, fun: Function) -> bool:
         """Checks if deflationary or rebase tokens are used"""
         res = []
         return res                 
@@ -79,10 +89,10 @@ class UniswapV2(AbstractDetector):
         res = []
         if "pess-uni-v2" in sys.argv:
             for contract in self.compilation_unit.contracts_derived:
+                pair_used = self._pair_used(contract)
                 for f in contract.functions:
                     pair_balance_used = self._pair_balance_used(f)
                     pair_reserve_used = self._pair_reserve_used(f)
-                    pair_used = self._pair_used(f)
                     minReturn_zero = self._minReturn_zero(f)
                     maxReturn_max = self._maxReturn_max(f)
                     has_bad_token = self._has_bad_token(f)
