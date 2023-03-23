@@ -3,6 +3,7 @@ from typing import List
 from slither.utils.output import Output
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
 from slither.core.declarations import Function, Contract
+from slither.slithir.operations.assignment import Assignment
 from slither.core.expressions.type_conversion import TypeConversion
 
 
@@ -72,7 +73,31 @@ class UniswapV2(AbstractDetector):
 
     def _minReturn_zero(self, fun: Function) -> bool:
         """Checks if a minReturn parameter equals zero"""
-        print(fun.external_call)
+        calls_with_0_pos_argument = {   # Functions where minReturn is an argument at position 0
+            "swapExactETHForTokens",
+            "swapExactETHForTokensSupportingFeeOnTransferTokens"
+        }
+        calls_with_1_pos_argument = {   # Functions where minReturn is an argument at position 1
+            "swapExactTokensForTokens",
+            "swapExactTokensForETH",
+            "swapExactTokensForTokensSupportingFeeOnTransferTokens",
+            "swapExactTokensForETHSupportingFeeOnTransferTokens"
+        }
+        amountOutMin = ''
+        for external_call in fun.external_calls_as_expressions: # Looking for a variable in the needed external call at positions 0 and 1
+            if [call for call in calls_with_0_pos_argument if(call in str(external_call))] and external_call.arguments:
+                amountOutMin = external_call.arguments[0]
+            if [call for call in calls_with_1_pos_argument if(call in str(external_call))] and len(external_call.arguments) > 1:
+                amountOutMin = external_call.arguments[1]
+        if str(amountOutMin) == "0":    # If argument is set directly to 0 return True
+            return True
+        elif amountOutMin:  # Looking for 0 assignments to a variable found above
+            for node in fun.nodes:
+                for ir in node.irs:
+                    if isinstance(ir, Assignment):
+                        if str(ir.lvalue) == str(amountOutMin) and str(ir.rvalue) == "0":
+                            return True
+        return False
 
     def _maxReturn_max(self, fun: Function) -> bool:
         """Checks if a maxReturn parameter equals infinity"""
