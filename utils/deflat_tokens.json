@@ -1,0 +1,88 @@
+{
+    "objects": [
+        {
+            "name": "Volt Inu",
+            "address": "0x7db5af2B9624e1b3B4Bb69D6DeBd9aD1016A58Ac"
+        },
+        {
+            "name": "FEGtoken",
+            "address": "0x389999216860AB8E0175387A0c90E5c52522C945"
+        },
+        {
+            "name": "Froggies",
+            "address": "0x7c3fF33c76C919B3F5fddAF7BddDBb20A826DC61"
+        },
+        {
+            "name": "pTokens SAFEMOON",
+            "address": "0x16631e53C20Fd2670027C6D53EfE2642929b285C"
+        },
+        {
+            "name": "BOOM",
+            "address": "0xDB7Eab9bA6be88B869F738f6DEeBa96d49Fe13fd"
+        },
+        {
+            "name": "OneSwap",
+            "address": "0x0B342C51d1592C41068d5D4b4DA4A68C0a04d5A4"
+        },
+        {
+            "name": "SafeMoon Inu",
+            "address": "0xCd7492db29E2ab436e819b249452EE1bbDf52214"
+        },
+        {
+            "name": "RYOSHI TOKEN",
+            "address": "0x9Ac59862934ebc36072D4D8ADA37c62373A13856"
+        },
+        {
+            "name": "ETHPAD.network",
+            "address": "0x8dB1D28Ee0d822367aF8d220C0dc7cB6fe9DC442"
+        },
+        {
+            "name": "Wrapped BGL",
+            "address": "0x2bA64EFB7A4Ec8983E22A49c81fa216AC33f383A"
+        },
+        {
+            "name": "Tia Token",
+            "address": "0x824E35f7A75324f99300aFAC75ECF7354E17Ea26"
+        },
+        {
+            "name": "Bobo Cash",
+            "address": "0xF53c24f7729C88C110265929c7124E6259eFccAB"
+        },
+        {
+            "name": "Wrapped BOMB",
+            "address": "0xbBB38bE7c6D954320c0297c06Ab3265a950CDF89"
+        },
+        {
+            "name": "BOMB",
+            "address": "0x1C95b093d6C236d3EF7c796fE33f9CC6b8606714"
+        },
+        {
+            "name": "Tardigrades.Finance",
+            "address": "0x92a42Db88Ed0F02c71D439e55962Ca7CAB0168b5"
+        },
+        {
+            "name": "DoYourTip",
+            "address": "0x740623d2c797b7D8D1EcB98e9b4Afcf99Ec31E14"
+        },
+        {
+            "name": "Porkchop",
+            "address": "0x646707246D7d5C2a86d7206f41CA8199ea9CED69"
+        },
+        {
+            "name": "DeFiat",
+            "address": "0xB6eE603933E024d8d53dDE3faa0bf98fE2a3d6f1"
+        },
+        {
+            "name": "ETHplode",
+            "address": "0xe0c6CE3e73029F201e5C0Bedb97F67572A93711C"
+        },
+        {
+            "name": "BitcoinSoV",
+            "address": "0x26946adA5eCb57f3A1F91605050Ce45c482C9Eb1"
+        },
+        {
+            "name": "Island",
+            "address": "0x1681bcB589b3cFCF0c0616B0cE9b19b240643dc1"
+        }
+    ]
+}

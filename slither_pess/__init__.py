@@ -16,6 +16,7 @@ from slither_pess.detectors.unprotected_initialize import UnprotectedInitialize
 from slither_pess.detectors.read_only_reentrancy import ReadOnlyReentrancy
 from slither_pess.detectors.event_setter import EventSetter
 from slither_pess.detectors.before_token_transfer import BeforeTokenTransfer
+from slither_pess.detectors.uni_v2 import UniswapV2
 
 
 def make_plugin():
@@ -36,6 +37,7 @@ def make_plugin():
         ReadOnlyReentrancy,
         EventSetter,
         BeforeTokenTransfer,
+        UniswapV2,
     ]
     plugin_printers = []
 
