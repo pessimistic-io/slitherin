@@ -1,4 +1,6 @@
 import sys
+import os
+import json
 from typing import List
 from slither.utils.output import Output
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
@@ -125,15 +127,27 @@ class UniswapV2(AbstractDetector):
                             return True
         return False
 
+    #TODO детектить сет адресов в важных функциях через параметры, детектить в сторадж переменных
     def _has_bad_token(self, fun: Function) -> bool:
         """Checks if deflationary or rebase tokens are used"""
-        res = []
-        return res                 
+        absolute_path = os.path.dirname(__file__)
+        relative_path = "../../utils/deflat_tokens.json"
+        full_path = os.path.join(absolute_path, relative_path)
+        fileJson = open(full_path)
+        data = json.load(fileJson)
+        objects = data['objects']
+        for section in objects: # Looks for token addresses from json in nodes
+            address = section['address']
+            for node in fun.nodes:
+                if address in str(node):
+                    return True
+        fileJson.close()
+        return False
 
     def _detect(self) -> List[Output]:
         """Main function"""
         res = []
-        if "pess-uni-v2" in sys.argv:
+        if "pess-uni-v2" in sys.argv:   # launch only if detector in terminal is present
             for contract in self.compilation_unit.contracts_derived:
                 pair_used = self._pair_used(contract)
                 for f in contract.functions:
