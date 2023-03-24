@@ -10,6 +10,10 @@ contract StrangeSetter {
         _;
     }
 
+    constructor(uint256 _setter){
+        toSet = _setter;
+    }
+
     function set_vulnurable(uint256 setter) public onlyOwner {
         uint256 a = 10;
         a = setter;
@@ -18,6 +22,7 @@ contract StrangeSetter {
     function setBuilder(bytes32 nameHash, address builder) public onlyOwner{
         s_builders[nameHash] = builder;
     }
+
     function setWithInt(bytes32 nameHash, address builder) public onlyOwner{
         uint256 x = 0;
         vulnurable_internal(x);
@@ -31,3 +36,13 @@ contract StrangeSetter {
         toSet = setter;
     } 
 }
+
+contract StrangeConstructor {
+    uint256 toSet;
+
+    constructor(uint256 _setter){
+        uint256 local_set;
+        local_set = _setter + 10;
+    }
+}
+

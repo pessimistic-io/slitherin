@@ -44,18 +44,12 @@ class UnprotectedSetter(AbstractDetector):
 
         for m in fun.modifiers:
             for m.name in ['initializer', 'onlyOwner']:
-                return True;
+                return True
 
         if fun.visibility in ['internal','private']:
-            return True;
+            return True
 
-        # или msg.sender внутри функции сверяется напрямую в require
-        # for n in fun.nodes:
-        #     for c in n.internal_calls:
-        #         if c.name in ['require(bool,string)', 'require(bool)']:
-        #             print(n.expression)
-
-        return fun.is_protected();
+        return fun.is_protected()
 
     def _detect(self):
 
@@ -66,7 +60,6 @@ class UnprotectedSetter(AbstractDetector):
                 if not self.has_access_control(f):
                     x = self.is_setter(f)
                     if (x!= None):
-                        # print()
                         res.append(self.generate_result([
                             "Function", ' ',
                             f, ' is a non-protected setter ',

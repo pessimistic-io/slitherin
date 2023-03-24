@@ -50,7 +50,6 @@ class NftApproveWarning(AbstractDetector):
                     is_from_sender = is_dependent(ir.arguments[0], SolidityVariableComposed("msg.sender"), node.function.contract)
                     # is_from_self = is_dependent(ir.arguments[0], SolidityVariable("this"), node.function.contract)
                     if (not is_from_sender): # and not is_from_self
-                        # print('DETECTION')
                         irList.append(ir.node)
         return irList
 
