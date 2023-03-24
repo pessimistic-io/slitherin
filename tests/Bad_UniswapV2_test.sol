@@ -69,10 +69,14 @@ contract Bad_UniswapV2_test {
     }
 
     /// @notice Explain to an end user what this does
-    function amount_max_not_infinite_router01 (uint amountOut, address[] calldata path, address to, uint deadline) external { // amountInMax != type(uint).max или type(uint256).max
-        uint amountInMax_1 = type(uint).max;
-        uint amountInMax_2 = type(uint256).max;
+    function amount_max_not_infinite_router01_1 (uint amountOut, address[] calldata path, address to, uint deadline) external { // amountInMax != type(uint).max или type(uint256).max
+        uint amountInMax_1 = type(uint).max; 
         uint256[] memory amounts_1 = router2.swapTokensForExactTokens(amountOut, amountInMax_1, path, to, deadline);
+    }
+
+    /// @notice Explain to an end user what this does
+    function amount_max_not_infinite_router01_2 (uint amountOut, address[] calldata path, address to, uint deadline) external { // amountInMax != type(uint).max или type(uint256).max
+        uint amountInMax_2 = type(uint256).max;
         uint256[] memory amounts_2 = router2.swapTokensForExactETH(amountOut, amountInMax_2, path, to, deadline);
     }
 

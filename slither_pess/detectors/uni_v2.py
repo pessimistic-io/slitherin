@@ -100,9 +100,30 @@ class UniswapV2(AbstractDetector):
         return False
 
     def _maxReturn_max(self, fun: Function) -> bool:
-        """Checks if a maxReturn parameter equals infinity"""
-        res = []
-        return res     
+        """Checks if a maxReturn parameter equals max"""
+        calls_with_1_pos_argument = {   # Functions where minReturn is an argument at position 1
+            "swapTokensForExactTokens",
+            "swapTokensForExactETH"
+        }
+        amountInMax = ''
+        tmp = ''
+        for external_call in fun.external_calls_as_expressions: # Looking for a variable in the needed external call at position 1
+            if [call for call in calls_with_1_pos_argument if(call in str(external_call))] and len(external_call.arguments) > 1:
+                amountInMax = external_call.arguments[1]
+        if str(amountInMax) == "type()(uint256).max":    # If argument is set directly to 0 return True
+            return True
+        elif amountInMax:  # Looking for max assignments to a variable found above
+            for node in fun.nodes:
+                for ir in node.irs:
+                    if isinstance(ir, Assignment):
+                        if (
+                            "TMP_" in str(ir.lvalue) and 
+                            str(ir.rvalue) == "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+                        ):
+                            tmp = str(ir.lvalue)
+                        if str(amountInMax) == str(ir.lvalue) and tmp == str(ir.rvalue):
+                            return True
+        return False
 
     def _has_bad_token(self, fun: Function) -> bool:
         """Checks if deflationary or rebase tokens are used"""
