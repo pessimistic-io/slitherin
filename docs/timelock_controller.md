@@ -8,8 +8,9 @@
 ## Description
 The detector sees if a contract contains an openzeppelin timelock-contoller implementation.
 
-## Exploit Scenario
+## Vulnerable Scenario
 The deploy address can govern the contract bypassing timelock-controller limitations.
+[test scenario](../tests/timelock_controller_test.sol)
 
-## Recomendation
-Remove Proposer and Executor roles from the deployer address after deploy. 
+## Recommendation
+Remove Proposer and Executor roles from the deployer address after deploy.

@@ -11,14 +11,14 @@ class CallForwardToProtected(AbstractDetector):
     """
 
     ARGUMENT = 'pess-call-forward-to-protected' # slither will launch the detector with slither.py --detect mydetector
-    HELP = '-'
+    HELP = 'Contract might have a call to a custom address'
     IMPACT = DetectorClassification.MEDIUM
     CONFIDENCE = DetectorClassification.LOW
 
-    WIKI = '-'
+    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/call_forward_to_protected.md'
     WIKI_TITLE = 'Call Forward To Protected'
     WIKI_DESCRIPTION = "No calls to custom addresses and contract interactions through access control"
-    WIKI_EXPLOIT_SCENARIO = 'Attacker makes a call on behalf of another contract'
+    WIKI_EXPLOIT_SCENARIO = '-'
     WIKI_RECOMMENDATION = 'Do not let calls to project contracts or do not give rights to a contract which can perform calls'
 
     

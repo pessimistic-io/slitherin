@@ -36,7 +36,6 @@ contract inconsistent_nonreentrant_test {
     }
 }
 
-// В этом контракте нет nonReentrant ни на одной функции, здесь детектор отрабатывать не должен
 contract inconsistent_nonreentrant_false_test {
 
     mapping (address=>uint) a;

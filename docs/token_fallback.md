@@ -8,8 +8,8 @@
 ## Description
 The detector sees if a token contract has a fallback function.
 
-## Exploit Scenario
-The exploit scenario is in progress.
+## Vulnerable Scenario
+[test scenario](../tests/token_fallback_test.sol)
 
-## Recomendation
+## Recommendation
 Be careful when implementing fallback function in token contracts.

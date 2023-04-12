@@ -1,11 +1,10 @@
 from slither.core.cfg.node import NodeType
-
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
 
 
 class DoubleEntryTokenPossiblity(AbstractDetector):
     """
-    Sees if contract contains a function wich is vulnurable to double-entry tokens attack
+    Sees if contract contains a function which is vulnurable to double-entry tokens attack
     """
 
     ARGUMENT = 'pess-double-entry-token-alert' # slither will launch the detector with slither.py --detect mydetector
@@ -13,11 +12,11 @@ class DoubleEntryTokenPossiblity(AbstractDetector):
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.LOW
 
-    WIKI = 'https://docs.google.com/presentation/d/1jbOBBou-6eUBzm32X8cflTl4V6xvFd8jdaIZmi1A7kM/edit#slide=id.g142209ff0ae_0_0'
+    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/double_entry_token_possibility.md'
     WIKI_TITLE = 'Double-entry token'
-    WIKI_DESCRIPTION = "Возможны проблемы при использования double-entry токена"
-    WIKI_EXPLOIT_SCENARIO = '...'
-    WIKI_RECOMMENDATION = 'Контракт должен быть устойчив, если два адреса указывают на один и тот же токен'
+    WIKI_DESCRIPTION = "Double-entry token related attack might be possible"
+    WIKI_EXPLOIT_SCENARIO = '-'
+    WIKI_RECOMMENDATION = 'Project contract must be sustainable to a token which has two pointing addresses'
 
 
     def get_tokens_as_params(self, fun):

@@ -6,13 +6,13 @@
 * Confidence: `Low`
 
 ## Description
-The detector sees if a contract uses tx.gasprice variable.
+tx.gasprice variable is set by contract users not developers. The detector sees if a contract uses tx.gasprice variable.
 
-## Exploit Scenario
-The exploit scenario is in progress.
+## Vulnerable Scenario
+[test scenario](../tests/tx_gasprice_warning_test.sol)
 
 ## Related Attack
 https://cointelegraph.com/news/ethereum-alarm-clock-exploit-leads-to-260k-in-stolen-gas-fees-so-far
 
-## Recomendation
+## Recommendation
 Make sure that exploits with tx.gasprice variable set by users are not possible.

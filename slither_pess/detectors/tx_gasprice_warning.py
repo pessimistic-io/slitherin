@@ -14,10 +14,10 @@ class TxGaspriceWarning(AbstractDetector):
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.LOW
 
-    WIKI = 'https://workflowy.com/#/40d940743275'
+    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/tx_gasprice_warning.md'
     WIKI_TITLE = 'TX Gasprice Warning'
     WIKI_DESCRIPTION = "Tx.gasprice variable must be used carefully"
-    WIKI_EXPLOIT_SCENARIO = 'N/A'
+    WIKI_EXPLOIT_SCENARIO = '-'
     WIKI_RECOMMENDATION = 'Make sure that tx.gasprice varible which is set by users does not exploit the contract logic'
 
 

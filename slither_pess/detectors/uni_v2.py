@@ -19,14 +19,13 @@ class UniswapV2(AbstractDetector):
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.MEDIUM
 
-    WIKI = '-'
+    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/integration_uniswapV2.md'
     WIKI_TITLE = 'UniswapV2 Integration'
-    WIKI_DESCRIPTION = "UniswapV2 vulnerabilities should not be present in the codebase"
-    WIKI_EXPLOIT_SCENARIO = 'N/A'
+    WIKI_DESCRIPTION = "UniswapV2 integration vulnerabilities must not be present in the codebase"
+    WIKI_EXPLOIT_SCENARIO = '-'
     WIKI_RECOMMENDATION = 'Follow UniswapV2 integration checklist'
 
     
-    #TODO детектить предварительные присваивания. См. test - pair_token_balance_used_3
     def _pair_balance_used(self, fun: Function) -> bool:
         """Checks if a function a uses pair balance"""
         mb_pair_vars = []
@@ -49,7 +48,6 @@ class UniswapV2(AbstractDetector):
                                 return True
         return False
 
-    #TODO детектить использование первого return параметра
     def _pair_reserve_used(self, fun: Function) -> bool:
         """Checks if a function uses getReserves function of the Pair contract"""
         for external_call in fun.external_calls_as_expressions:

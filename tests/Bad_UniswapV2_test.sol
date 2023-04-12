@@ -16,7 +16,7 @@ contract Bad_UniswapV2_test {
     uint32  private blockTimestampLast;
 
     constructor(address _uniswap, address _token, address _router2){
-        uniswap = IUniswapV2Pair(_uniswap); // Поиска использования интерфейса - достаточно?
+        uniswap = IUniswapV2Pair(_uniswap);
         token = IUniswapV2ERC20(_token);
         router2 = IUniswapV2Router02(_router2);
     }

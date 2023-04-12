@@ -9,23 +9,21 @@ class UnprotectedSetter(AbstractDetector):
     """
 
     ARGUMENT = 'pess-unprotected-setter' # slither will launch the detector with slither.py --detect mydetector
-    HELP = 'Contract parameter might be changed be anyone'
+    HELP = 'Contract critical storage parameters might be changed by anyone'
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.MEDIUM
 
-    WIKI = 'https://workflowy.com/s/40d940743275/G8dJAU9ahhPNuSCY#/c9183b987c7f'
+    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/unprotected_setter.md'
     WIKI_TITLE = 'Unprotected Setter'
-    WIKI_DESCRIPTION = "Почти всегда setter'ы должны быть защищены какой-то ролью"
-    WIKI_EXPLOIT_SCENARIO = 'Кто угодно может менять параметры протокола'
+    WIKI_DESCRIPTION = "Usually all setters must be protected with access control"
+    WIKI_EXPLOIT_SCENARIO = '-'
     WIKI_RECOMMENDATION = 'Add access control'
 
 
     def is_setter(self, fun, params=None):
-
         if not params:
-            params = fun.parameters # параметры функции
-
-        for n in fun.nodes: # в первом приближении нода это строчка
+            params = fun.parameters
+        for n in fun.nodes:
             if(n.type==NodeType.EXPRESSION):
                 for v in n.state_variables_written:
                     lr = str(n.expression).split(' = ')
@@ -35,26 +33,19 @@ class UnprotectedSetter(AbstractDetector):
                         for p in params:
                             if '.' in left: continue
                             if '[' in left: continue
-                            if right==str(p): return left # присваеваем аргумент функции напрямую в сторадж
-
-        # TODO: непрямые присваивания
+                            if right==str(p): return left
         return None
 
     def has_access_control(self, fun):
-
         for m in fun.modifiers:
             for m.name in ['initializer', 'onlyOwner']:
                 return True
-
         if fun.visibility in ['internal','private']:
             return True
-
         return fun.is_protected()
 
     def _detect(self):
-
         res = []
-
         for contract in self.compilation_unit.contracts_derived:
             for f in contract.functions:
                 if not self.has_access_control(f):
@@ -65,6 +56,4 @@ class UnprotectedSetter(AbstractDetector):
                             f, ' is a non-protected setter ',
                             x, ' is written'
                             '\n']))
-
-
         return res

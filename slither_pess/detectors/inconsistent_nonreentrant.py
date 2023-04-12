@@ -12,13 +12,13 @@ class InconsistentNonreentrant(AbstractDetector):
     ARGUMENT = 'pess-inconsistent-nonreentrant' # slither will launch the detector with slither.py --detect inconsistent-nonreentrant
     HELP = 'function ... (), function ... () nonReentrant'
     IMPACT = DetectorClassification.MEDIUM
-    CONFIDENCE = DetectorClassification.HIGH
+    CONFIDENCE = DetectorClassification.MEDIUM
 
-    WIKI = 'https://workflowy.com/s/40d940743275/G8dJAU9ahhPNuSCY#/b3637d2987cb'
+    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/inconsistent_nonreentrant.md'
     WIKI_TITLE = 'Inconsistent nonreentrant'
-    WIKI_DESCRIPTION = "Если используется non-reentrant модификатор, то обычно он должен быть на всех non-veiw методах"
-    WIKI_EXPLOIT_SCENARIO = 'Атакующий может сделать реентранси атаку, вызвав реентрант функцию через reentrancy-point в nonReentrant функции'
-    WIKI_RECOMMENDATION = 'Убедиться, что все non-view функции используют non-reentrant'
+    WIKI_DESCRIPTION = "If non-reentrant modifier is used then for security reasons it should be used in all non-veiw functions"
+    WIKI_EXPLOIT_SCENARIO = '-'
+    WIKI_RECOMMENDATION = 'Make sure that all non-view functions use non-reentrant modifier'
 
 
     def _has_visibility_or_view(self, fun: Function) -> bool:

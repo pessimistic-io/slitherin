@@ -165,7 +165,6 @@ class ReadOnlyReentrancy(Reentrancy):
     WIKI = "https://github.com/pessimistic-io/custom_detectors/blob/master/docs/readonly_reentrancy.md"
     WIKI_TITLE = "Read-only reentrancy vulnerabilities"
     WIKI_DESCRIPTION = "Check docs"
-
     STANDARD_JSON = False
     KEY = "readonly_reentrancy"
 

@@ -14,11 +14,11 @@ class StrangeSetter(AbstractDetector):
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.MEDIUM
 
-    WIKI = 'https://workflowy.com/#/692cf11bd6f1'
+    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/strange_setter.md'
     WIKI_TITLE = 'Strange Setter'
-    WIKI_DESCRIPTION = "Сеттеры должны менять значения storage переменных"
-    WIKI_EXPLOIT_SCENARIO = 'Неработающий контракт'
-    WIKI_RECOMMENDATION = 'Fix setter function'
+    WIKI_DESCRIPTION = "Setter must write to storage variables"
+    WIKI_EXPLOIT_SCENARIO = '-'
+    WIKI_RECOMMENDATION = 'Make sure that your setter actually sets something'
 
 
     def _is_strange_setter(self, fun: Function) -> bool: 

@@ -8,8 +8,8 @@
 ## Description
 The detector sees if a contract contains a setter that does not emit an event.
 
-## Exploit Scenario
-The exploit scenario is in progress.
+## Vulnerable Scenario
+[test scenario](../tests/event_setter_test.sol)
 
-## Recomendation
-Setters should emit events.
+## Recommendation
+Setters must emit events.
