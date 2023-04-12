@@ -14,10 +14,10 @@ class TokenFallback(AbstractDetector):
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.LOW
 
-    WIKI = 'https://workflowy.com/#/40d940743275'
+    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/token_fallback.md'
     WIKI_TITLE = 'Token Fallback'
     WIKI_DESCRIPTION = "Fallback function in tokens must be used carefully"
-    WIKI_EXPLOIT_SCENARIO = 'N/A'
+    WIKI_EXPLOIT_SCENARIO = '-'
     WIKI_RECOMMENDATION = 'Make sure that contract can not be exploited with fallback function'
 
 
@@ -26,7 +26,6 @@ class TokenFallback(AbstractDetector):
         if fun.name == "fallback":
             return True
         return False
-
 
     def _detect(self) -> List[Output]:
         """Main function"""

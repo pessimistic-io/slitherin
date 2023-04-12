@@ -14,10 +14,10 @@ class MultipleStorageRead(AbstractDetector):
     IMPACT = DetectorClassification.OPTIMIZATION
     CONFIDENCE = DetectorClassification.HIGH
 
-    WIKI = 'https://workflowy.com/#/40d940743275'
+    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/multiple_storage_read.md'
     WIKI_TITLE = 'Multiple Storage Read'
     WIKI_DESCRIPTION = "The same storage variable must not be read multiple times in the same function"
-    WIKI_EXPLOIT_SCENARIO = 'N/A'
+    WIKI_EXPLOIT_SCENARIO = '-'
     WIKI_RECOMMENDATION = 'Consider creating and reading a local variable instead of a storage one if you read it more than once'
 
 

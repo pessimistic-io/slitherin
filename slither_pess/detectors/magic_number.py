@@ -7,7 +7,7 @@ from slither.core.declarations import Function
 
 class MagicNumber(AbstractDetector):
     """
-    Shows int/uint values which are not assigned to variables
+    Shows int/uint values which are not assigned to variables.
     """
 
     ARGUMENT = 'pess-magic-number' # slither will launch the detector with slither.py --detect mydetector
@@ -15,16 +15,15 @@ class MagicNumber(AbstractDetector):
     IMPACT = DetectorClassification.INFORMATIONAL
     CONFIDENCE = DetectorClassification.HIGH
 
-    WIKI = '-'
+    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/magic_number.md'
     WIKI_TITLE = 'Magic Number'
-    WIKI_DESCRIPTION = "не должно быть числовых литералов без присваивания в константные переменные"
-    WIKI_EXPLOIT_SCENARIO = 'N/A'
-    WIKI_RECOMMENDATION = 'присваивать значения в константные переменные'
+    WIKI_DESCRIPTION = "Values should be assigned to variables"
+    WIKI_EXPLOIT_SCENARIO = '-'
+    WIKI_RECOMMENDATION = 'Assign values to variables'
 
 
     EXCEPTION = {"0","1","2","1000","1e18"}
 
-    
     def _getLiterals(self, fun: Function) -> List[str]:
         """Get numbers except those which are in EXCEPTION{}"""
         res = []

@@ -15,9 +15,9 @@ class EventSetter(AbstractDetector):
     IMPACT = DetectorClassification.LOW
     CONFIDENCE = DetectorClassification.MEDIUM
 
-    WIKI = 'https://workflowy.com/#/40d940743275'
+    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/event_setter.md'
     WIKI_TITLE = 'Missing Event Setter'
-    WIKI_DESCRIPTION = "Setter-functions should emit events"
+    WIKI_DESCRIPTION = "Setter-functions must emit events"
     WIKI_EXPLOIT_SCENARIO = 'N/A'
     WIKI_RECOMMENDATION = 'Emit events in setter functions'
 

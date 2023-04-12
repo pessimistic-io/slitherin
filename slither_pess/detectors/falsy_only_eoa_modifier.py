@@ -12,13 +12,13 @@ class OnlyEOACheck(AbstractDetector):
     ARGUMENT = 'pess-only-eoa-check' # slither will launch the detector with slither.py --detect mydetector
     HELP = 'msg.sender == tx.origin'
     IMPACT = DetectorClassification.MEDIUM
-    CONFIDENCE = DetectorClassification.HIGH
+    CONFIDENCE = DetectorClassification.LOW
 
-    WIKI = '-'
+    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/falsy_only_eoa_modifier.md'
     WIKI_TITLE = 'Falsy Only EOA Modifier'
-    WIKI_DESCRIPTION = "не должно быть логики msg.sender == tx.origin"
-    WIKI_EXPLOIT_SCENARIO = 'Неработающий контракт'
-    WIKI_RECOMMENDATION = 'не полагаться на подобную логику'
+    WIKI_DESCRIPTION = "Logic msg.sender == tx.origin must be removed"
+    WIKI_EXPLOIT_SCENARIO = '-'
+    WIKI_RECOMMENDATION = 'Do not rely on logic msg.sender == tx.origin when protecting contract logic'
 
     def hasWrongEq(self, fun, params=None):
         varListMsg = []
@@ -35,14 +35,10 @@ class OnlyEOACheck(AbstractDetector):
                 for i in range(len(varListTx)):
                     if(str(n).__contains__(f'{varListMsg[i]} == {varListTx[i]}') or str(n).__contains__(f'{varListTx[i]} == {varListMsg[i]}')):
                         return "True"
-
-        # TODO: непрямые присваивания
         return "False"
 
     def _detect(self):
-
         res = []
-
         for contract in self.compilation_unit.contracts_derived:
             for f in contract.functions:
                 x = self.hasWrongEq(f)
@@ -52,6 +48,4 @@ class OnlyEOACheck(AbstractDetector):
                         f.name, ' has a falsy EOA modifier ',
                         x, ' is set'
                         '\n']))
-
-
         return res

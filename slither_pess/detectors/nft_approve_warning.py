@@ -1,5 +1,4 @@
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
-
 from typing import List
 from slither.core.cfg.node import Node
 from slither.core.declarations import Function, SolidityVariableComposed
@@ -14,16 +13,15 @@ class NftApproveWarning(AbstractDetector):
     ARGUMENT = 'pess-nft-approve-warning' # slither will launch the detector with slither.py --detect nft-approve-warning
     HELP = '[safe]TransferFrom(from,...) - from parameter is not related to msg.sender'
     IMPACT = DetectorClassification.MEDIUM
-    CONFIDENCE = DetectorClassification.HIGH
+    CONFIDENCE = DetectorClassification.LOW
 
     WIKI = 'https://ventral.digital/posts/2022/8/18/sznsdaos-bountyboard-unauthorized-transferfrom-vulnerability'
     WIKI_TITLE = 'NFT Approve Warning'
-    WIKI_DESCRIPTION = "В [safe]TransferFrom() параметр from должен сравниваться с msg.sender"
-    WIKI_EXPLOIT_SCENARIO = 'Атакующий мог забрать любые nft, на который пользователь дал апрув протоколу. Причина: оптимистичный код erc721.safeTransferFrom(erc721.ownerOf(id),...) вместо erc721.safeTransferFrom(msg.sender,...) '
-    WIKI_RECOMMENDATION = 'Параметр from должен быть msg.sender'
+    WIKI_DESCRIPTION = "In [safe]TransferFrom() from parameter must be related to msg.sender"
+    WIKI_EXPLOIT_SCENARIO = '-'
+    WIKI_RECOMMENDATION = 'from parameter must be related to msg.sender'
 
     _signatures=["transferFrom(address,address,uint256)", "safeTransferFrom(address,address,uint256,bytes)", "safeTransferFrom(address,address,uint256)"]
-
 
     def _detect_arbitrary_from(self, f: Function):
         all_high_level_calls = [
@@ -61,5 +59,4 @@ class NftApproveWarning(AbstractDetector):
             for f in c.functions:
                 for d in self._detect_arbitrary_from(f):
                     res.append(self.generate_result([f.contract_declarer.name, ' ',f.name, ' parameter from is not related to msg.sender ', d, '\n']))
-
         return res

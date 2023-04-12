@@ -1,15 +1,16 @@
 # Call Forward To Protected
 
 ## Configuration
-* Check: `call-forward-to-protected`
+* Check: `pess-call-forward-to-protected`
 * Severity: `Medium`
 * Confidence: `Low` 
 
 ## Description
-Sees if contract function has low level calls to a custom address.
+Sees if a contract function has low level calls to a custom address.
 
-## Exploit Scenario
+## Vulnerable Scenario
 Attacker makes a call on behalf of another contract and interacts with functions through access control.
+[test scenario](../tests/call_forward_to_protected_test.sol)
 
 ## Recommendation
-Do not let calls to project contracts or do not give rights to a contract which can perform calls
+Don't let low level calls to project contracts or don't give rights to a contract which can perform low level calls.

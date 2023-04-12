@@ -14,10 +14,10 @@ class TimelockController(AbstractDetector):
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.LOW
 
-    WIKI = 'https://workflowy.com/#/40d940743275'
+    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/timelock_controller.md'
     WIKI_TITLE = 'OZ Timelock Controller'
     WIKI_DESCRIPTION = "Delpoyer can bypass timelock limitations"
-    WIKI_EXPLOIT_SCENARIO = 'N/A'
+    WIKI_EXPLOIT_SCENARIO = '-'
     WIKI_RECOMMENDATION = 'Revoke Proposer and Executor roles from the deployer of OZ Timelock Controller'
 
 

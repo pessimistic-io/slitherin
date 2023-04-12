@@ -6,18 +6,18 @@ from slither.core.declarations import Function
 
 class BeforeTokenTransfer(AbstractDetector):
     """
-    Sees if contract beforeTokenTransfer function is not right.
+    Sees if a contract has a beforeTokenTransfer function.
     """
 
     ARGUMENT = 'pess-before-token-transfer' # slither will launch the detector with slither.py --detect mydetector
     HELP = 'beforeTokenTransfer function does not follow OZ documentation'
     IMPACT = DetectorClassification.LOW
-    CONFIDENCE = DetectorClassification.MEDIUM
+    CONFIDENCE = DetectorClassification.HIGH
 
     WIKI = 'https://docs.openzeppelin.com/contracts/4.x/extending-contracts#rules_of_hooks'
     WIKI_TITLE = 'Before Token Transfer'
     WIKI_DESCRIPTION = "Follow OZ documentation using their contracts"
-    WIKI_EXPLOIT_SCENARIO = 'N/A'
+    WIKI_EXPLOIT_SCENARIO = '-'
     WIKI_RECOMMENDATION = 'Make sure that beforeTokenTransfer function is used in the correct way.'
 
 

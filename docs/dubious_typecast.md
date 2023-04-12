@@ -1,20 +1,18 @@
 # Dubious Typecast
 
 ## Configuration
-* Check: `dubious-typecast`
+* Check: `pess-dubious-typecast`
 * Severity: `Low`
 * Confidence: `Low` 
 
 ## Description
 Highlights unstandard typecasts.
 
-## Exploit Scenario
-Strangely formed constants can disrupt project integration.
+### Potential Improvement
+Reduce the number of FP removing the highlight of OK typecasts.
 
-[see test](../tests/dubious_typecast_test.sol)
-
-## Related presentation
-Makes contract logic more complex, which leads to error probability increment.
+## Vulnerable Scenario
+[test scenario](../tests/dubious_typecast_test.sol)
 
 ## Recommendation
-Use clean variables without typecasts.
+Makes contract logic more complex, which leads to an error probability increment. Use clean variables without typecasts.

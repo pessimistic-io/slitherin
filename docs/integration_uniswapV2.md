@@ -33,10 +33,12 @@ Checks the correctness of UniswapV2 integration in the contract.
 ### swap-maxReturn-is-infinite
 * Impact - Medium;
 * Description - All swaps must not have parameter maxReturn equal to max.
-* Recommendation - Put a minReturn parameter of swaps different from max.
+* Recommendation - Put a maxReturn parameter of swaps different from max.
 
 ### deflationary-token-protection
 * Impact - Medium;
 * Description - Pools must not allow deflationary (tokens that take fees for transfer) and elastic supply tokens which make arbitrage possible.
-* Recommendation - Do not use blacklisted tokens in UniswapV2 integrations.
+* Recommendation - Do not use [deflationary](../utils/deflat_tokens.json) and [rebase](../utils/rebase_tokens.json) tokens in UniswapV2 integrations.
 
+## Vulnerable Scenario
+[test scenario](../tests/Bad_UniswapV2_test.sol)

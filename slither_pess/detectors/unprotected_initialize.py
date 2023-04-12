@@ -14,10 +14,10 @@ class UnprotectedInitialize(AbstractDetector):
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.LOW
 
-    WIKI = '-'
+    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/unprotected_initialize.md'
     WIKI_TITLE = 'Unprotected Initialize'
     WIKI_DESCRIPTION = "Initializers must be protected"
-    WIKI_EXPLOIT_SCENARIO = 'N/A'
+    WIKI_EXPLOIT_SCENARIO = '-'
     WIKI_RECOMMENDATION = 'Protect initializers with modifiers/require statements'
 
 

@@ -8,8 +8,8 @@
 ## Description
 The detector sees if a contract contains an initialize function without modifier protection or access control inside the function.
 
-## Exploit Scenario
-The exploit scenario is in progress.
+## Vulnerable Scenario
+[test scenario](../tests/unprotected_initialize_test.sol)
 
-## Recomendation
+## Recommendation
 Add access control and make sure that initialize functions are protected. 
