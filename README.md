@@ -8,17 +8,21 @@ We would also be delighted if you, dear community, let us know if you have disco
 
 ## Repository Navigation
 
-**Table of Contents:**
+#### **Table of Contents:**
 
-| Section      | Link                                                                                                 |
-|--------------|------------------------------------------------------------------------------------------------------|
-| Docs         | [Docs for each detector](https://github.com/pessimistic-io/custom_detectors/tree/master/docs)        |
-| Slither_pess | [Detectors](https://github.com/pessimistic-io/custom_detectors/tree/master/slither_pess)             |
-| Tests        | [Test contracts for detectors](https://github.com/pessimistic-io/custom_detectors/tree/master/tests) |
-| Utils        | [Auxiliary files](https://github.com/pessimistic-io/custom_detectors/tree/master/utils)              |
-| Issues       | [Explore](https://github.com/pessimistic-io/custom_detectors/issues)                                 |
+| Section                      | Link                                                                                                          |
+|------------------------------|---------------------------------------------------------------------------------------------------------------|
+| Docs                         | [Docs for each detector](https://github.com/pessimistic-io/custom_detectors/tree/master/docs)                 |
+| Slither_pess                 | [Detectors](https://github.com/pessimistic-io/custom_detectors/tree/master/slither_pess)                      |
+| Tests                        | [Test contracts for detectors](https://github.com/pessimistic-io/custom_detectors/tree/master/tests)          |
+| Utils                        | [Auxiliary files](https://github.com/pessimistic-io/custom_detectors/tree/master/utils)                       |
+| Issues                       | [Suggest an idea](https://github.com/pessimistic-io/custom_detectors/issues)                                  |
+| Installation Process         | [Step-by-Step guide](https://github.com/pessimistic-io/custom_detectors#installation-process)                 |
+| Development & Customization  | [Tips for developers](https://github.com/pessimistic-io/custom_detectors#development--customization)          |
+| Enhancements & New Detectors | [Project's Improvements](https://github.com/pessimistic-io/custom_detectors#enhancements--new-detectors)      |
+| BackLog                      | [Explore Backlog](https://github.com/pessimistic-io/custom_detectors/blob/master/README.md#detectors-backlog) |
 
-**Detectors & Docs:**
+#### **Detectors & Docs:**
 
 | Detector Link                                                                                                                                             | Docs & Setup                                                                                                     |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|
