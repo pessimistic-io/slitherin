@@ -22,28 +22,6 @@ We would also be delighted if you, dear community, let us know if you have disco
 | Enhancements & New Detectors | [Project's Improvements](https://github.com/pessimistic-io/custom_detectors#enhancements--new-detectors)      |
 | BackLog                      | [Explore Backlog](https://github.com/pessimistic-io/custom_detectors/blob/master/README.md#detectors-backlog) |
 
-#### **Detectors & Docs:**
-
-| Detector Link                                                                                                                                             | Docs & Setup                                                                                                     |
-|-----------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|
-| [Unprotected Setter](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/unprotected_setter.py)                         | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/unprotected_setter.md)             |
-| [Unprotected Initialize](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/unprotected_initialize.py)                 | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/unprotected_initialize.md)         |
-| [TX Gasprice Warning](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/tx_gasprice_warning.py)                       | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/tx_gasprice_warning.md)            |
-| [UniswapV2 Integration](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/uni_v2.py)                                  | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/integration_uniswapV2.md)          |
-| [Token Fallback](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/token_fallback.py)                                 | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/token_fallback.md)                 |
-| [Timelock Controller](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/timelock_controller.py)                       | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/timelock_controller.md)            |
-| [Strange Setter](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/strange_setter.py)                                 | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/strange_setter.md)                 |
-| [Read-only Reentrancy](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/read_only_reentrancy.py)                     | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/readonly_reentrancy.md)            |
-| [NFT Approve Warning](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/nft_approve_warning.py)                       | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/nft_approve_warning.md)            |
-| [Multiple Storage Read](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/multiple_storage_read.py)                   | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/multiple_storage_read.md)          |
-| [Magic Number](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/magic_number.py)                                     | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/magic_number.md)                   |
-| [Inconsistent Non-Reentrant](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/inconsistent_nonreentrant.py)          | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/inconsistent_nonreentrant.md)      |
-| [Falsy Only EOA Modifier](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/falsy_only_eoa_modifier.py)               | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/falsy_only_eoa_modifier.md)        |
-| [Missing Event Setter](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/event_setter.py)                             | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/event_setter.md)                   |
-| [Dubious Typecast](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/dubious_typecast.py)                             | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/dubious_typecast.md)               |
-| [Double Entry Token Possibility](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/double_entry_token_possibility.py) | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/double_entry_token_possibility.md) |
-| [Call Forward To Protected](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/call_forward_to_protected.py)           | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/call_forward_to_protected.md)      |
-| [Before Token Transfer](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/before_token_transfer.py)                   | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/before_token_transfer.md)          |
 
 ## Installation Process
 
@@ -69,6 +47,30 @@ python3 setup.py develop
 
 - Check out the [documentation](https://github.com/trailofbits/slither/wiki/Adding-a-new-detector) here.
 - We would also like to invite you to [visit our blog](https://blog.pessimistic.io/) and [read our article about the Slither](https://blog.pessimistic.io/slither-an-auditors-cornucopia-a8793ea96e67)! 
+
+#### **Detectors & Docs:**
+
+| Detector Link                                                                                                                                             | Docs & Setup                                                                                                     |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|
+| [Unprotected Setter](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/unprotected_setter.py)                         | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/unprotected_setter.md)             |
+| [Unprotected Initialize](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/unprotected_initialize.py)                 | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/unprotected_initialize.md)         |
+| [TX Gasprice Warning](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/tx_gasprice_warning.py)                       | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/tx_gasprice_warning.md)            |
+| [UniswapV2 Integration](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/uni_v2.py)                                  | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/integration_uniswapV2.md)          |
+| [Token Fallback](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/token_fallback.py)                                 | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/token_fallback.md)                 |
+| [Timelock Controller](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/timelock_controller.py)                       | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/timelock_controller.md)            |
+| [Strange Setter](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/strange_setter.py)                                 | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/strange_setter.md)                 |
+| [Read-only Reentrancy](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/read_only_reentrancy.py)                     | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/readonly_reentrancy.md)            |
+| [NFT Approve Warning](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/nft_approve_warning.py)                       | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/nft_approve_warning.md)            |
+| [Multiple Storage Read](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/multiple_storage_read.py)                   | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/multiple_storage_read.md)          |
+| [Magic Number](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/magic_number.py)                                     | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/magic_number.md)                   |
+| [Inconsistent Non-Reentrant](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/inconsistent_nonreentrant.py)          | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/inconsistent_nonreentrant.md)      |
+| [Falsy Only EOA Modifier](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/falsy_only_eoa_modifier.py)               | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/falsy_only_eoa_modifier.md)        |
+| [Missing Event Setter](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/event_setter.py)                             | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/event_setter.md)                   |
+| [Dubious Typecast](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/dubious_typecast.py)                             | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/dubious_typecast.md)               |
+| [Double Entry Token Possibility](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/double_entry_token_possibility.py) | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/double_entry_token_possibility.md) |
+| [Call Forward To Protected](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/call_forward_to_protected.py)           | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/call_forward_to_protected.md)      |
+| [Before Token Transfer](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/before_token_transfer.py)                   | [Explore](https://github.com/pessimistic-io/custom_detectors/blob/master/docs/before_token_transfer.md)          |
+
 
 ## Enhancements & New Detectors
 
