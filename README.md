@@ -47,7 +47,7 @@ To add and use our detectors, you must first install a special plugin, the funct
 
 To install the detectors properly, simply copy the original Slither repository, then clone our repository, and after that run a single command (listed in below). **Keep in mind that in order to test the detectors on test contracts, dependencies must be installed!**
 
-**Step-by-Step:**
+> Please note: there is one detector that is disabled by default: [pess-uni-v2](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/uni_v2.py). **It is recommended to run it only on projects that integrate UniswapV2!**
 
 With Slither installed, run the following command in the repository folder:
 
@@ -55,8 +55,6 @@ With Slither installed, run the following command in the repository folder:
 python3 setup.py develop
 
 ```
-
-> Please note: there is one detector that is disabled by default: [pess-uni-v2](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/uni_v2.py). **It is recommended to run it only on projects that integrate UniswapV2!**
 
 ## Development & Customization
 
@@ -70,14 +68,19 @@ python3 setup.py develop
 
 ## Enhancements & New Detectors
 
-Here we indicate our updates, workflows and mark completed tasks and improvements. You can add your idea for improvement by [opening the Issue at the following link](https://github.com/pessimistic-io/custom_detectors/issues)!
+Here we indicate our updates, workflows and mark completed tasks and improvements. You can add your idea for improvement by [opening the Issue at the following link](https://github.com/pessimistic-io/custom_detectors/issues)! 
+
+> We also have some "tasty" statistics data on current detector alarms, which we have been collecting since January 2022. These alarms are also included in our reports that we send to our customers. You can check it out at the following link: [GoogleDoc Link](https://docs.google.com/spreadsheets/d/1koDJ5y5oYYUP35Jm7jXE_VzW1XzDkrWbfX2sa6KLgx0/edit?hl=ru#gid=0)
 
 **Detectors Backlog:**
 
-We also have some statistics data on current detector alarms, which we have been collecting since January 2022. These alarms are also included in our reports that we send to our customers. You can check it out at the following link:
-
-- [GoogleDoc Link](https://docs.google.com/spreadsheets/d/1koDJ5y5oYYUP35Jm7jXE_VzW1XzDkrWbfX2sa6KLgx0/edit?hl=ru#gid=0)
+| Task                                                                                                                                  | Status     |
+|---------------------------------------------------------------------------------------------------------------------------------------|------------|
+| Update No.1                                                                                                                           | In Process |
+| Fix - Reentrancy Detector                                                                                                             | Completed  |
+| Suggestion - Write a Walkthrough Article                                                                                              | In Process |
+| Add [UniswapV2 Integration](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/uni_v2.py) Detector | Completed  |
 
 #
 
-We hope you find our work useful; we would appreciate any feedback, so please do not hesitate to [contact us](mailto:gm@pessimistic.io)!
+**We hope you find our work useful; we would appreciate any feedback, so please do not hesitate to [contact us](mailto:gm@pessimistic.io)!**
