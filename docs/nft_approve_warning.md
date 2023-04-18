@@ -13,7 +13,8 @@ An attacker can steal any approved NFTs because `transferFrom` function does NOT
 [test scenario](../tests/nft_approve_warning_test.sol) 
 
 ## Related attack
-https://ventral.digital/posts/2022/8/18/sznsdaos-bountyboard-unauthorized-transferfrom-vulnerability
+
+[Unauthorized transfer_from Vulnerability](https://ventral.digital/posts/2022/8/18/sznsdaos-bountyboard-unauthorized-transferfrom-vulnerability)
 
 ## Recommendation
 Make sure that in `erc721.[safe]TransferFrom(from, ...)` functions `from` parameter is related to `msg.sender`.
