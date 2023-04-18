@@ -12,7 +12,8 @@ tx.gasprice variable is set by contract users not developers. The detector sees 
 [test scenario](../tests/tx_gasprice_warning_test.sol)
 
 ## Related Attack
-https://cointelegraph.com/news/ethereum-alarm-clock-exploit-leads-to-260k-in-stolen-gas-fees-so-far
+
+[Ethereum-alarm-clock Exploit](https://cointelegraph.com/news/ethereum-alarm-clock-exploit-leads-to-260k-in-stolen-gas-fees-so-far)
 
 ## Recommendation
 Make sure that exploits with tx.gasprice variable set by users are not possible.
