@@ -35,7 +35,7 @@ Besides its excellent analysis capabilities, it also includes a bunch of printer
 
 With all said, we tend to think that plugins are actually one of the most important aspects of properly setting up and running Slither because they significantly increase the functionality. Also, keep in mind that it is the most convenient way to add your own detectors. [Check out our recent article about the Slither](https://blog.pessimistic.io/slither-an-auditors-cornucopia-a8793ea96e67)!
 
-**It was also mentioned in the following [research papers](https://github.com/OffcierCia/ultimate-defi-research-base):**
+**It was also mentioned in the following [research papers](https://github.com/crytic/slither#external-publications):**
 
 > Small tip: use [arxiv-vanity](https://www.arxiv-vanity.com/)
 
@@ -50,7 +50,7 @@ With all said, we tend to think that plugins are actually one of the most import
 
 To add and use our detectors, you must first install a special plugin, the functionality of which is described in the [original ToB's Slither repository](https://github.com/crytic/slither). We strongly recommend that you read it at [the following link](https://github.com/crytic/slither) for a deeper understanding of the principles of our detectors!
 
-To install the detectors properly, simply copy the original Slither repository, then clone our repository, and after that run a single command (listed in below). **Keep in mind that in order to test the detectors on test contracts, dependencies must be installed!**
+To install the detectors properly, simply copy the original Slither repository, then clone our repository, and after that run a single command (listed in below). **Keep in mind that in order to test the detectors on test contracts, dependencies must be installed first!**
 
 > Please note: there is one detector that is disabled by default: [pess-uni-v2](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/uni_v2.py). **It is recommended to run it only on projects that integrate UniswapV2!**
 
