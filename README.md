@@ -1,5 +1,9 @@
 #  Custom plugins for Slither by Pessimistic.io
 
+[![Blog](https://img.shields.io/badge/Blog-Link-blue)](https://blog.pessimistic.io/)
+[![Our Website](https://img.shields.io/badge/By-pessimistic.io-green)](https://pessimistic.io/) 
+[![Mail](https://img.shields.io/badge/Mail-gm%40pessimistic.io-orange)](mailto:gm@pessimistic.io)
+
 **Welcome!** We are the [pessimistic.io](https://pessimistic.io/) team, and in recent months we have been actively developing our [own **Slither detectors**](https://github.com/pessimistic-io/custom_detectors/tree/master/slither_pess/detectors) to help with code review and audit process. This repository contains everything you may require to work with them: they are **fully operational and we have made them available to the public for the first time!**
 
 We increased the sensitivity of our detectors since they are *quite straightforward* and not written in the "original style." As a result, they produce FPs ([False Positives](https://en.wikipedia.org/wiki/False_positives_and_false_negatives)) slightly more frequently than original ones, **which is actually their primary feature**. So that, our detectors are a kind of automation of the checks implemented in the checklist, their main purpose is to look for issues and assist the code auditor.
