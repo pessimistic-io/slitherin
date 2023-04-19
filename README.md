@@ -31,7 +31,7 @@ Besides its excellent analysis capabilities, it also includes a bunch of printer
 
 With all said, we tend to think that plugins are actually one of the most important aspects of properly setting up and running Slither because they significantly increase the functionality. Also, keep in mind that it is the most convenient way to add your own detectors. [Check out our recent article about the Slither](https://blog.pessimistic.io/slither-an-auditors-cornucopia-a8793ea96e67)!
 
-**It was also mentioned in the following [research papers](https://github.com/OffcierCia/ultimate-defi-research-base/edit/main/README.md):**
+**It was also mentioned in the following [research papers](https://github.com/OffcierCia/ultimate-defi-research-base):**
 
 > Small tip: use [arxiv-vanity](https://www.arxiv-vanity.com/)
 
