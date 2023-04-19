@@ -4,7 +4,7 @@
 
 We increased the sensitivity of our detectors since they are *quite straightforward* and not written in the "original style." As a result, they produce FPs ([False Positives](https://en.wikipedia.org/wiki/False_positives_and_false_negatives)) slightly more frequently than original ones, **which is actually their primary feature**. So that, our detectors are a kind of automation of the checks implemented in the checklist, their main purpose is to look for issues and assist the code auditor.
 
-Please let us know if you have discovered an issue/bug/vulnerability via our custom Slither detectors. You may contact us via opening a [PR/Issue](https://github.com/pessimistic-io/custom_detectors/issues) or [directly](mailto:gm@pessimistic.io), whichever is more convenient for you!  💎
+**Please let us know if you have discovered an issue/bug/vulnerability via our custom Slither detectors. You may contact us via opening a [PR/Issue](https://github.com/pessimistic-io/custom_detectors/issues) or [directly](mailto:gm@pessimistic.io), whichever is more convenient for you!**  💎
 
 ## Repository Navigation
 
