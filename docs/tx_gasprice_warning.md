@@ -13,7 +13,7 @@ tx.gasprice variable is set by contract users not developers. The detector sees 
 
 ## Related Attack
 
-[Ethereum-alarm-clock Exploit](https://cointelegraph.com/news/ethereum-alarm-clock-exploit-leads-to-260k-in-stolen-gas-fees-so-far)
+[Ethereum-alarm-clock Exploit](https://cointelegraph.com/news/ethereum-alarm-clock-exploit-leads-to-260k-in-stolen-gas-fees-so-far) & [2nd source](https://www.theblock.co/amp/post/178418/ethereum-alarm-clocks-smart-contract-is-being-targeted-by-exploiters)
 
 ## Recommendation
 Make sure that exploits with tx.gasprice variable set by users are not possible.
