@@ -52,7 +52,7 @@ To add and use our detectors, you must first install a special plugin, the funct
 
 To install the detectors properly, simply copy the original Slither repository, then clone our repository, and after that run a single command (listed in below). **Keep in mind that in order to test the detectors on test contracts, dependencies must be installed first!**
 
-> Please note: there is one detector that is disabled by default: [pess-uni-v2](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/uni_v2.py). **It is recommended to run it only on projects that integrate UniswapV2!**
+> Please note: there is one detector that is disabled by default: [pess-uni-v2](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/uni_v2.py). **It is recommended to run it only on projects that integrate [Uniswap V2](https://betterprogramming.pub/uniswap-v2-in-depth-98075c826254)!**
 
 With Slither installed, run the following command in the repository folder:
 
