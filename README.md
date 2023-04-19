@@ -4,9 +4,9 @@
 [![Our Website](https://img.shields.io/badge/By-pessimistic.io-green?style=flat-square&logo=appveyor?logo=data:https://pessimistic.io/favicon.ico)](https://pessimistic.io/) 
 [![Mail](https://img.shields.io/badge/Mail-gm%40pessimistic.io-orange?style=flat-square&logo=appveyor?logo=data:https://pessimistic.io/favicon.ico)](mailto:gm@pessimistic.io)
 
-**Welcome!** We are the [pessimistic.io](https://pessimistic.io/) team, and in recent months we have been actively developing our [own **Slither detectors**](https://github.com/pessimistic-io/custom_detectors/tree/master/slither_pess/detectors) to help with code review and audit process. This repository contains everything you may require to work with them: they are **fully operational and we have made them available to the public for the first time!**
+**Welcome!** We are the [pessimistic.io](https://pessimistic.io/) team, and in recent months we have been actively developing our [own **Slither detectors**](https://github.com/pessimistic-io/custom_detectors/tree/master/slither_pess/detectors) to help with code review and audit process. This repository contains everything you may require to work with them!**
 
-We increased the sensitivity of our detectors since they are *quite straightforward* and not written in the "original style." As a result, they produce FPs ([False Positives](https://en.wikipedia.org/wiki/False_positives_and_false_negatives)) slightly more frequently than original ones, **which is actually their primary feature**. So that, our detectors are a kind of automation of the checks implemented in the checklist, their main purpose is to look for issues and assist the code auditor.
+We increased the sensitivity of our detectors since they are *quite straightforward* and not written in the "original style." As a result, they produce FPs ([False Positives](https://en.wikipedia.org/wiki/False_positives_and_false_negatives)) slightly more frequently than original ones. So that, our detectors are a kind of automation of the checks implemented in the checklist, their main purpose is to look for issues and assist the code auditor.
 
 Please let us know if you have discovered an [issue/bug/vulnerability](https://telegra.ph/BountyCTF-Platforms-Web3-04-19) via our custom Slither detectors. You may contact us via opening a [PR/Issue](https://github.com/pessimistic-io/custom_detectors/issues) or [directly](mailto:gm@pessimistic.io), whichever is more convenient for you. If you have any further questions or suggestions, please [join our Discord Server](https://discord.gg/vPxkR8B9p7)! We hope to see you there, and we intend to support the community and its initiatives!
 
@@ -26,26 +26,6 @@ Please let us know if you have discovered an [issue/bug/vulnerability](https://t
 | Enhancements & New Detectors | [Project's Improvements](https://github.com/pessimistic-io/custom_detectors#enhancements--new-detectors)      |
 | BackLog                      | [Explore Backlog](https://github.com/pessimistic-io/custom_detectors/blob/master/README.md#detectors-backlog) |
 
-
-## Slither Explained
-
-In short, [Slither is a Python-based](https://pypi.org/project/slither-analyzer/) contract security framework first proposed in a [2019 paper](https://arxiv.org/pdf/1908.09878.pdf) by **Josselin Feist, Gustavo Grieco, and Alex Groce**. [The Slither framework](https://blog.trailofbits.com/2019/05/27/slither-the-leading-static-analyzer-for-smart-contracts/) offers automated detection of vulnerabilities and optimizations, as well as codebase summaries to aid developer comprehension. Born from Crytic, the blockchain security division of Trail of Bits, Slither is compatible with Hardhat and Truffle and supports Solidity code written beginning with V0.4. 
-
-Besides its excellent analysis capabilities, it also includes a bunch of printers that summarize different aspects of the contract in a digestible form. One can even use them to quickly build a mental contract model before diving deeply into the code! However, multiple printers lose their value for more complex projects since their output becomes unmanageable. 
-
-With all said, we tend to think that **plugins are actually one of the most important** aspects of properly setting up and running Slither because they significantly increase the functionality. Also, keep in mind that it is the most convenient way to add your own detectors. [Check out our recent article about the Slither, if you haven't already!](https://blog.pessimistic.io/slither-an-auditors-cornucopia-a8793ea96e67)
-
-**It was also mentioned in the following [research papers](https://github.com/crytic/slither#external-publications):**
-
-> Small tip: use [arxiv-vanity](https://www.arxiv-vanity.com/) or [dangerzone](https://telegra.ph/DangerZone-04-19)
-
-- [Slither: A Static Analysis Framework For Smart Contracts](https://arxiv.org/pdf/1908.09878.pdf)
-- [Detecting Vulnerable Ethereum Smart Contracts via Abstracted Vulnerability Signatures](https://arxiv.org/pdf/1912.04466.pdf)
-- [Evaluating Smart Contract Static Analysis Tools Using Bug Injection](https://arxiv.org/pdf/2005.11613.pdf)
-- [A Framework and DataSet for Bugs in Ethereum Smart Contracts](https://arxiv.org/pdf/2009.02066.pdf)
-- [A Comprehensive Survey of Upgradeable Smart Contract Patterns](https://arxiv.org/pdf/2304.03405.pdf)
-- We would also like to invite you to [visit our blog](https://blog.pessimistic.io/) and [read our article about the Slither](https://blog.pessimistic.io/slither-an-auditors-cornucopia-a8793ea96e67)! 
-
 ## Installation Process
 
 To add and use our detectors, you must first install a special plugin, the functionality of which is described in the [original ToB's Slither repository](https://github.com/crytic/slither). We strongly recommend that you read it at [the following link](https://github.com/crytic/slither) for a deeper understanding of the principles of our detectors!
@@ -54,7 +34,7 @@ To install the detectors properly, simply copy the original Slither repository, 
 
 > Please note: there is one detector that is disabled by default: [pess-uni-v2](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/uni_v2.py). **It is recommended to run it only on projects that integrate [Uniswap V2](https://betterprogramming.pub/uniswap-v2-in-depth-98075c826254)!**
 
-With Slither installed, run the following command in the repository folder:
+With [Slither](https://telegra.ph/Slither-Explained-04-19) installed, run the following command in the repository folder:
 
 ```bash
 python3 setup.py develop
@@ -69,8 +49,6 @@ python3 setup.py develop
 > Keep in mind that you don't have to reinstall the plugin every time you use it!
 
 - Check out the Slither [documentation](https://github.com/trailofbits/slither/wiki/Adding-a-new-detector) here.
-- [Slither: In-Depth](https://medium.com/coinmonks/slither-smart-contract-security-tools-29918df0fa8c) & [Slither Review](https://blog.trailofbits.com/2019/05/27/slither-the-leading-static-analyzer-for-smart-contracts/)
-- We would also like to invite you to [visit our blog](https://blog.pessimistic.io/) and [read our article about the Slither](https://blog.pessimistic.io/slither-an-auditors-cornucopia-a8793ea96e67)! 
 
 #### **Detectors & Docs:**
 
@@ -116,6 +94,11 @@ Here we indicate our updates, workflows and mark completed tasks and improvement
 | Add [UniswapV2 Integration](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/uni_v2.py) Detector | Completed  |
 
 Please let us know if you have discovered an issue/bug/vulnerability via our custom Slither detectors. You may contact us via opening a [PR/Issue](https://github.com/pessimistic-io/custom_detectors/issues) or [directly](mailto:gm@pessimistic.io), whichever is more convenient for you. If you have any further questions or suggestions, please [join our Discord Server](https://discord.gg/vPxkR8B9p7)! We hope to see you there, and we intend to support the community and its initiatives!
+
+**Check out:**
+
+- [Slither: In-Depth](https://medium.com/coinmonks/slither-smart-contract-security-tools-29918df0fa8c) & [Slither Review](https://blog.trailofbits.com/2019/05/27/slither-the-leading-static-analyzer-for-smart-contracts/)
+- We would also like to invite you to [visit our blog](https://blog.pessimistic.io/) and [read our article about the Slither](https://blog.pessimistic.io/slither-an-auditors-cornucopia-a8793ea96e67)! 
 
 #
 
