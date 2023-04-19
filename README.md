@@ -37,7 +37,7 @@ With all said, we tend to think that **plugins are actually one of the most impo
 
 **It was also mentioned in the following [research papers](https://github.com/crytic/slither#external-publications):**
 
-> Small tip: use [arxiv-vanity](https://www.arxiv-vanity.com/)
+> Small tip: use [arxiv-vanity](https://www.arxiv-vanity.com/) or [dangerzone](https://telegra.ph/DangerZone-04-19)
 
 - [Slither: A Static Analysis Framework For Smart Contracts](https://arxiv.org/pdf/1908.09878.pdf)
 - [Detecting Vulnerable Ethereum Smart Contracts via Abstracted Vulnerability Signatures](https://arxiv.org/pdf/1912.04466.pdf)
