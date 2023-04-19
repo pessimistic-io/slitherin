@@ -23,6 +23,25 @@ We increased the sensitivity of our detectors since they are *quite straightforw
 | BackLog                      | [Explore Backlog](https://github.com/pessimistic-io/custom_detectors/blob/master/README.md#detectors-backlog) |
 
 
+## Slither Explained
+
+In short, [Slither is a Python-based](https://pypi.org/project/slither-analyzer/) contract security framework first proposed in a [2019 paper](https://arxiv.org/pdf/1908.09878.pdf) by **Josselin Feist, Gustavo Grieco, and Alex Groce**. [The Slither framework](https://blog.trailofbits.com/2019/05/27/slither-the-leading-static-analyzer-for-smart-contracts/) offers automated detection of vulnerabilities and optimizations, as well as codebase summaries to aid developer comprehension. Born from Crytic, the blockchain security division of Trail of Bits, Slither is compatible with Hardhat and Truffle and supports Solidity code written beginning with V0.4. 
+
+Besides its excellent analysis capabilities, it also includes a bunch of printers that summarize different aspects of the contract in a digestible form. One can even use them to quickly build a mental contract model before diving deeply into the code. However, multiple printers lose their value for more complex projects since their output becomes unmanageable. 
+
+With all said, we tend to think that plugins are actually one of the most important aspects of properly setting up and running Slither because they significantly increase the functionality. Also, keep in mind that it is the most convenient way to add your own detectors. [Check out our recent article about the Slither](https://blog.pessimistic.io/slither-an-auditors-cornucopia-a8793ea96e67)!
+
+**It was also mentioned in the following research papers:**
+
+> Small tip: use [arxiv-vanity](https://www.arxiv-vanity.com/)
+
+- [Slither: A Static Analysis Framework For Smart Contracts](https://arxiv.org/pdf/1908.09878.pdf)
+- [Detecting Vulnerable Ethereum Smart Contracts via Abstracted Vulnerability Signatures](https://arxiv.org/pdf/1912.04466.pdf)
+- [Evaluating Smart Contract Static Analysis Tools Using Bug Injection](https://arxiv.org/pdf/2005.11613.pdf)
+- [A Framework and DataSet for Bugs in Ethereum Smart Contracts](https://arxiv.org/pdf/2009.02066.pdf)
+- [A Comprehensive Survey of Upgradeable Smart Contract Patterns](https://arxiv.org/pdf/2304.03405.pdf)
+- We would also like to invite you to [visit our blog](https://blog.pessimistic.io/) and [read our article about the Slither](https://blog.pessimistic.io/slither-an-auditors-cornucopia-a8793ea96e67)! 
+
 ## Installation Process
 
 To add and use our detectors, you must first install a special plugin, the functionality of which is described in the [original ToB's Slither repository](https://github.com/crytic/slither). We strongly recommend that you read it at [the following link](https://github.com/crytic/slither) for a deeper understanding of the principles of our detectors!
@@ -45,7 +64,8 @@ python3 setup.py develop
 
 > Keep in mind that you don't have to reinstall the plugin every time you use it!
 
-- Check out the [documentation](https://github.com/trailofbits/slither/wiki/Adding-a-new-detector) here.
+- Check out the Slither [documentation](https://github.com/trailofbits/slither/wiki/Adding-a-new-detector) here.
+- [Slither: In-Depth](https://medium.com/coinmonks/slither-smart-contract-security-tools-29918df0fa8c) & [Slither Review](https://blog.trailofbits.com/2019/05/27/slither-the-leading-static-analyzer-for-smart-contracts/)
 - We would also like to invite you to [visit our blog](https://blog.pessimistic.io/) and [read our article about the Slither](https://blog.pessimistic.io/slither-an-auditors-cornucopia-a8793ea96e67)! 
 
 #### **Detectors & Docs:**
