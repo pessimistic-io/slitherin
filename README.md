@@ -1,8 +1,8 @@
 #  Custom plugins for Slither by Pessimistic.io
 
-[![Blog](https://img.shields.io/badge/Blog-Link-blue)](https://blog.pessimistic.io/)
-[![Our Website](https://img.shields.io/badge/By-pessimistic.io-green)](https://pessimistic.io/) 
-[![Mail](https://img.shields.io/badge/Mail-gm%40pessimistic.io-orange)](mailto:gm@pessimistic.io)
+[![Blog](https://img.shields.io/badge/Blog-Link-blue?style=flat-square&logo=appveyor)](https://blog.pessimistic.io/)
+[![Our Website](https://img.shields.io/badge/By-pessimistic.io-green?style=flat-square&logo=appveyor)](https://pessimistic.io/) 
+[![Mail](https://img.shields.io/badge/Mail-gm%40pessimistic.io-orange?style=flat-square&logo=appveyor)](mailto:gm@pessimistic.io)
 
 **Welcome!** We are the [pessimistic.io](https://pessimistic.io/) team, and in recent months we have been actively developing our [own **Slither detectors**](https://github.com/pessimistic-io/custom_detectors/tree/master/slither_pess/detectors) to help with code review and audit process. This repository contains everything you may require to work with them: they are **fully operational and we have made them available to the public for the first time!**
 
@@ -103,6 +103,10 @@ Here we indicate our updates, workflows and mark completed tasks and improvement
 > We also have some "tasty" statistics data on current detector alarms, which we have been collecting since January 2022. These alarms are also included in our reports that we send to our customers. You can check it out at the following link: [GoogleDoc Link](https://docs.google.com/spreadsheets/d/1koDJ5y5oYYUP35Jm7jXE_VzW1XzDkrWbfX2sa6KLgx0/edit?hl=ru#gid=0)
 
 #### **Detectors Backlog:**
+
+[![Issues](https://img.shields.io/github/issues/pessimistic-io/custom_detectors?style=flat-square)](https://github.com/pessimistic-io/custom_detectors/issues)
+[![Open Pool Requests](https://img.shields.io/github/issues-pr/pessimistic-io/custom_detectors?style=flat-square)](https://github.com/pessimistic-io/custom_detectors/pulls)
+[![Closed Pool Requests](https://img.shields.io/github/issues-pr-closed-raw/pessimistic-io/custom_detectors?style=flat-square)](https://github.com/pessimistic-io/custom_detectors/pulls?q=is%3Apr+is%3Aclosed)
 
 | Task                                                                                                                                  | Status     |
 |---------------------------------------------------------------------------------------------------------------------------------------|------------|
