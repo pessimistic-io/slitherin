@@ -138,7 +138,7 @@ Prior to adding an *enhancement*, ensure that:
 ## Thank you! 
 
 
-#### It would be fantastic if you could bookmark, share, star, or fork this repository! Any attention will help us achieve our shared objective of making **Web3 a little bit safer** than it was before!
+#### It would be fantastic if you could bookmark, share, star, or fork this repository! Any attention will help us achieve our commom goal of making **Web3 a little bit safer** than it was before!
 
 [![Watch](https://img.shields.io/github/watchers/pessimistic-io/custom_detectors?style=social)](https://github.com/pessimistic-io/custom_detectors/watchers)
 [![Like](https://img.shields.io/github/stars/pessimistic-io/custom_detectors?style=social)](https://github.com/pessimistic-io/custom_detectors/stargazers)
