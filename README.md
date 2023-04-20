@@ -102,11 +102,25 @@ Prior to adding an *enhancement*, ensure that:
 | Suggestion - Write a Walkthrough Article                                                                                              | In Process |
 | Add [UniswapV2 Integration](https://github.com/pessimistic-io/custom_detectors/blob/master/slither_pess/detectors/uni_v2.py) Detector | Completed  |
 
-## Articles:
+## Acknowledgements
 
+**Articles:**
+
+- [Slither](https://github.com/crytic/slither#how-to-install)
 - [How do we use Slither at Pessimistic.io](https://blog.pessimistic.io/slither-an-auditors-cornucopia-a8793ea96e67)
+- [Slither Explained](https://telegra.ph/Slither-Explained-04-19)
 - [Slither: In-Depth](https://medium.com/coinmonks/slither-smart-contract-security-tools-29918df0fa8c)
 - [Slither Review](https://blog.trailofbits.com/2019/05/27/slither-the-leading-static-analyzer-for-smart-contracts/)
+- [Slither - Python](https://pypi.org/project/slither-analyzer/)
+- [Reentrancy Attacks on Smart Contracts Distilled](https://blog.pessimistic.io/reentrancy-attacks-on-smart-contracts-distilled-7fed3b04f4b6)
+
+**Research Papers:**
+
+- [Slither: A Static Analysis Framework For Smart Contracts](https://arxiv.org/pdf/1908.09878.pdf)
+- [Detecting Vulnerable Ethereum Smart Contracts via Abstracted Vulnerability Signatures](https://arxiv.org/pdf/1912.04466.pdf)
+- [Evaluating Smart Contract Static Analysis Tools Using Bug Injection](https://arxiv.org/pdf/2005.11613.pdf)
+- [A Framework and DataSet for Bugs in Ethereum Smart Contracts](https://arxiv.org/pdf/2009.02066.pdf)
+- [A Comprehensive Survey of Upgradeable Smart Contract Patterns](https://arxiv.org/pdf/2304.03405.pdf)
 
 #
 
