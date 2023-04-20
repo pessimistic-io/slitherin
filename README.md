@@ -137,8 +137,6 @@ Prior to adding an *enhancement*, ensure that:
 - [Slither & Echidna + Remappings](https://www.justinsilver.com/technology/programming/slither-echidna-remappings/)
 - [Static Analysis of Smart Contracts with Slither & GitHub Actions](https://medium.com/coinmonks/static-analysis-of-smart-contracts-with-slither-github-actions-1e67e54ed8a7)
 
-#
-
 ## Thank you!
 
 #### It would be fantastic if you could bookmark, share, star, or fork this repository. Any attention will help us achieve our commom goal of making **Web3 a little bit safer** than it was before: therefore, we require your support!
