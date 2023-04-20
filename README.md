@@ -107,6 +107,8 @@ Prior to adding an *enhancement*, ensure that:
 
 ## Acknowledgements
 
+Our team would like to express our deepest gratitude to the [Slither tool](https://github.com/crytic/slither#how-to-install) creators: [Josselin Feist, Gustavo Grieco, and Alex Groce](https://arxiv.org/pdf/1908.09878.pdf), as well as [Crytic](https://github.com/crytic), [Trail of Bits'](https://blog.trailofbits.com) blockchain security division, and all the people who believe in the original tool and its evolution!
+
 **Articles:**
 
 - [Slither](https://github.com/crytic/slither#how-to-install)
