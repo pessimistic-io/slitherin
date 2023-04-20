@@ -122,7 +122,29 @@ Prior to adding an *enhancement*, ensure that:
 - [A Framework and DataSet for Bugs in Ethereum Smart Contracts](https://arxiv.org/pdf/2009.02066.pdf)
 - [A Comprehensive Survey of Upgradeable Smart Contract Patterns](https://arxiv.org/pdf/2304.03405.pdf)
 
+**Slither: In-Depth**
+
+- [Accessing Private Data in Smart contracts](https://quillaudits.medium.com/accessing-private-data-in-smart-contracts-quillaudits-fe847581ce6d)
+- [Simplest way to run Slither for your Smart Contract project](https://coinsbench.com/simplest-way-to-run-slither-for-your-smart-contract-project-4bdb367c06e2)
+- [Slither Notes](https://hackmd.io/@DRViPNz-TVC6wqdRF8LP6w/HJHcycB9t)
+- [Dataset Card for Slither Audited Smart Contracts](https://huggingface.co/datasets/mwritescode/slither-audited-smart-contracts)
+- [Auditing Tools Report: Slither](https://hackmd.io/@Ydcnh_SKTIqqOYzr7HhBvQ/B1X7o1dij)
+- [Bridge Security Checklist: Client Side](https://hackmd.io/@cbym/HJWQglwNs)
+- [Slither & Echidna + Remappings](https://www.justinsilver.com/technology/programming/slither-echidna-remappings/)
+- [Static Analysis of Smart Contracts with Slither & GitHub Actions](https://medium.com/coinmonks/static-analysis-of-smart-contracts-with-slither-github-actions-1e67e54ed8a7)
+
 #
 
-### We would also like to invite you to [visit our blog](https://blog.pessimistic.io/)!
-### **We hope you find our work useful; we would appreciate any feedback, so please do not hesitate to [contact us](mailto:gm@pessimistic.io)!**
+## Thank you! 
+
+
+#### It would be fantastic if you could bookmark, share, star, or fork this repository! Any attention will help us achieve our shared objective of making **Web3 a little bit safer** than it was before!
+
+[![Watch](https://img.shields.io/github/watchers/pessimistic-io/custom_detectors?style=social)](https://github.com/pessimistic-io/custom_detectors/watchers)
+[![Like](https://img.shields.io/github/stars/pessimistic-io/custom_detectors?style=social)](https://github.com/pessimistic-io/custom_detectors/stargazers)
+[![Fork](https://img.shields.io/github/forks/pessimistic-io/custom_detectors?style=social)](https://github.com/pessimistic-io/custom_detectors/stargazers)
+
+#### We'd like to invite you to [check out our blog](https://blog.pessimistic.io/). We also hope you find our work useful; any feedback would be greatly appreciated, so please do not hesitate to [contact us](mailto:gm@pessimistic.io)!
+
+#
+
