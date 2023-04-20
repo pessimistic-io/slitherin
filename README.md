@@ -8,7 +8,10 @@
 
 We increased the sensitivity of our detectors since they are *quite straightforward* and not written in the "original style." As a result, they produce FPs ([False Positives](https://en.wikipedia.org/wiki/False_positives_and_false_negatives)) more frequently than original ones. So that, our detectors are a kind of automation of the checks implemented in the checklist, their main purpose is to look for issues and assist the code auditor.
 
-Please let us know if you have discovered an [issue/bug/vulnerability](https://telegra.ph/BountyCTF-Platforms-Web3-04-19) via our custom Slither detectors. You may contact us via opening a [PR/Issue](https://github.com/pessimistic-io/custom_detectors/issues) or [directly](mailto:gm@pessimistic.io), whichever is more convenient for you. If you have any further questions or suggestions, please [join our Discord Server](https://discord.gg/vPxkR8B9p7)! We hope to see you there, and we intend to support the community and its initiatives!
+Please let us know if you have discovered an [issue/bug/vulnerability](https://telegra.ph/BountyCTF-Platforms-Web3-04-19) via our custom Slither detectors. You may contact us via opening a [PR/Issue](https://github.com/pessimistic-io/custom_detectors/issues) or [directly](mailto:gm@pessimistic.io), whichever is more convenient for you. If you have any further questions or suggestions, please [join our Discord Server](https://discord.gg/vPxkR8B9p7) or [Telegram chat](https://t.me/+t8dRfLLbVx1iYzNi)! We hope to see you there, and we intend to support the community and its initiatives!
+
+[![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/+t8dRfLLbVx1iYzNi)
+[![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/vPxkR8B9p7)
 
 ## Repository Navigation
 
@@ -113,6 +116,7 @@ Prior to adding an *enhancement*, ensure that:
 - [Slither Review](https://blog.trailofbits.com/2019/05/27/slither-the-leading-static-analyzer-for-smart-contracts/)
 - [Slither - Python](https://pypi.org/project/slither-analyzer/)
 - [Reentrancy Attacks on Smart Contracts Distilled](https://blog.pessimistic.io/reentrancy-attacks-on-smart-contracts-distilled-7fed3b04f4b6)
+- Be sure to [check out our blog](https://blog.pessimistic.io/) as well!
 
 **Research Papers:**
 
@@ -135,16 +139,17 @@ Prior to adding an *enhancement*, ensure that:
 
 #
 
-## Thank you! 
+## Thank you!
 
-
-#### It would be fantastic if you could bookmark, share, star, or fork this repository! Any attention will help us achieve our commom goal of making **Web3 a little bit safer** than it was before!
+#### It would be fantastic if you could bookmark, share, star, or fork this repository. Any attention will help us achieve our commom goal of making **Web3 a little bit safer** than it was before: therefore, we require your support!
 
 [![Watch](https://img.shields.io/github/watchers/pessimistic-io/custom_detectors?style=social)](https://github.com/pessimistic-io/custom_detectors/watchers)
 [![Like](https://img.shields.io/github/stars/pessimistic-io/custom_detectors?style=social)](https://github.com/pessimistic-io/custom_detectors/stargazers)
 [![Fork](https://img.shields.io/github/forks/pessimistic-io/custom_detectors?style=social)](https://github.com/pessimistic-io/custom_detectors/stargazers)
 
-#### We'd like to invite you to [check out our blog](https://blog.pessimistic.io/). We also hope you find our work useful; any feedback would be greatly appreciated, so please do not hesitate to [contact us](mailto:gm@pessimistic.io)!
+#### For our part, we'll do everything in our power to ensure that this project continues to grow successfully in terms of both code and technology as well as community and professional interaction! We sincerely hope you find our work useful and appreciate any feedback, so please do not hesitate to [contact us](mailto:gm@pessimistic.io)!
+
+[![Mail](https://img.shields.io/badge/Mail-gm%40pessimistic.io-orange?style=flat-square&logo=appveyor?logo=data:https://pessimistic.io/favicon.ico)](mailto:gm@pessimistic.io)
 
 #
 
