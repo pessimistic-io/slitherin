@@ -15,5 +15,4 @@ jobs:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.BOT_TOKEN }}
         message: |
-          Обновился master в репозитории наших слизер-детекторов (https://github.com/pessimistic-io/custom_detectors).
-          Cделайте `git pull`.
+         Master branch received updates. Pull new features from https://github.com/pessimistic-io/slitherin.
