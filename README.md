@@ -1,7 +1,7 @@
 #  Slither Detectors by Pessimistic.io test
 
 [![Blog](https://img.shields.io/badge/Blog-Link-blue?style=flat-square&logo=appveyor?logo=data:https://pessimistic.io/favicon.ico)](https://blog.pessimistic.io/)
-[![Our Website](https://img.shields.io/badge/By-pessimistic.io-green?style=flat-square&logo=appveyor?logo=data:https://pessimistic.io/favicon.ico)](https://pessimistic.io/) 
+[![Our Website](https://img.shields.io/badge/By-pessimistic.io-green?style=flat-square&logo=appveyor?logo=data:https://pessimistic.io/favicon.ico)](https://pessimistic.io/)
 [![Mail](https://img.shields.io/badge/Mail-gm%40pessimistic.io-orange?style=flat-square&logo=appveyor?logo=data:https://pessimistic.io/favicon.ico)](mailto:gm@pessimistic.io)
 
 **Welcome!** We are the [pessimistic.io](https://pessimistic.io/) team, and in recent months we have been actively developing our [own **Slither detectors**](https://github.com/pessimistic-io/custom_detectors/tree/master/slither_pess/detectors) to help with code review and audit process. This repository contains everything you may require to work with them!
@@ -94,9 +94,9 @@ Prior to adding an *enhancement*, ensure that:
 
 #### **Detectors Backlog:**
 
-[![Issues](https://img.shields.io/github/issues/pessimistic-io/custom_detectors?style=flat-square)](https://github.com/pessimistic-io/custom_detectors/issues)
-[![Open Pool Requests](https://img.shields.io/github/issues-pr/pessimistic-io/custom_detectors?style=flat-square)](https://github.com/pessimistic-io/custom_detectors/pulls)
-[![Closed Pool Requests](https://img.shields.io/github/issues-pr-closed-raw/pessimistic-io/custom_detectors?style=flat-square)](https://github.com/pessimistic-io/custom_detectors/pulls?q=is%3Apr+is%3Aclosed)
+[![Issues](https://img.shields.io/github/issues/pessimistic-io/slitherin?style=flat-square)](https://github.com/pessimistic-io/custom_detectors/issues)
+[![Open Pool Requests](https://img.shields.io/github/issues-pr/pessimistic-io/slitherin?style=flat-square)](https://github.com/pessimistic-io/custom_detectors/pulls)
+[![Closed Pool Requests](https://img.shields.io/github/issues-pr-closed-raw/pessimistic-io/slitherin?style=flat-square)](https://github.com/pessimistic-io/custom_detectors/pulls?q=is%3Apr+is%3Aclosed)
 
 | Task                                                                                                                                  | Status     |
 |---------------------------------------------------------------------------------------------------------------------------------------|------------|
@@ -143,9 +143,9 @@ Our team would like to express our deepest gratitude to the [Slither tool](https
 
 #### It would be fantastic if you could bookmark, share, star, or fork this repository. Any attention will help us achieve our common goal of making **Web3 a little bit safer** than it was before: therefore, we require your support!
 
-[![Watch](https://img.shields.io/github/watchers/pessimistic-io/custom_detectors?style=social)](https://github.com/pessimistic-io/custom_detectors/watchers)
-[![Like](https://img.shields.io/github/stars/pessimistic-io/custom_detectors?style=social)](https://github.com/pessimistic-io/custom_detectors/stargazers)
-[![Fork](https://img.shields.io/github/forks/pessimistic-io/custom_detectors?style=social)](https://github.com/pessimistic-io/custom_detectors/stargazers)
+[![Watch](https://img.shields.io/github/watchers/pessimistic-io/slitherin?style=social)](https://github.com/pessimistic-io/custom_detectors/watchers)
+[![Like](https://img.shields.io/github/stars/pessimistic-io/slitherin?style=social)](https://github.com/pessimistic-io/custom_detectors/stargazers)
+[![Fork](https://img.shields.io/github/forks/pessimistic-io/slitherin?style=social)](https://github.com/pessimistic-io/custom_detectors/stargazers)
 
 #### For our part, we'll do everything in our power to ensure that this project continues to grow successfully in terms of both code and technology as well as community and professional interaction! We sincerely hope you find our work useful and appreciate any feedback, so please do not hesitate to [contact us](mailto:gm@pessimistic.io)!
 
