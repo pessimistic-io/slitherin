@@ -19,7 +19,7 @@ class UniswapV2(AbstractDetector):
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.MEDIUM
 
-    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/integration_uniswapV2.md'
+    WIKI = 'https://github.com/pessimistic-io/slitherin/blob/master/docs/integration_uniswapV2.md'
     WIKI_TITLE = 'UniswapV2 Integration'
     WIKI_DESCRIPTION = "UniswapV2 integration vulnerabilities must not be present in the codebase"
     WIKI_EXPLOIT_SCENARIO = '-'

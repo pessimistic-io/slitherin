@@ -14,7 +14,7 @@ class TimelockController(AbstractDetector):
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.LOW
 
-    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/timelock_controller.md'
+    WIKI = 'https://github.com/pessimistic-io/slitherin/blob/master/docs/timelock_controller.md'
     WIKI_TITLE = 'OZ Timelock Controller'
     WIKI_DESCRIPTION = "Delpoyer can bypass timelock limitations"
     WIKI_EXPLOIT_SCENARIO = '-'

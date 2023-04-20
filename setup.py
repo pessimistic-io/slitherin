@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name="slither-pess",
     description="Some pessimistic detectors",
-    url="https://github.com/pessimistic-io/custom_detectors",
+    url="https://github.com/pessimistic-io/slitherin",
     author="Pessimistic",
     version="0.1",
     packages=find_packages(),

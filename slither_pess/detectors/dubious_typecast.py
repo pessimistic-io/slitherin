@@ -24,7 +24,7 @@ class DubiousTypecast(AbstractDetector):
     IMPACT = DetectorClassification.LOW
     CONFIDENCE = DetectorClassification.LOW
 
-    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/dubious_typecast.md'
+    WIKI = 'https://github.com/pessimistic-io/slitherin/blob/master/docs/dubious_typecast.md'
     WIKI_TITLE = 'Dubious Typecast'
     WIKI_DESCRIPTION = "Constant variables should not be typecasted more than once"
     WIKI_EXPLOIT_SCENARIO = 'Makes contract logic more complex, wich leads to error probability increment and make integration more difficult'

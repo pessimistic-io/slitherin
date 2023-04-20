@@ -15,7 +15,7 @@ class MagicNumber(AbstractDetector):
     IMPACT = DetectorClassification.INFORMATIONAL
     CONFIDENCE = DetectorClassification.HIGH
 
-    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/magic_number.md'
+    WIKI = 'https://github.com/pessimistic-io/slitherin/blob/master/docs/magic_number.md'
     WIKI_TITLE = 'Magic Number'
     WIKI_DESCRIPTION = "Values should be assigned to variables"
     WIKI_EXPLOIT_SCENARIO = '-'

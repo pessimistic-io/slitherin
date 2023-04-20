@@ -162,7 +162,7 @@ class ReadOnlyReentrancy(Reentrancy):
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.LOW
 
-    WIKI = "https://github.com/pessimistic-io/custom_detectors/blob/master/docs/readonly_reentrancy.md"
+    WIKI = "https://github.com/pessimistic-io/slitherin/blob/master/docs/readonly_reentrancy.md"
     WIKI_TITLE = "Read-only reentrancy vulnerabilities"
     WIKI_DESCRIPTION = "Check docs"
     STANDARD_JSON = False

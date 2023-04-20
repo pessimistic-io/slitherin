@@ -14,7 +14,7 @@ class InconsistentNonreentrant(AbstractDetector):
     IMPACT = DetectorClassification.MEDIUM
     CONFIDENCE = DetectorClassification.MEDIUM
 
-    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/inconsistent_nonreentrant.md'
+    WIKI = 'https://github.com/pessimistic-io/slitherin/blob/master/docs/inconsistent_nonreentrant.md'
     WIKI_TITLE = 'Inconsistent nonreentrant'
     WIKI_DESCRIPTION = "If non-reentrant modifier is used then for security reasons it should be used in all non-veiw functions"
     WIKI_EXPLOIT_SCENARIO = '-'
