@@ -22,7 +22,7 @@ Please let us know if you have discovered an [issue/bug/vulnerability](https://t
 | Utils                        | [Auxiliary files](https://github.com/pessimistic-io/custom_detectors/tree/master/utils)                       |
 | Issues                       | [Suggest an idea](https://github.com/pessimistic-io/custom_detectors/issues)                                  |
 | Installation Process         | [Step-by-Step guide](https://github.com/pessimistic-io/custom_detectors#installation-process)                 |
-| Detectors                    | [Detectors table](https://github.com/pessimistic-io/custom_detectors#detectors--table)                        |
+| Detectors                    | [Detectors table](https://github.com/pessimistic-io/custom_detectors#detectors-table)                         |
 | Enhancements & New Detectors | [Project Improvements](https://github.com/pessimistic-io/custom_detectors#enhancements--new-detectors)        |
 
 ## Installation Process
