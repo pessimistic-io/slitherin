@@ -14,7 +14,7 @@ class TxGaspriceWarning(AbstractDetector):
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.LOW
 
-    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/tx_gasprice_warning.md'
+    WIKI = 'https://github.com/pessimistic-io/slitherin/blob/master/docs/tx_gasprice_warning.md'
     WIKI_TITLE = 'TX Gasprice Warning'
     WIKI_DESCRIPTION = "Tx.gasprice variable must be used carefully"
     WIKI_EXPLOIT_SCENARIO = '-'

@@ -14,7 +14,7 @@ class StrangeSetter(AbstractDetector):
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.MEDIUM
 
-    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/strange_setter.md'
+    WIKI = 'https://github.com/pessimistic-io/slitherin/blob/master/docs/strange_setter.md'
     WIKI_TITLE = 'Strange Setter'
     WIKI_DESCRIPTION = "Setter must write to storage variables"
     WIKI_EXPLOIT_SCENARIO = '-'

@@ -13,7 +13,7 @@ class UnprotectedSetter(AbstractDetector):
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.MEDIUM
 
-    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/unprotected_setter.md'
+    WIKI = 'https://github.com/pessimistic-io/slitherin/blob/master/docs/unprotected_setter.md'
     WIKI_TITLE = 'Unprotected Setter'
     WIKI_DESCRIPTION = "Usually all setters must be protected with access control"
     WIKI_EXPLOIT_SCENARIO = '-'

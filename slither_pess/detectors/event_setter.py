@@ -15,7 +15,7 @@ class EventSetter(AbstractDetector):
     IMPACT = DetectorClassification.LOW
     CONFIDENCE = DetectorClassification.MEDIUM
 
-    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/event_setter.md'
+    WIKI = 'https://github.com/pessimistic-io/slitherin/blob/master/docs/event_setter.md'
     WIKI_TITLE = 'Missing Event Setter'
     WIKI_DESCRIPTION = "Setter-functions must emit events"
     WIKI_EXPLOIT_SCENARIO = 'N/A'

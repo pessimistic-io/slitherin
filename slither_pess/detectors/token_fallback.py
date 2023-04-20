@@ -14,7 +14,7 @@ class TokenFallback(AbstractDetector):
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.LOW
 
-    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/token_fallback.md'
+    WIKI = 'https://github.com/pessimistic-io/slitherin/blob/master/docs/token_fallback.md'
     WIKI_TITLE = 'Token Fallback'
     WIKI_DESCRIPTION = "Fallback function in tokens must be used carefully"
     WIKI_EXPLOIT_SCENARIO = '-'

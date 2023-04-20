@@ -14,7 +14,7 @@ class UnprotectedInitialize(AbstractDetector):
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.LOW
 
-    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/unprotected_initialize.md'
+    WIKI = 'https://github.com/pessimistic-io/slitherin/blob/master/docs/unprotected_initialize.md'
     WIKI_TITLE = 'Unprotected Initialize'
     WIKI_DESCRIPTION = "Initializers must be protected"
     WIKI_EXPLOIT_SCENARIO = '-'

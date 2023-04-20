@@ -14,7 +14,7 @@ class MultipleStorageRead(AbstractDetector):
     IMPACT = DetectorClassification.OPTIMIZATION
     CONFIDENCE = DetectorClassification.HIGH
 
-    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/multiple_storage_read.md'
+    WIKI = 'https://github.com/pessimistic-io/slitherin/blob/master/docs/multiple_storage_read.md'
     WIKI_TITLE = 'Multiple Storage Read'
     WIKI_DESCRIPTION = "The same storage variable must not be read multiple times in the same function"
     WIKI_EXPLOIT_SCENARIO = '-'

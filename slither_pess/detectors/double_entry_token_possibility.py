@@ -12,7 +12,7 @@ class DoubleEntryTokenPossiblity(AbstractDetector):
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.LOW
 
-    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/double_entry_token_possibility.md'
+    WIKI = 'https://github.com/pessimistic-io/slitherin/blob/master/docs/double_entry_token_possibility.md'
     WIKI_TITLE = 'Double-entry token'
     WIKI_DESCRIPTION = "Double-entry token related attack might be possible"
     WIKI_EXPLOIT_SCENARIO = '-'

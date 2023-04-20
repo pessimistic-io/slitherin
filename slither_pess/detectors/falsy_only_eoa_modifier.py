@@ -14,7 +14,7 @@ class OnlyEOACheck(AbstractDetector):
     IMPACT = DetectorClassification.MEDIUM
     CONFIDENCE = DetectorClassification.LOW
 
-    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/falsy_only_eoa_modifier.md'
+    WIKI = 'https://github.com/pessimistic-io/slitherin/blob/master/docs/falsy_only_eoa_modifier.md'
     WIKI_TITLE = 'Falsy Only EOA Modifier'
     WIKI_DESCRIPTION = "Logic msg.sender == tx.origin must be removed"
     WIKI_EXPLOIT_SCENARIO = '-'

@@ -15,7 +15,7 @@ class CallForwardToProtected(AbstractDetector):
     IMPACT = DetectorClassification.MEDIUM
     CONFIDENCE = DetectorClassification.LOW
 
-    WIKI = 'https://github.com/pessimistic-io/custom_detectors/blob/master/docs/call_forward_to_protected.md'
+    WIKI = 'https://github.com/pessimistic-io/slitherin/blob/master/docs/call_forward_to_protected.md'
     WIKI_TITLE = 'Call Forward To Protected'
     WIKI_DESCRIPTION = "No calls to custom addresses and contract interactions through access control"
     WIKI_EXPLOIT_SCENARIO = '-'
