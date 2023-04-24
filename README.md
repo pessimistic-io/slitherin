@@ -94,8 +94,8 @@ Prior to adding an *enhancement*, ensure that:
 
 #### **Detectors Backlog:**
 
-[![Issues](https://img.shields.io/github/issues/pessimistic-io/slitherin?style=flat-square)](https://github.com/pessimistic-io/slitherin/issues)
-[![Open Pool Requests](https://img.shields.io/github/issues-pr/pessimistic-io/slitherin?style=flat-square)](https://github.com/pessimistic-io/slitherin/pulls)
+[![Issues](https://img.shields.io/github/issues-raw/pessimistic-io/slitherin?style=flat-square)](https://github.com/pessimistic-io/slitherin/issues)
+[![Open Pool Requests](https://img.shields.io/github/issues-pr/pessimistic-io/slitherin)](https://github.com/pessimistic-io/slitherin/pulls)
 [![Closed Pool Requests](https://img.shields.io/github/issues-pr-closed-raw/pessimistic-io/slitherin?style=flat-square)](https://github.com/pessimistic-io/slitherin/pulls?q=is%3Apr+is%3Aclosed)
 
 | Task                                                                                                                                  | Status     |
@@ -149,13 +149,12 @@ Our team would like to express our deepest gratitude to the [Slither tool](https
 
 #### It would be fantastic if you could bookmark, share, star, or fork this repository. Any attention will help us achieve our common goal of making **Web3 a little bit safer** than it was before: therefore, we require your support!
 
-[![Watch](https://img.shields.io/github/watchers/pessimistic-io/slitherin?style=social)](https://github.com/pessimistic-io/slitherin/watchers)
-[![Like](https://img.shields.io/github/stars/pessimistic-io/slitherin?style=social)](https://github.com/pessimistic-io/slitherin/stargazers)
-[![Fork](https://img.shields.io/github/forks/pessimistic-io/slitherin?style=social)](https://github.com/pessimistic-io/slitherin/stargazers)
+[![Watch](https://img.shields.io/github/watchers/pessimistic-io/slitherin)](https://github.com/pessimistic-io/slitherin/watchers)
+[![Like](https://img.shields.io/github/stars/pessimistic-io/slitherin)](https://github.com/pessimistic-io/slitherin/stargazers)
+[![Fork](https://img.shields.io/github/forks/pessimistic-io/slitherin)](https://github.com/pessimistic-io/slitherin/stargazers)
 
 #### For our part, we'll do everything in our power to ensure that this project continues to grow successfully in terms of both code and technology as well as community and professional interaction! We sincerely hope you find our work useful and appreciate any feedback, so please do not hesitate to [contact us](mailto:gm@pessimistic.io)!
 
 [![Mail](https://img.shields.io/badge/Mail-gm%40pessimistic.io-orange?style=flat-square&logo=appveyor?logo=data:https://pessimistic.io/favicon.ico)](mailto:gm@pessimistic.io)
 
 #
-
