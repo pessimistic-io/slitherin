@@ -103,7 +103,13 @@ Prior to adding an *enhancement*, ensure that:
 | Opensource current repository                                                                                                         | In Process |
 | Fix - Readonly Reentrancy Detector                                                                                                    | Completed  |
 | Suggestion - Write a Walkthrough Article                                                                                              | In Process |
-| Add [UniswapV2 Integration](https://github.com/pessimistic-io/slitherin/blob/master/slither_pess/detectors/uni_v2.py) Detector | Completed  |
+| Add [UniswapV2 Integration](https://github.com/pessimistic-io/slitherin/blob/master/slither_pess/detectors/uni_v2.py) detector        | Completed  |
+| Refactor python code. Make it cleaner.                                                                                                | TODO       |
+| Nft-approve-warning detector - remove detection with "this" as a first parameter in "transferFrom()" function                         | TODO       |
+| Strange-setter detector - remove detection when mappings or structs are set                                                           | TODO       |
+| Double-entry-token detector - remove detection of ETH transfers                                                                       | TODO       |
+| Before-token-transfer detector - remove detection with "virtual" modifier and "super" function call                                   | TODO       |
+| Strange-constructor detector - remove detection of constructor function with base constructor                                         | TODO       |
 
 ## Acknowledgements
 
