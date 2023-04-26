@@ -33,12 +33,13 @@ Please let us know if you have discovered an [issue/bug/vulnerability](https://t
 To install Pessimistic Detectors: 
 1. Install the [original Slither](https://github.com/crytic/slither#how-to-install);
 2. Clone our repository;
-3. Run the following command in our repository folder:
+3. Run the following command in our repository folder to add new detectors to Slither:
 ```bash
 python3 setup.py develop
 ```
 > Keep in mind that you don't have to reinstall the plugin after changes in the repository!
-4. Dependencies must be installed in order to test the detectors on our test contracts:
+4. Run original Slither as usual.
+5. Dependencies must be installed in order to test the detectors on our test contracts:
 ```bash
 npm install
 ```
