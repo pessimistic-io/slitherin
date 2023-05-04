@@ -151,7 +151,7 @@ Our team would like to express our deepest gratitude to the [Slither tool](https
 
 - [Week in Ethereum News](https://weekinethereumnews.com/#:~:text=Slitherin%3A%20custom%20Slither%20detectors%20with%20higher%20sensitivity%20but%20higher%20false%20positives)
 - [Blockthreat](https://newsletter.blockthreat.io/p/blockthreat-week-16-2023#:~:text=Slitherin%20a%20collection%20of%20Slither%20detection%20by%20Pessimistic.io%20team)
-- [Release article by officercia](https://hackmd.io/@DRViPNz-TVC6wqdRF8LP6w/HJHcycB9t)
+- [Release article by officercia.eth](https://officercia.mirror.xyz/ucWYWnhBXmkKq54BIdJcH5GnrAB-nQkUsZ2F-ytEsR4)
 - [Defillama](https://t.me/defillama_tg/842)
 
 ## Thank you!
