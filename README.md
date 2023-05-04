@@ -147,6 +147,13 @@ Our team would like to express our deepest gratitude to the [Slither tool](https
 - [Slither & Echidna + Remappings](https://www.justinsilver.com/technology/programming/slither-echidna-remappings/)
 - [Static Analysis of Smart Contracts with Slither & GitHub Actions](https://medium.com/coinmonks/static-analysis-of-smart-contracts-with-slither-github-actions-1e67e54ed8a7)
 
+**Slitherin in mass media**
+
+- [Week in Ethereum News](https://weekinethereumnews.com/#:~:text=Slitherin%3A%20custom%20Slither%20detectors%20with%20higher%20sensitivity%20but%20higher%20false%20positives)
+- [Blockthreat](https://newsletter.blockthreat.io/p/blockthreat-week-16-2023#:~:text=Slitherin%20a%20collection%20of%20Slither%20detection%20by%20Pessimistic.io%20team)
+- [Release article by officercia](https://hackmd.io/@DRViPNz-TVC6wqdRF8LP6w/HJHcycB9t)
+- [Defillama](https://t.me/defillama_tg/842)
+
 ## Thank you!
 
 #### It would be fantastic if you could bookmark, share, star, or fork this repository. Any attention will help us achieve our common goal of making **Web3 a little bit safer** than it was before: therefore, we require your support!
