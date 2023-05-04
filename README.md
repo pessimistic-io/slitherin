@@ -8,7 +8,7 @@
 
 We increased the sensitivity of our detectors since they are *quite straightforward* and not written in the "original style." As a result, they produce FPs ([False Positives](https://en.wikipedia.org/wiki/False_positives_and_false_negatives)) more frequently than original ones. So that, our detectors are a kind of automation of the checks implemented in the checklist, their main purpose is to look for issues and assist the code auditor.
 
-Please let us know if you have discovered an [issue/bug/vulnerability](https://telegra.ph/BountyCTF-Platforms-Web3-04-19) via our custom Slither detectors. You may contact us via opening a [PR/Issue](https://github.com/pessimistic-io/slitherin/issues) or [directly](mailto:gm@pessimistic.io), whichever is more convenient for you. If you have any further questions or suggestions, please [join our Discord Server](https://discord.gg/vPxkR8B9p7) or [Telegram chat](https://t.me/+t8dRfLLbVx1iYzNi)! We hope to see you there, and we intend to support the community and its initiatives!
+Please let us know if you have discovered an [issue/bug/vulnerability](https://telegra.ph/BountyCTF-Platforms-Web3-04-19) via our custom Slither detectors. You may contact us via opening a [PR/Issue](https://github.com/pessimistic-io/slitherin/issues) or [directly](mailto:gm@pessimistic.io), whichever is more convenient for you. If you have any further questions or suggestions, please [join our Discord Server](https://discord.gg/vPxkR8B9p7) or [Telegram chat](https://t.me/+G96ejJ7Pmgk1NDZi)! We hope to see you there, and we intend to support the community and its initiatives!
 
 [![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/+t8dRfLLbVx1iYzNi)
 [![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/vPxkR8B9p7)
@@ -57,7 +57,7 @@ npm install
 | [Strange Setter](https://github.com/pessimistic-io/slitherin/blob/master/slither_pess/detectors/strange_setter.py)                                        | [Explore](https://github.com/pessimistic-io/slitherin/blob/master/docs/strange_setter.md)                        | [Test](https://github.com/pessimistic-io/slitherin/blob/master/tests/strange_setter_test.sol)                                                             | 0                                                                                                                |
 | [Read-only Reentrancy](https://github.com/pessimistic-io/slitherin/blob/master/slither_pess/detectors/read_only_reentrancy.py)                            | [Explore](https://github.com/pessimistic-io/slitherin/blob/master/docs/readonly_reentrancy.md)                   | [Test](https://github.com/pessimistic-io/slitherin/blob/master/tests/readonly_reentrancy_test.sol)                                                        | 0                                                                                                                |
 | [NFT Approve Warning](https://github.com/pessimistic-io/slitherin/blob/master/slither_pess/detectors/nft_approve_warning.py)                              | [Explore](https://github.com/pessimistic-io/slitherin/blob/master/docs/nft_approve_warning.md)                   | [Test](https://github.com/pessimistic-io/slitherin/blob/master/tests/nft_approve_warning_test.sol)                                                        | 0                                                                                                                |
-| [Multiple Storage Read](https://github.com/pessimistic-io/slitherin/blob/master/slither_pess/detectors/multiple_storage_read.py)                          | [Explore](https://github.com/pessimistic-io/slitherin/blob/master/docs/multiple_storage_read.md)                 | [Test](https://github.com/pessimistic-io/slitherin/blob/master/tests/multiple_storage_read_test.sol)                                                      | 4                                                                                                                |
+| [Multiple Storage Read](https://github.com/pessimistic-io/slitherin/blob/master/slither_pess/detectors/multiple_storage_read.py)                          | [Explore](https://github.com/pessimistic-io/slitherin/blob/master/docs/multiple_storage_read.md)                 | [Test](https://github.com/pessimistic-io/slitherin/blob/master/tests/multiple_storage_read_test.sol)                                                      | 6                                                                                                                |
 | [Magic Number](https://github.com/pessimistic-io/slitherin/blob/master/slither_pess/detectors/magic_number.py)                                            | [Explore](https://github.com/pessimistic-io/slitherin/blob/master/docs/magic_number.md)                          | [Test](https://github.com/pessimistic-io/slitherin/blob/master/tests/magic_number_test.sol)                                                               | 3                                                                                                                |
 | [Inconsistent Non-Reentrant](https://github.com/pessimistic-io/slitherin/blob/master/slither_pess/detectors/inconsistent_nonreentrant.py)                 | [Explore](https://github.com/pessimistic-io/slitherin/blob/master/docs/inconsistent_nonreentrant.md)             | [Test](https://github.com/pessimistic-io/slitherin/blob/master/tests/inconsistent_nonreentrant_test.sol)                                                  | 0                                                                                                                |
 | [Falsy Only EOA Modifier](https://github.com/pessimistic-io/slitherin/blob/master/slither_pess/detectors/falsy_only_eoa_modifier.py)                      | [Explore](https://github.com/pessimistic-io/slitherin/blob/master/docs/falsy_only_eoa_modifier.md)               | [Test](https://github.com/pessimistic-io/slitherin/blob/master/tests/falsy_only_eoa_modifier_test.sol)                                                    | 0                                                                                                                |
@@ -69,7 +69,7 @@ npm install
 
 **Please note:**
 
-- *Valid - issues included in reports and fixed by developers (January 2023 - March 2023).
+- *Valid - issues included in reports and fixed by developers (January 2023 - April 2023).
 
 - There is one detector that is disabled by default: [pess-uni-v2](https://github.com/pessimistic-io/slitherin/blob/master/slither_pess/detectors/uni_v2.py). **It is recommended to run it only on projects that integrate [Uniswap V2](https://betterprogramming.pub/uniswap-v2-in-depth-98075c826254)!**
 
@@ -101,10 +101,11 @@ Prior to adding an *enhancement*, ensure that:
 
 | Task                                                                                                                                  | Status     |
 |---------------------------------------------------------------------------------------------------------------------------------------|------------|
-| Opensource current repository                                                                                                         | In Process |
+| Opensource current repository                                                                                                         | Completed  |
 | Fix - Readonly Reentrancy Detector                                                                                                    | Completed  |
-| Suggestion - Write a Walkthrough Article                                                                                              | In Process |
+| Suggestion - Write a Walkthrough Article                                                                                              | Completed  |
 | Add [UniswapV2 Integration](https://github.com/pessimistic-io/slitherin/blob/master/slither_pess/detectors/uni_v2.py) detector        | Completed  |
+| For-continue-increment - add detector                                                                                                 | In progress|
 | Refactor python code. Make it cleaner.                                                                                                | TODO       |
 | Nft-approve-warning detector - remove detection with "this" as a first parameter in "transferFrom()" function                         | TODO       |
 | Strange-setter detector - remove detection when mappings or structs are set                                                           | TODO       |
@@ -145,6 +146,13 @@ Our team would like to express our deepest gratitude to the [Slither tool](https
 - [Bridge Security Checklist: Client Side](https://hackmd.io/@cbym/HJWQglwNs)
 - [Slither & Echidna + Remappings](https://www.justinsilver.com/technology/programming/slither-echidna-remappings/)
 - [Static Analysis of Smart Contracts with Slither & GitHub Actions](https://medium.com/coinmonks/static-analysis-of-smart-contracts-with-slither-github-actions-1e67e54ed8a7)
+
+**Slitherin in mass media**
+
+- [Week in Ethereum News](https://weekinethereumnews.com/#:~:text=Slitherin%3A%20custom%20Slither%20detectors%20with%20higher%20sensitivity%20but%20higher%20false%20positives)
+- [Blockthreat](https://newsletter.blockthreat.io/p/blockthreat-week-16-2023#:~:text=Slitherin%20a%20collection%20of%20Slither%20detection%20by%20Pessimistic.io%20team)
+- [Release article by officercia](https://hackmd.io/@DRViPNz-TVC6wqdRF8LP6w/HJHcycB9t)
+- [Defillama](https://t.me/defillama_tg/842)
 
 ## Thank you!
 
