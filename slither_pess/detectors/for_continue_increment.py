@@ -94,7 +94,7 @@ def check_function(node: Optional[Node], ctx: Context)-> bool:
 
 class ForContinueIncrement(AbstractDetector):
 
-    ARGUMENT = "for-continue-increment" # slither will launch the detector with slither.py --detect nft-approve-warning
+    ARGUMENT = "for-continue-increment" # slither will launch the detector with slither.py --detect for-continue-increment
     HELP = "Loop might turn out infinite"
     IMPACT = DetectorClassification.MEDIUM
     CONFIDENCE = DetectorClassification.LOW
