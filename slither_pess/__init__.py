@@ -18,6 +18,7 @@ from slither_pess.detectors.event_setter import EventSetter
 from slither_pess.detectors.before_token_transfer import BeforeTokenTransfer
 from slither_pess.detectors.uni_v2 import UniswapV2
 from slither_pess.detectors.token_fallback import TokenFallback
+from slither_pess.detectors.for_continue_increment import ForContinueIncrement
 
 
 def make_plugin():
@@ -40,6 +41,7 @@ def make_plugin():
         BeforeTokenTransfer,
         UniswapV2,
         TokenFallback,
+        ForContinueIncrement,
     ]
     plugin_printers = []
 

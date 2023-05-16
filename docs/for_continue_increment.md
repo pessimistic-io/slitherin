@@ -1,7 +1,7 @@
 # For Continue Increment
 
 ## Configuration
-* Check: `for-continue-increment`
+* Check: `pess-for-continue-increment`
 * Severity: `Medium`
 * Confidence: `Low`
 
