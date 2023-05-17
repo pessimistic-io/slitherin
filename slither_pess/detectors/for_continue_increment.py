@@ -9,7 +9,6 @@ from slither.utils.output import Output
 class Context():
     def __init__(self):
       self.visited = []
-      self.verbose = verbose
       self.depth = 0
       self.index_var = None
       self.father_type = None
@@ -31,7 +30,7 @@ def check_contract(c: Contract) -> List[Function]:
     return results_raw
 
   # filter unwanted funcs
-  to_inspect = x for x in c.functions if x.is_implemented
+  to_inspect = (x for x in c.functions if x.is_implemented)
 
   for f in to_inspect: 
     if check_function(f.entry_point, Context()):
