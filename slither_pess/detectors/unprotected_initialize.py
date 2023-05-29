@@ -26,35 +26,29 @@ class UnprotectedInitialize(AbstractDetector):
         if isinstance(fun, Function) and "init" in fun.name:
             return True
         return False
-
-    def _has_modifiers(self, fun: Function) -> bool:
-        """Checks if function has modifier protection"""
-        for modifier in fun.modifiers:
-            if str(modifier) == "onlyOwner" or str(modifier) == "initializer":
+    
+    def _has_access_control(self, fun):
+        for m in fun.modifiers:
+            for m.name in ['initializer', 'onlyOwner']:
                 return True
-        return False
-
-    def _has_require(self, fun: Function) -> bool:
-        """Checks if function has require statement protection"""
+        if fun.visibility in ['internal','private']:
+            return True
         for node in fun.nodes:
             if "require" in str(node):
                 for variable in node.variables_read:
                     if str(variable.type) == "address":
                         return True
-        return False
-
-
+        return fun.is_protected()
+    
     def _detect(self) -> List[Output]:
         """Main function"""
         res = []
         for contract in self.compilation_unit.contracts_derived:
             if not contract.is_library:
-                for f in contract.functions_and_modifiers_declared:
-                    x = self._is_initialize(f)
-                    if x:
-                        is_safe = self._has_modifiers(f)
-                        is_safe2 = self._has_require(f)
-                        if not is_safe and not is_safe2:
+                for f in contract.functions:
+                    if not self.has_access_control(f):
+                        x = self.is_initialize(f)
+                        if (x!= None):
                             res.append(self.generate_result([
                                 "Function ",
                                 f, ' is an unprotected initializer.',

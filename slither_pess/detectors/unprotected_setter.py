@@ -42,6 +42,11 @@ class UnprotectedSetter(AbstractDetector):
                 return True
         if fun.visibility in ['internal','private']:
             return True
+        for node in fun.nodes:
+            if "require" in str(node):
+                for variable in node.variables_read:
+                    if str(variable.type) == "address":
+                        return True
         return fun.is_protected()
 
     def _detect(self):
