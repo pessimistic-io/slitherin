@@ -232,4 +232,45 @@ contract FalsePositive {
     function notVulnarable() public {
         DummyToken(msg.sender).balanceOf(msg.sender);
     }
+
+    uint256 balance0;
+    uint256 balance1;
+    uint256 managerBalance0;
+    uint256 managerBalance1;
+    DummyToken token0 = DummyToken(zero);
+    DummyToken token1 = DummyToken(zero);
+    address zero = address(0);
+
+    function withdrawManagerBalance() external {
+        uint256 amount0 = managerBalance0;
+        uint256 amount1 = managerBalance1;
+
+        managerBalance0 = 0;
+        managerBalance1 = 0;
+
+        if (amount0 > 0) {
+            DummyToken(zero).transfer(zero, amount0);
+        }
+
+        if (amount1 > 0) {
+            DummyToken(zero).transfer(zero, amount1);
+        }
+    }
+
+    function _applyFees(uint256 _fee0, uint256 _fee1) private {
+        balance0 += _fee0 / 100;
+        balance1 += _fee1 / 100;
+        managerBalance0 += _fee0 / 100;
+        managerBalance1 += _fee1 / 100;
+    }
+
+    function _rebalance() public {
+        uint256 leftover0 = token0.balanceOf(address(this)) - managerBalance0;
+        uint256 leftover1 = token1.balanceOf(address(this)) - managerBalance1;
+        uint256 feesEarned0 = leftover0;
+        uint256 feesEarned1 = leftover1;
+        _applyFees(feesEarned0, feesEarned1);
+    }
 }
+
+//TODO(yhtiyar): add example with Balancer Vault read-only exlpoit (setiment hack)
