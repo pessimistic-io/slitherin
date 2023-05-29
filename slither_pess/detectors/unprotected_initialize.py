@@ -48,14 +48,15 @@ class UnprotectedInitialize(AbstractDetector):
         """Main function"""
         res = []
         for contract in self.compilation_unit.contracts_derived:
-            for f in contract.functions_and_modifiers_declared:
-                x = self._is_initialize(f)
-                if x:
-                    is_safe = self._has_modifiers(f)
-                    is_safe2 = self._has_require(f)
-                    if not is_safe and not is_safe2:
-                        res.append(self.generate_result([
-                            "Function ",
-                            f, ' is an unprotected initializer.',
-                            '\n']))
+            if not contract.is_library:
+                for f in contract.functions_and_modifiers_declared:
+                    x = self._is_initialize(f)
+                    if x:
+                        is_safe = self._has_modifiers(f)
+                        is_safe2 = self._has_require(f)
+                        if not is_safe and not is_safe2:
+                            res.append(self.generate_result([
+                                "Function ",
+                                f, ' is an unprotected initializer.',
+                                '\n']))
         return res

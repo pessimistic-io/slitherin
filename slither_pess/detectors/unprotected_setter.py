@@ -47,13 +47,14 @@ class UnprotectedSetter(AbstractDetector):
     def _detect(self):
         res = []
         for contract in self.compilation_unit.contracts_derived:
-            for f in contract.functions:
-                if not self.has_access_control(f):
-                    x = self.is_setter(f)
-                    if (x!= None):
-                        res.append(self.generate_result([
-                            "Function", ' ',
-                            f, ' is a non-protected setter ',
-                            x, ' is written'
-                            '\n']))
+            if not contract.is_library:
+                for f in contract.functions:
+                    if not self.has_access_control(f):
+                        x = self.is_setter(f)
+                        if (x!= None):
+                            res.append(self.generate_result([
+                                "Function", ' ',
+                                f, ' is a non-protected setter ',
+                                x, ' is written'
+                                '\n']))
         return res
