@@ -370,6 +370,11 @@ class ReadOnlyReentrancy(Reentrancy):
                         finding_value.node,
                         "\n",
                     ]
+                    #info += ["\t- ", finding_value.node, "\n"]
+
+                    # for other_node in finding_value.nodes:
+                    #     if other_node != finding_value.node:
+                    #         info += ["\t\t- ", other_node, "\n"]
 
                     # TODO: currently we are not printing the whole call-stack of variable
                     # it wasn't working properly, so I am removing it for now to avoid confusion
