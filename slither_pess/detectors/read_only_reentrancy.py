@@ -87,6 +87,15 @@ class ReadOnlyReentrancyState(AbstractState):
                         if key != skip_father
                     },
                 )
+                self._reads = union_dict(
+                    self._reads, father.context[detector.KEY].reads
+                )
+                self._reads_external = union_dict(
+                    self._reads_external, father.context[detector.KEY].reads
+                )
+                self._written_external = union_dict(
+                    self._written_external, father.context[detector.KEY].reads
+                )
 
     def analyze_node(self, node: Node, detector):
         state_vars_read: Dict[Variable, Set[Node]] = defaultdict(
@@ -236,6 +245,12 @@ class ReadOnlyReentrancy(Reentrancy):
 
         return written_after_reentrancy, written_after_reentrancy_external
 
+    def are_same_contract(self, a: Contract, b: Contract) -> bool:
+        """
+        Checks if A==B or A inherits from B or otherwise
+        """
+        return a == b or (b in a.inheritance) or (b in a.derived_contracts)
+
     # IMPORTANT:
     # FOR the external reads, that var should be external written in the same contract
     def get_readonly_reentrancies(self):
@@ -244,6 +259,7 @@ class ReadOnlyReentrancy(Reentrancy):
             written_after_reentrancy_external,
         ) = self.find_writes_after_reentrancy()
         result = defaultdict(set)
+        vulnerable_getters = defaultdict(set)
         for contract in self.contracts:
             for f in contract.functions_and_modifiers_declared:
                 for node in f.nodes:
@@ -252,7 +268,9 @@ class ReadOnlyReentrancy(Reentrancy):
                         continue
                     vulnerable_variables = set()
                     for r, nodes in node.context[self.KEY].reads.items():
-                        if r.contract == f.contract and not f.view:
+                        if self.are_same_contract(r.contract, f.contract):
+                            # TODO(yhtiyar): In case f.view we can notify the user that the given
+                            # method could be vulnerable if other contract will use it
                             continue
 
                         if r in written_after_reentrancy:
@@ -271,6 +289,10 @@ class ReadOnlyReentrancy(Reentrancy):
                             )
 
                     for r, nodes in node.context[self.KEY].reads_external.items():
+                        if self.are_same_contract(r.contract, f.contract):
+                            # TODO(yhtiyar): In case f.view we can notify the user that the given
+                            # method could be vulnerable if other contract will use it
+                            continue
                         if r in written_after_reentrancy_external:
                             isVulnerable = any(
                                 c in self.contracts_written_variable_after_reentrancy[r]
@@ -341,11 +363,18 @@ class ReadOnlyReentrancy(Reentrancy):
                     "\tState variables read that were written after the external call(s):\n"
                 ]
                 for finding_value in varsRead:
-                    info += ["\t- ", finding_value.node, "\n"]
-                    for other_node in finding_value.nodes:
-                        if other_node != finding_value.node:
-                            info += ["\t\t- ", other_node, "\n"]
-                    info += ["\t Written after external call at:\n"]
+                    info += [
+                        "\t- ",
+                        finding_value.variable,
+                        " was read at ",
+                        finding_value.node,
+                        "\n",
+                    ]
+
+                    # TODO: currently we are not printing the whole call-stack of variable
+                    # it wasn't working properly, so I am removing it for now to avoid confusion
+
+                    info += ["\t This variable was written at (after external call):\n"]
                     for other_node in finding_value.written_at:
                         # info += ["\t- ", call_info, "\n"]
                         if other_node != finding_value.node:
