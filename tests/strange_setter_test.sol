@@ -19,7 +19,7 @@ contract StrangeSetter {
         a = setter;
     }
 
-    function set_vulnurable_mapping(uint256 _toSet) external onlyOwner {
+    function set_vulnerable_mapping(uint256 _toSet) external onlyOwner {
         uint256 vars = _toSet;
         toSet = vars;
     }
