@@ -125,11 +125,10 @@ class UniswapV2(AbstractDetector):
                             return True
         return False
 
-    #TODO детектить сет адресов в важных функциях через параметры, детектить в сторадж переменных
     def _has_bad_token(self, fun: Function) -> bool:
         """Checks if deflationary or rebase tokens are used"""
         absolute_path = os.path.dirname(__file__)
-        relative_path = "../../utils/deflat_tokens.json"
+        relative_path = "../utils/deflat_tokens.json"
         full_path = os.path.join(absolute_path, relative_path)
         fileJson = open(full_path)
         data = json.load(fileJson)
