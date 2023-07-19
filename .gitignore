@@ -4,4 +4,4 @@
 build/
 dist/
 .slither-pess/
-node_modules
+node_modules/
