@@ -22,7 +22,6 @@ class DoubleEntryTokenPossiblity(AbstractDetector):
     def get_tokens_as_params(self, fun):
 
         res = []  # параметры функции
-
         for p in fun.parameters:
             if str(p.type) in ['IERC20[]', 'address[]']:
                 res.append(p)
