@@ -23,7 +23,7 @@ class DoubleEntryTokenPossiblity(AbstractDetector):
 
         res = []  # параметры функции
         for p in fun.parameters:
-            if str(p.type) in ['IERC20[]', 'address[]']:
+            if len(p._name) and str(p.type) in ['IERC20[]', 'address[]']:
                 res.append(p)
 
         return res
