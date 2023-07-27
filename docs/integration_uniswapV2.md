@@ -40,5 +40,11 @@ Checks the correctness of UniswapV2 integration in the contract.
 * Description - Pools must not allow deflationary (tokens that take fees for transfer) and elastic supply tokens which make arbitrage possible.
 * Recommendation - Do not use [deflationary](../utils/deflat_tokens.json) and [rebase](../utils/rebase_tokens.json) tokens in UniswapV2 integrations.
 
+### tainted-swap-routes
+* Impact - Medium;
+* Description - looks for UniV2 funtions where the path parameter is partially or entirely provided from external invocation.
+* Recommendation - External invocation of functions with custom path parameter might lead to an exploit.
+
+
 ## Vulnerable Scenario
 [test scenario](../tests/Bad_UniswapV2_test.sol)
