@@ -1,18 +1,19 @@
 # Dubious Typecast
 
 ## Configuration
-* Check: `pess-dubious-typecast`
-* Severity: `Low`
-* Confidence: `Low` 
+
+- Check: `pess-dubious-typecast`
+- Severity: `Medium`
+- Confidence: `High`
 
 ## Description
-Highlights unstandard typecasts.
 
-### Potential Improvement
-Reduce the number of FP removing the highlight of OK typecasts.
+Highlights nonstandard typecasts. E.g: `uint256(uint8(K))`
 
 ## Vulnerable Scenario
+
 [test scenario](../tests/dubious_typecast_test.sol)
 
 ## Recommendation
-Makes contract logic more complex, which leads to an error probability increment. Use clean variables without typecasts.
+
+Verify that the typecast doesn't break the code.

@@ -55,18 +55,20 @@ def is_ok_cast(from_type: str, to_type: str) -> bool:
 
 class DubiousTypecast(AbstractDetector):
     """
-    Shows variables which are typecasted more than once.
+    Shows nonstandard typecasts.
     """
 
     ARGUMENT = "pess-dubious-typecast"  # slither will launch the detector with slither.py --detect mydetector
     HELP = "uint8 = uint8(uint256)"
-    IMPACT = DetectorClassification.LOW
-    CONFIDENCE = DetectorClassification.LOW
+    IMPACT = DetectorClassification.MEDIUM
+    CONFIDENCE = DetectorClassification.HIGH
 
     WIKI = "https://github.com/pessimistic-io/slitherin/blob/master/docs/dubious_typecast.md"
     WIKI_TITLE = "Dubious Typecast"
-    WIKI_DESCRIPTION = "Constant variables should not be typecasted more than once"
-    WIKI_EXPLOIT_SCENARIO = "Makes contract logic more complex, wich leads to error probability increment and make integration more difficult"
+    WIKI_DESCRIPTION = "Check docs"
+    WIKI_EXPLOIT_SCENARIO = (
+        "Can produce unpredictable results because of nonstandard typecasts"
+    )
     WIKI_RECOMMENDATION = "Use clear constants"
 
     def analyze_irs(self, irs: List[Operation]) -> List[Tuple[str, str]]:
