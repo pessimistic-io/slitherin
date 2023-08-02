@@ -1,5 +1,9 @@
 pragma solidity ^0.8.0;
 
+interface I {
+    function initialize() external;
+}
+
 contract unprotected_initialize {
     uint256 toSet;
     bool isProtected = true;
@@ -10,33 +14,33 @@ contract unprotected_initialize {
         _;
     }
 
-    function initialize_ok1 (uint256 setter) external onlyOwner {
+    function initialize_ok1(uint256 setter) external onlyOwner {
         uint256 a = 10;
         toSet = setter + a;
     }
 
-    function initialize_ok2 (uint256 setter) external {
+    function initialize_ok2(uint256 setter) external {
         require(msg.sender == owner);
         uint256 a = 10;
         toSet = setter + a;
     }
 
-    function initialize_vuln (uint256 setter) external {
+    function initialize_vuln(uint256 setter) external {
         toSet = setter;
     }
 
-    function init_ok1 (uint256 setter) external onlyOwner {
+    function init_ok1(uint256 setter) external onlyOwner {
         uint256 a = 10;
         toSet = setter + a;
     }
 
-    function init_ok2 (uint256 setter) external {
+    function init_ok2(uint256 setter) external {
         require(msg.sender == owner);
         uint256 a = 10;
         toSet = setter + a;
     }
 
-    function init_vuln (uint256 setter) external {
+    function init_vuln(uint256 setter) external {
         toSet = setter;
     }
 }

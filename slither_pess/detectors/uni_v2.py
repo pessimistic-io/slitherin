@@ -1,13 +1,201 @@
 import sys
 import os
 import json
-from typing import List
+import copy
+from typing import List, Optional
 from slither.utils.output import Output
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
 from slither.core.declarations import Function, Contract
-from slither.slithir.operations.assignment import Assignment
 from slither.core.expressions.type_conversion import TypeConversion
+from slither.core.cfg.node import NodeType, Node
+from slither.core.variables.local_variable import LocalVariable
+from slither.core.solidity_types.array_type import ArrayType
+from slither.slithir.operations import SolidityCall, InternalCall, HighLevelCall
+from slither.slithir.operations.assignment import Assignment
+from slither.analyses.data_dependency.data_dependency import is_dependent
 
+
+class Context():
+  def __init__(self, c: Contract, entry_point: Function, func: Function, args_tainted_mask: List[bool], verbose: bool):
+    self.visited = []
+    self.contract = c
+    self.entry_point = entry_point
+    self.hit_function = None
+    self.tainted_path = []
+    self.param_name = None
+    self.function = func
+    self.args_tainted_mask = args_tainted_mask #TODO remove as this is redundant (covered by entrypoint_params_index_dependency)
+    self.entrypoint_params_index_dependency: List[List[int]] = [[i] for i in range(len(entry_point.parameters))]
+    self.call_chain = [entry_point.name]
+    self.hits = []
+    self.verb = verbose
+  
+  def make_copy(self): # to avoid passing by reference in internal calls inspections
+    cp = copy.copy(self)
+    cp.call_chain = copy.copy(self.call_chain)
+    cp.entrypoint_params_index_dependency = copy.copy(self.entrypoint_params_index_dependency)
+    return cp
+
+  def __str__(self): # debug
+    return 'entry_point' + str(self.entry_point) + 'hit_function' + str(self.hit_function) + 'param_name' + str(self.param_name) 
+
+class Hit():
+  def __init__(self, entry_point: Function, hit_function: Function, param_name, call_chain: List[str], entry_params_used: List[str], swap_func: str):
+    self.entry_point = entry_point
+    self.hit_function = hit_function
+    self.param_name = param_name
+    self.call_chain = call_chain
+    self.entry_params_used = entry_params_used
+    self.swap_func = swap_func
+
+swap_functions = ["swapExactTokensForTokens","swapTokensForExactTokens","swapExactTokensForTokensSupportingFeeOnTransferTokens","swapExactETHForTokensSupportingFeeOnTransferTokens",
+ "swapExactTokensForETHSupportingFeeOnTransferTokens","swapETHForExactTokens","swapExactTokensForETH","swapTokensForExactETH","swapExactETHForTokens", "getAmountsOut", "getAmountsIn"]
+swap_route_arg_pos = [2,2,2,1,2,1,2,2,1,1,1]       
+
+# widespread false positives
+banned_funcs = ["ensure", "constructor"]
+# partial (LIKE %x%)
+banned_funcs_partial = [] 
+banned_contracts_partial = ["swap", "dex", "router", "pancake", "buysell"] 
+  
+
+def check_contract(c: Contract) -> List[Function]:
+  results_raw: List[Function] = []
+
+  if len(swap_functions) != len(swap_route_arg_pos):
+    print("ERROR - Array lengths not matching")
+    return results_raw
+  # skip test contracts
+  if any( x in c.name for x in ["Test", "Mock"]) or any(x in c.name.lower() for x in banned_contracts_partial): 
+    return results_raw
+
+  # to filter constructors for old solidity versions
+  inherited_contracts = get_inherited_contracts(c) + [c.name] 
+
+  # filter unwanted funcs (also checked later recursively for nested calls)
+  to_inspect = (x for x in c.functions if (
+    # filter banned functions and old solc constructors
+    x.name not in (banned_funcs + inherited_contracts) and 
+    not any(y in x.name for y in banned_funcs_partial) and
+    not x.pure and not x.view and
+    x.visibility in ["public", "external"] and # internal functions inspected through internal calls to keep the flow consistent
+    x.is_implemented))
+
+  for f in to_inspect: 
+    verb = False
+    if f.name == "-":
+      verb = True
+    ctx = Context(c, f, f, [True for i in range(len(f.parameters))], verb)
+    check_function(f.entry_point, ctx)
+    if len(ctx.hits):
+      results_raw += ctx.hits
+  return results_raw
+
+
+def check_function(node: Optional[Node], ctx: Context):
+  if node is None:
+    return False
+  
+  if ctx.function.name in banned_funcs or any(x in ctx.function.name for x in banned_funcs_partial):
+    return False
+
+  if is_modifier_protected(ctx.function): # TODO enhance 
+    return False
+
+  if node in ctx.visited:
+    return False
+  ctx.visited.append(node)
+
+  # debug
+  if ctx.verb:
+    print(str(node))
+    for ir in node.irs:
+      print("    " + str(ir) + "    " + str(type(ir)))
+
+  # check if the input parameters are checked, and remove taint flag if so
+  if node.contains_if() or node.contains_require_or_assert() and "address(0)" not in str(node):
+    for i in range(len(ctx.function.parameters)):
+      param = ctx.function.parameters[i]
+      if isinstance(param, LocalVariable) and not isinstance(param.type, ArrayType): # only look for checks on single addresses, not on path (which most likely will be length)
+        if param in node.local_variables_read:
+          ctx.args_tainted_mask[i] = False
+          ctx.entrypoint_params_index_dependency[i] = False
+
+
+  for ir in node.irs:
+    # check for external calls 
+    if isinstance(ir, HighLevelCall):
+      for i in range(len(swap_functions)): # check if 
+        if hasattr(ir.function, "name") and ir.function.name == swap_functions[i] and len(ir.arguments) >= swap_route_arg_pos[i] + 1:
+          path_argument = ir.arguments[swap_route_arg_pos[i]]
+          tainted_indexes = is_dependent_on_any_tainted(path_argument, ctx.function.parameters, ctx.args_tainted_mask, ctx.function)
+          if len(tainted_indexes):
+            if not (ctx.function.name == ctx.entry_point.name and ctx.function.name in swap_functions):
+              _ctx = ctx.make_copy()
+              # list entry parameters used to compute the route 
+              entry_params_used = []
+              for ti in tainted_indexes: # indici dei parametri della funzione corrente, da cui dipende la path
+                for pi in ctx.entrypoint_params_index_dependency[ti]: # indici dei parametri dell'entrypoint 
+                  entry_params_used.append(ctx.entry_point.parameters[pi].name)
+              ctx.hits.append(Hit(_ctx.entry_point, _ctx.function, path_argument.name, _ctx.call_chain, entry_params_used, swap_functions[i]))
+
+    # internal call to inspect
+    elif isinstance(ir, InternalCall):
+      # prepare new context for the callee
+      ctx_callee = ctx.make_copy()
+      ctx_callee.call_chain.append(ir.function.name)
+      # map tainted bool mask from caller parameters to callee arguments
+      taint_mask = []
+      ctx_callee.entrypoint_params_index_dependency = [[] for i in range(len(ir.arguments))] # empty out to fill in the coming loop
+      for i in range(len(ir.arguments)):
+        carg = ir.arguments[i]
+        tainted_indexes = is_dependent_on_any_tainted(carg, ctx.function.parameters, ctx.args_tainted_mask, ctx.function)
+        taint_mask.append(True if len(tainted_indexes) else False)
+        for ti in tainted_indexes:
+          for epi in ctx.entrypoint_params_index_dependency[ti]:
+            ctx_callee.entrypoint_params_index_dependency[i].append(epi)
+
+      ctx_callee.args_tainted_mask = taint_mask
+      ctx_callee.function = ir.function
+      check_function(ir.function.entry_point, ctx_callee)
+      if len(ctx_callee.hits) > len(ctx.hits): # callee has new hits
+        for i in range(len(ctx_callee.hits), len(ctx.hits)):
+          ctx.hits.append(ctx_callee.hits[i])
+
+  # sons inspection
+  ret = False
+  for son in node.sons:
+      ret = ret or check_function(son, ctx) # ctx by reference to get it populated with flags
+  return ret
+
+
+def is_dependent_on_any_tainted(checked_var: LocalVariable, vars_list: List[LocalVariable], tainted_mask: List[bool], context) -> List[int]:
+  ret: List[int] = []
+  if not type(checked_var) is list: # can be list eg foo([bar, 0], par)
+    checked_var = [checked_var]
+  for i in range(len(checked_var)):
+    if not isinstance(checked_var[i], LocalVariable):
+      continue
+    if not len(vars_list) == len(tainted_mask):
+      print("ERROR: Mismatch array length vars_list vs tainted_mask")
+      return []
+    for j in range(len(vars_list)):
+      if not tainted_mask[j]: 
+        continue
+      if is_dependent(checked_var[i], vars_list[j], context):
+        ret.append(j)
+  return ret
+
+
+def get_inherited_contracts(contract: Contract) -> List[str]:
+    return list(x.name for x in contract.inheritance)
+
+def is_modifier_protected(func: Function) -> bool:
+  bannedPattern = ['admin', 'owner', 'role', 'only', 'permission', 'initializ', 'auth']
+  for mod in func.modifiers:
+    if any(x in mod.name.lower() for x in bannedPattern):
+      return True
+  return False
 
 class UniswapV2(AbstractDetector):
     """
@@ -125,11 +313,10 @@ class UniswapV2(AbstractDetector):
                             return True
         return False
 
-    #TODO детектить сет адресов в важных функциях через параметры, детектить в сторадж переменных
     def _has_bad_token(self, fun: Function) -> bool:
         """Checks if deflationary or rebase tokens are used"""
         absolute_path = os.path.dirname(__file__)
-        relative_path = "../../utils/deflat_tokens.json"
+        relative_path = "../utils/deflat_tokens.json"
         full_path = os.path.join(absolute_path, relative_path)
         fileJson = open(full_path)
         data = json.load(fileJson)
@@ -145,8 +332,28 @@ class UniswapV2(AbstractDetector):
     def _detect(self) -> List[Output]:
         """Main function"""
         res = []
+        results_raw: List[Hit] = []
+        results: List[Output] = []
         if "pess-uni-v2" in sys.argv:   # launch only if detector in terminal is present
             for contract in self.compilation_unit.contracts_derived:
+                results_raw += check_contract(contract)
+                for f in results_raw:
+                    info = [
+                    f"Tainted route '",
+                    f.param_name,
+                    "' for function '",
+                    f.swap_func,
+                    "'\n in function '",
+                    f.hit_function,
+                    "'\n from entry point '",
+                    f.entry_point,
+                    "'\n Call chain (one of the possible ones): ",
+                    str(f.call_chain),
+                    "\n Entrypoint params used: ",
+                    str(f.entry_params_used),
+                    "\n\n"
+                    ]
+                    res.append(self.generate_result(info))
                 pair_used = self._pair_used(contract)
                 for f in contract.functions:
                     pair_balance_used = self._pair_balance_used(f)
