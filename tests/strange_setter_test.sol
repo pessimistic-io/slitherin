@@ -19,6 +19,11 @@ contract StrangeSetter {
         a = setter;
     }
 
+    function set_vulnerable_mapping(uint256 _toSet) external onlyOwner {
+        uint256 vars = _toSet;
+        toSet = vars;
+    }
+
     function setBuilder(bytes32 nameHash, address builder) public onlyOwner{
         s_builders[nameHash] = builder;
     }
@@ -44,5 +49,9 @@ contract StrangeConstructor {
         uint256 local_set;
         local_set = _setter + 10;
     }
+}
+
+contract OkConstructor {    //if constructor has no parameters or is empty - do not detect
+    constructor(){}
 }
 
