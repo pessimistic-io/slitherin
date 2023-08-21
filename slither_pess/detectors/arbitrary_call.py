@@ -1,4 +1,7 @@
-from typing import List, Optional, Tuple
+from collections import namedtuple
+from dataclasses import dataclass
+from typing import Dict, List, Optional, Tuple, Set
+
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
 from slither.slithir.operations import TypeConversion, Operation
 from slither.core.declarations import (
@@ -11,7 +14,7 @@ from slither.slithir.operations import LowLevelCall
 from slither.analyses.data_dependency.data_dependency import is_dependent, is_tainted
 
 
-# TODO:
+# TODO/Possible improvements:
 # look for transferFroms if there is any transferFrom and contract contains whole arbitrary call - it is screwed
 # Construct callstack on how the destination/args could be tainted
 
@@ -33,30 +36,34 @@ class ArbitraryCall(AbstractDetector):
     WIKI_EXPLOIT_SCENARIO = "Attacker can manipulate on inputs"
     WIKI_RECOMMENDATION = "Do not allow arbitrary calls"
 
-    def analyze_function(self, function: FunctionContract) -> List[Tuple[str, str]]:
+    def analyze_function(
+        self, function: FunctionContract
+    ) -> List[Tuple[FunctionContract, Node, LowLevelCall, bool, bool]]:
         results = []
         for node in function.nodes:
             for ir in node.irs:
                 try:
                     if isinstance(ir, LowLevelCall):
                         destination_tainted = is_tainted(ir.destination, node, True)
-                        if destination_tainted and ir.destination == "this":
-                            # TODO: check this
+                        if (
+                            destination_tainted
+                            and ir.destination == SolidityVariableComposed("msg.sender")
+                        ):
+                            # We don't care about msg.sender, since will be only reentrancy issue
                             destination_tainted = False
                         args_tainted = any(
                             is_tainted(arg, node, True) for arg in ir.arguments
                         )  # seems like ir.arguments = [data] for all low-level calls
-
-                        if destination_tainted and args_tainted:
-                            # attacker can manipulate on the whole call
-                            results.append(f"The whole call is tainted:{node}")
-                            print(f"The whole call is tainted:{node}")
-                        elif destination_tainted:
-                            results.append(f"The destination tainted:{node}")
-                            print(f"The destination tainted:{node}")
-                        elif args_tainted:
-                            results.append(f"The whole call is tainted:{node}")
-                            print(f"The whole call is tainted:{node}")
+                        if args_tainted or destination_tainted:
+                            results.append(
+                                (
+                                    function,
+                                    node,
+                                    ir,
+                                    args_tainted,
+                                    destination_tainted,
+                                )
+                            )
 
                 except Exception as e:
                     print("ArbitraryCall:Failed to check types", e)
@@ -66,28 +73,59 @@ class ArbitraryCall(AbstractDetector):
 
     def analyze_contract(self, contract: Contract):
         stores_approve = False
+        all_tainted_calls: List[Tuple[Node, LowLevelCall, bool, bool]] = []
+        results = []
         for f in contract.functions:
             res = self.analyze_function(f)
             if res:
-                print(contract, res)
+                all_tainted_calls.extend(res)
+
+        for call_fn, node, ir, args_tainted, destination_tainted in all_tainted_calls:
+            info = ["Manipulated call found: ", node, " in ", call_fn, "\n"]
+            if args_tainted and destination_tainted:
+                text = "Both destination and calldata could be manipulated"
+            else:
+                part = "calldata" if args_tainted else "destination"
+                text = f"Only the {part} could be manipulated"
+            info += [f"{text}\n"]
+
+            for f in contract.functions:
+                if f.visibility not in ["external", "public"]:
+                    continue
+
+                fn_taints_args = False
+                fn_taints_destination = False
+
+                if args_tainted and any(
+                    is_dependent(ir.arguments[0], fn_arg, node)
+                    for fn_arg in f.variables
+                ):
+                    fn_taints_args = True
+
+                if destination_tainted and any(
+                    is_dependent(ir.destination, fn_arg, node) for fn_arg in f.variables
+                ):
+                    fn_taints_destination = True
+
+                if not (fn_taints_args or fn_taints_destination):
+                    continue
+
+                if fn_taints_args and fn_taints_destination:
+                    text = "The call could be fully manipulated (arbitrary call)"
+                else:
+                    part = "calldata" if fn_taints_args else "destination"
+                    text = "The calldata could be manipulated"
+                info += [f"\t{text} through ", f, "\n"]
+
+            res = self.generate_result(info)
+            res.add(node)
+            results.append(res)
+        return results
 
     def _detect(self):
         results = []
         for contract in self.compilation_unit.contracts_derived:
-            self.analyze_contract(contract)
-            # for f in contract.functions:
-            #     func_res = self.get_dubious_typecasts(f)
-            #     if func_res:
-            #         info = ["Dubious typecast in ", f, ":\n"]
-            #         for node, node_res in func_res:
-            #             for from_type, to_type in node_res:
-            #                 info += [
-            #                     f"\t{str(from_type)} => {str(to_type)} casting occurs in ",
-            #                     node,
-            #                     "\n",
-            #                 ]
-            #         res = self.generate_result(info)
-            #         res.add(f)
-            #         results.append(res)
-
+            r = self.analyze_contract(contract)
+            if r:
+                results.extend(r)
         return results

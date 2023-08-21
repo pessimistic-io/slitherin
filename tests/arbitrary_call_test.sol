@@ -19,12 +19,28 @@ contract Test {
         toAddress.call(abi.encodePacked(callData, data));
     }
 
+    function _makeCallToThis(bytes memory data) private {
+        address(this).call(data);
+    }
+
+    function _makeCallNoData(address to) private {
+        to.call("");
+    }
+
     function publicCallArbitraty(address to, bytes memory data) public {
         //This is vulnerable
         _makeCall(to, data);
         _makeCall2(to);
         _makeCall3(data);
         _makeCall4(data);
+        _makeCallToThis(data);
+        _makeCallNoData(to);
+    }
+
+    function calldataHalfManipulated(bytes memory data) public {
+        bytes4 selector = 0xffffffff;
+        bytes memory _calldata = abi.encodeWithSelector(selector, data);
+        _makeCall3(data);
     }
 
     function publicNonArbitraryCall() public {
