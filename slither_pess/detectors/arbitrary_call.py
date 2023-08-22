@@ -16,7 +16,7 @@ from slither.analyses.data_dependency.data_dependency import is_dependent, is_ta
 
 # TODO/Possible improvements:
 # look for transferFroms if there is any transferFrom and contract contains whole arbitrary call - it is screwed
-# Construct callstack on how the destination/args could be tainted
+# Filter out role protected
 
 
 class ArbitraryCall(AbstractDetector):
@@ -73,7 +73,9 @@ class ArbitraryCall(AbstractDetector):
 
     def analyze_contract(self, contract: Contract):
         stores_approve = False
-        all_tainted_calls: List[Tuple[Node, LowLevelCall, bool, bool]] = []
+        all_tainted_calls: List[
+            Tuple[FunctionContract, Node, LowLevelCall, bool, bool]
+        ] = []
         results = []
         for f in contract.functions:
             res = self.analyze_function(f)
