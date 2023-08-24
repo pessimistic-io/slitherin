@@ -30,7 +30,9 @@ class ArbitraryCall(AbstractDetector):
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.LOW
 
-    WIKI = "https://github.com/pessimistic-io/slitherin/blob/master/docs/dubious_typecast.md"
+    WIKI = (
+        "https://github.com/pessimistic-io/slitherin/blob/master/docs/arbitrary_call.md"
+    )
     WIKI_TITLE = "Arbitrary calls"
     WIKI_DESCRIPTION = "Check docs"
     WIKI_EXPLOIT_SCENARIO = "Attacker can manipulate on inputs"
