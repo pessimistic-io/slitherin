@@ -40,6 +40,7 @@ contract Test {
     function calldataHalfManipulated(bytes memory data) public {
         bytes4 selector = 0xffffffff;
         bytes memory _calldata = abi.encodeWithSelector(selector, data);
+        //this will also be considered as fully vulnerable, even though user cannot fully manipulate the calldata
         _makeCall3(data);
     }
 

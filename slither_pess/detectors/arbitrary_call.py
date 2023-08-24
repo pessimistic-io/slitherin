@@ -116,7 +116,7 @@ class ArbitraryCall(AbstractDetector):
                     text = "The call could be fully manipulated (arbitrary call)"
                 else:
                     part = "calldata" if fn_taints_args else "destination"
-                    text = "The calldata could be manipulated"
+                    text = f"The {part} could be manipulated"
                 info += [f"\t{text} through ", f, "\n"]
 
             res = self.generate_result(info)
