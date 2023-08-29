@@ -2,9 +2,9 @@
 
 ## Configuration
 
-- Check: `pess-before-token-transfer`
-- Severity: `Low`
-- Confidence: `High`
+- Check: `pess-arbitrary-call`
+- Severity: `High`
+- Confidence: `Low`
 
 ## Description
 
@@ -12,7 +12,7 @@ The detector iterates over all low-level calls, checks if the destination or cal
 
 ### Potential Improvement
 
-Find functions without virtual modifier and a call of a parent function without super.
+Filter out role protected calls, divide detector to multiple detectors with different severity and confidence
 
 ## Vulnerable Scenario
 
