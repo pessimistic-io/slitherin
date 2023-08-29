@@ -1,3 +1,4 @@
+from slither_pess.detectors.arbitrary_call import ArbitraryCall
 from slither_pess.detectors.double_entry_token_possibility import (
     DoubleEntryTokenPossiblity,
 )
@@ -42,6 +43,7 @@ def make_plugin():
         UniswapV2,
         TokenFallback,
         ForContinueIncrement,
+        ArbitraryCall,
     ]
     plugin_printers = []
 
