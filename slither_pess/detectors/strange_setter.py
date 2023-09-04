@@ -33,12 +33,13 @@ class StrangeSetter(AbstractDetector):
         for (
             fin
         ) in fun.internal_calls:  # branch with for-loop for setters in internal calls
-            for param in fin.parameters:
-                for n in fin.nodes:
-                    if n.state_variables_written and str(param) in str(
-                        n
-                    ):  # check if there's a state variable setter using function parameters
-                        return False
+            if isinstance(fin, Function):
+                for param in fin.parameters:
+                    for n in fin.nodes:
+                        if n.state_variables_written and str(param) in str(
+                            n
+                        ):  # check if there's a state variable setter using function parameters
+                            return False
         for param in fun.parameters:
             if fun.state_variables_written:
                 for n in fun.nodes:
@@ -64,7 +65,7 @@ class StrangeSetter(AbstractDetector):
                         )  # adding functions to an overridden list
                         if f.name == "constructor":
                             x = self._is_strange_constructor(f)
-                        if (
+                        elif (
                             f.name.startswith("set")
                             and not f in overriden_funtions
                             and len(f.nodes) != 0
