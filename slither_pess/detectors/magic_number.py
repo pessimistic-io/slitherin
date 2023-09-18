@@ -45,7 +45,6 @@ class MagicNumber(AbstractDetector):
                     r"\W\d+e\d+|\W\d+[_*\d]*", nodeString
                 )  # regular expression to get numbers
                 if lit:
-                    print(lit)
                     magic_number = lit[0]
                     index = (
                         len(magic_number) - 1
@@ -72,8 +71,6 @@ class MagicNumber(AbstractDetector):
         for contract_used_count in all_used_counts:
             for num, data in contract_used_count.items():
                 if num:
-                    l = []
-                    pre = "magic number"
                     if data["count"] < 2:
                         continue
                     info = [f"Magic number {num} is used multiple times in:\n"]
