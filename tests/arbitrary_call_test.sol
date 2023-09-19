@@ -56,4 +56,104 @@ contract Test {
     function semiArbitraryCall2(bytes calldata data) external {
         _makeCall(toAddress, data);
     }
+
+    function assembly_delegateCall_full_tainted(
+        address target,
+        address data
+    ) public returns (bytes memory response) {
+        // call contract in current context
+        bytes memory _data = abi.encodeWithSignature("relay(address)", data);
+        assembly {
+            let succeeded := delegatecall(
+                sub(gas(), 5000),
+                target,
+                add(_data, 0x20),
+                mload(_data),
+                0,
+                0
+            )
+            let size := returndatasize()
+
+            response := mload(0x40)
+            mstore(
+                0x40,
+                add(response, and(add(add(size, 0x20), 0x1f), not(0x1f)))
+            )
+            mstore(response, size)
+            returndatacopy(add(response, 0x20), 0, size)
+
+            switch iszero(succeeded)
+            case 1 {
+                // throw if delegatecall failed
+                revert(add(response, 0x20), size)
+            }
+        }
+    }
+
+    function assembly_delegateCall_only_data_tainted(
+        address data
+    ) public returns (bytes memory response) {
+        // call contract in current context
+        bytes memory _data = abi.encodeWithSignature("relay(address)", data);
+        address target = toAddress;
+        assembly {
+            let succeeded := delegatecall(
+                sub(gas(), 5000),
+                target,
+                add(_data, 0x20),
+                mload(_data),
+                0,
+                0
+            )
+            let size := returndatasize()
+
+            response := mload(0x40)
+            mstore(
+                0x40,
+                add(response, and(add(add(size, 0x20), 0x1f), not(0x1f)))
+            )
+            mstore(response, size)
+            returndatacopy(add(response, 0x20), 0, size)
+
+            switch iszero(succeeded)
+            case 1 {
+                // throw if delegatecall failed
+                revert(add(response, 0x20), size)
+            }
+        }
+    }
+
+    function assembly_call_full_tainted(
+        address target,
+        address data
+    ) public returns (bytes memory response) {
+        // call contract in current context
+        bytes memory _data = abi.encodeWithSignature("dosmth(address)", data);
+        assembly {
+            let succeeded := call(
+                sub(gas(), 5000),
+                target,
+                0,
+                add(_data, 0x20),
+                mload(_data),
+                0,
+                0
+            )
+            let size := returndatasize()
+
+            response := mload(0x40)
+            mstore(
+                0x40,
+                add(response, and(add(add(size, 0x20), 0x1f), not(0x1f)))
+            )
+            mstore(response, size)
+            returndatacopy(add(response, 0x20), 0, size)
+
+            switch iszero(succeeded)
+            case 1 {
+                // throw if delegatecall failed
+                revert(add(response, 0x20), size)
+            }
+        }
+    }
 }

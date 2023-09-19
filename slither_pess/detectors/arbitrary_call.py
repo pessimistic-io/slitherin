@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple, Set
 
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
-from slither.slithir.operations import TypeConversion, Operation
+from slither.slithir.operations import TypeConversion, Operation, SolidityCall
 from slither.core.declarations import (
     Contract,
     SolidityVariableComposed,
@@ -45,6 +45,8 @@ class ArbitraryCall(AbstractDetector):
         for node in function.nodes:
             for ir in node.irs:
                 try:
+                    destination_tainted = False
+                    args_tainted = False
                     if isinstance(ir, LowLevelCall):
                         destination_tainted = is_tainted(ir.destination, node, True)
                         if (
@@ -56,17 +58,36 @@ class ArbitraryCall(AbstractDetector):
                         args_tainted = any(
                             is_tainted(arg, node, True) for arg in ir.arguments
                         )  # seems like ir.arguments = [data] for all low-level calls
-                        if args_tainted or destination_tainted:
-                            results.append(
-                                (
-                                    function,
-                                    node,
-                                    ir,
-                                    args_tainted,
-                                    destination_tainted,
-                                )
-                            )
 
+                    elif (
+                        isinstance(ir, SolidityCall)
+                        and ir.function.name
+                        == "delegatecall(uint256,uint256,uint256,uint256,uint256,uint256)"
+                    ):
+                        # delegatecall
+                        destination_tainted = is_tainted(ir.arguments[1], node, True)
+                        # #args_tainted = is_tainted(ir.arguments[2], node, True)
+                        # for delegateCall we don't actually care about args, since
+                        # for all proxies, user fully sets args
+                    elif (
+                        isinstance(ir, SolidityCall)
+                        and ir.function.name
+                        == "call(uint256,uint256,uint256,uint256,uint256,uint256,uint256)"
+                    ):
+                        # call()
+                        destination_tainted = is_tainted(ir.arguments[1], node, True)
+                        args_tainted = is_tainted(ir.arguments[3], node, True)
+
+                    if args_tainted or destination_tainted:
+                        results.append(
+                            (
+                                function,
+                                node,
+                                ir,
+                                args_tainted,
+                                destination_tainted,
+                            )
+                        )
                 except Exception as e:
                     print("ArbitraryCall:Failed to check types", e)
                     print(ir)
@@ -99,15 +120,19 @@ class ArbitraryCall(AbstractDetector):
 
                 fn_taints_args = False
                 fn_taints_destination = False
-
+                args = (
+                    ir.arguments[0] if isinstance(ir, LowLevelCall) else ir.arguments[3]
+                )
                 if args_tainted and any(
-                    is_dependent(ir.arguments[0], fn_arg, node)
-                    for fn_arg in f.variables
+                    is_dependent(args, fn_arg, node) for fn_arg in f.variables
                 ):
                     fn_taints_args = True
 
+                destination = (
+                    ir.destination if isinstance(ir, LowLevelCall) else ir.arguments[1]
+                )
                 if destination_tainted and any(
-                    is_dependent(ir.destination, fn_arg, node) for fn_arg in f.variables
+                    is_dependent(destination, fn_arg, node) for fn_arg in f.variables
                 ):
                     fn_taints_destination = True
 
