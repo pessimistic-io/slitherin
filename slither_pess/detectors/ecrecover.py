@@ -27,8 +27,8 @@ class Ecrecover(AbstractDetector):
 
     ARGUMENT = "pess-ecrecover"  # slither will launch the detector with slither.py --detect mydetector
     HELP = "signer = ecrecover(hash, v, r, s)"
-    IMPACT = DetectorClassification.MEDIUM
-    CONFIDENCE = DetectorClassification.HIGH
+    IMPACT = DetectorClassification.HIGH
+    CONFIDENCE = DetectorClassification.MEDIUM
 
     WIKI = "https://github.com/pessimistic-io/slitherin/blob/master/docs/ecrecover.md"
     WIKI_TITLE = "Ecrecover"
