@@ -21,6 +21,7 @@ from slither_pess.detectors.uni_v2 import UniswapV2
 from slither_pess.detectors.token_fallback import TokenFallback
 from slither_pess.detectors.for_continue_increment import ForContinueIncrement
 from slither_pess.detectors.ecrecover import Ecrecover
+from slither_pess.detectors.public_vs_external import PublicVsExternal
 
 
 def make_plugin():
@@ -46,6 +47,7 @@ def make_plugin():
         ForContinueIncrement,
         ArbitraryCall,
         Ecrecover,
+        PublicVsExternal,
     ]
     plugin_printers = []
 
