@@ -1,7 +1,7 @@
 from typing import List
 from slither.utils.output import Output
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
-from slither.core.declarations import Function, Contract
+from slither.core.declarations import Contract
 
 
 class PublicVsExternal(AbstractDetector):
