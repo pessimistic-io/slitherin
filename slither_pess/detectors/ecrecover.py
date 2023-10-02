@@ -1,23 +1,17 @@
-from collections import namedtuple
-from dataclasses import dataclass
 import re
-from typing import Dict, List, Optional, Tuple, Set
+from typing import List, Tuple
 
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
 from slither.slithir.operations import (
-    TypeConversion,
-    Operation,
     SolidityCall,
     Condition,
 )
 from slither.core.declarations import (
-    Contract,
-    SolidityVariableComposed,
     FunctionContract,
 )
 from slither.core.cfg.node import Node
 from slither.slithir.operations import LowLevelCall
-from slither.analyses.data_dependency.data_dependency import is_dependent, is_tainted
+from slither.analyses.data_dependency.data_dependency import is_dependent
 
 
 class Ecrecover(AbstractDetector):

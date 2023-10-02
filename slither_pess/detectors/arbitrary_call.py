@@ -1,9 +1,7 @@
-from collections import namedtuple
-from dataclasses import dataclass
-from typing import Dict, List, Optional, Tuple, Set
+from typing import List, Tuple
 
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
-from slither.slithir.operations import TypeConversion, Operation, SolidityCall
+from slither.slithir.operations import SolidityCall
 from slither.core.declarations import (
     Contract,
     SolidityVariableComposed,

@@ -16,10 +16,8 @@ from .reentrancy.reentrancy import (
     union_dict,
     _filter_if,
     is_subset,
-    dict_are_equal,
 )
-from slither.slithir.operations import Send, Transfer, EventCall
-from slither.slithir.operations import Call
+from slither.slithir.operations import EventCall
 
 FindingKey = namedtuple("FindingKey", ["function", "calls"])
 FindingValue = namedtuple("FindingValue", ["variable", "written_at", "node", "nodes"])

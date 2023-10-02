@@ -1,6 +1,6 @@
 from slither.core.cfg.node import NodeType
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
-from slither.core.declarations import Contract, Function, SolidityVariableComposed
+from slither.core.declarations import SolidityVariableComposed
 from slither.analyses.data_dependency.data_dependency import is_dependent
 
 
