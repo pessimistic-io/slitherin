@@ -2,6 +2,7 @@ from typing import List
 from slither.utils.output import Output
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
 from slither.core.declarations import Function
+from slither.core.variables.variable import Variable
 
 
 class UnprotectedInitialize(AbstractDetector):
@@ -38,8 +39,9 @@ class UnprotectedInitialize(AbstractDetector):
         for node in fun.nodes:
             if "require" in str(node):
                 for variable in node.variables_read:
-                    if str(variable.type) == "address":
-                        return True
+                    if isinstance(variable, Variable):
+                        if str(variable.type) == "address":
+                            return True
         return False
 
     def _detect(self) -> List[Output]:
