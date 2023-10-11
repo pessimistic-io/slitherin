@@ -1,8 +1,8 @@
 name: notification
 
 on:
-  push:
-    branches: [ master ]
+  release:
+    types: [ published ]
 
 jobs:
 
@@ -15,4 +15,4 @@ jobs:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.BOT_TOKEN }}
         message: |
-         Master branch received updates. Pull new features from https://github.com/pessimistic-io/slitherin.
+         New version of Slitherin got realeased. Pull updates from here: https://github.com/pessimistic-io/slitherin or update a Python package: https://pypi.org/project/slitherin/. Release note: https://github.com/pessimistic-io/slitherin/releases
