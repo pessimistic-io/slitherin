@@ -3,7 +3,7 @@
 ## Configuration
 
 - Check: `pess-public-vs-external`
-- Severity: `High`
+- Severity: `Low`
 - Confidence: `Medium`
 
 ## Description
