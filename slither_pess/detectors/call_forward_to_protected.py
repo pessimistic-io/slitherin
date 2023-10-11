@@ -27,7 +27,7 @@ class CallForwardToProtected(AbstractDetector):
 
     def _detect_low_level_custom_address_call(self, fun: Function) -> bool:
         address_parameters = [
-            parameter for parameter in fun.parameters if str(parameter.type) == "address"
+            parameter for parameter in fun.parameters if str(parameter.type) == "address" and parameter.name
         ]
         for node in fun.nodes:
             if self._contains_low_level_calls(node):
