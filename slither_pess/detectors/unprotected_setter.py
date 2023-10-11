@@ -30,12 +30,13 @@ class UnprotectedSetter(AbstractDetector):
                         left = lr[0]
                         right = lr[1]
                         for p in params:
-                            if "." in left:
-                                continue
-                            if "[" in left:
-                                continue
-                            if right == str(p):
-                                return left
+                            if p.name:
+                                if "." in left:
+                                    continue
+                                if "[" in left:
+                                    continue
+                                if right == str(p):
+                                    return left
         return None
 
     def has_access_control(self, fun):
