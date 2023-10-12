@@ -161,6 +161,8 @@ Our team would like to express our deepest gratitude to the [Slither tool](https
 - [Blockthreat](https://newsletter.blockthreat.io/p/blockthreat-week-16-2023#:~:text=Slitherin%20a%20collection%20of%20Slither%20detection%20by%20Pessimistic.io%20team)
 - [Release article by officercia.eth](https://officercia.mirror.xyz/ucWYWnhBXmkKq54BIdJcH5GnrAB-nQkUsZ2F-ytEsR4)
 - [Defillama](https://t.me/defillama_tg/842)
+- [ETH Belgrade](https://www.youtube.com/watch?v=CU9JAqGY5h8&t=3s) talk
+- Integrated into [AuditWizard](https://app.auditwizard.io/)
 
 ## Thank you!
 
@@ -173,5 +175,12 @@ Our team would like to express our deepest gratitude to the [Slither tool](https
 #### For our part, we'll do everything in our power to ensure that this project continues to grow successfully in terms of both code and technology as well as community and professional interaction! We sincerely hope you find our work useful and appreciate any feedback, so please do not hesitate to [contact us](mailto:gm@pessimistic.io)!
 
 [![Mail](https://img.shields.io/badge/Mail-gm%40pessimistic.io-orange?style=flat-square&logo=appveyor?logo=data:https://pessimistic.io/favicon.ico)](mailto:gm@pessimistic.io)
+
+---
+> Pessimistic delivers trusted security audits since 2017.
+\
+> Require expert oversight of your safety?
+\
+> Explore our services at [pessimistic.io](https://pessimistic.io/).
 
 #
