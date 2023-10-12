@@ -79,7 +79,7 @@ pip install slitherin
 
 - *Valid - issues included in reports and fixed by developers (January 2023 - June 2023).
 
-- There is one detector that is disabled by default: [pess-uni-v2](https://github.com/pessimistic-io/slitherin/blob/master/slither_pess/detectors/uni_v2.py). **It is recommended to run it only on projects that integrate [Uniswap V2](https://betterprogramming.pub/uniswap-v2-in-depth-98075c826254)!**
+- There is one integration detector which has several checks inside: [pess-uni-v2](https://github.com/pessimistic-io/slitherin/blob/master/slither_pess/detectors/uni_v2.py). **It runs only on projects that integrate [Uniswap V2](https://betterprogramming.pub/uniswap-v2-in-depth-98075c826254)!**
 
 ## Enhancements & New Detectors
 

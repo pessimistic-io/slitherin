@@ -1,4 +1,3 @@
-import copy
 from typing import List, Optional
 from slither.core.cfg.node import NodeType, Node
 from slither.core.declarations import Contract, Function

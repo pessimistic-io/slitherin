@@ -8,12 +8,12 @@ from slither import Slither
 from slither.core.compilation_unit import SlitherCompilationUnit
 from slither.utils.output import Output
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
-from slither.core.declarations import Function, Contract, FunctionContract
+from slither.core.declarations import Function, Contract
 from slither.core.expressions.type_conversion import TypeConversion
-from slither.core.cfg.node import NodeType, Node
+from slither.core.cfg.node import Node
 from slither.core.variables.local_variable import LocalVariable
 from slither.core.solidity_types.array_type import ArrayType
-from slither.slithir.operations import SolidityCall, InternalCall, HighLevelCall
+from slither.slithir.operations import InternalCall, HighLevelCall
 from slither.slithir.operations.assignment import Assignment
 from slither.analyses.data_dependency.data_dependency import is_dependent
 

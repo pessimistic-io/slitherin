@@ -10,7 +10,7 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/pessimistic-io/slitherin",
     author="Pessimistic.io",
-    version="0.3.0",
+    version="0.4.0",
     package_dir={"":"."},
     packages=find_packages(),
     license="AGPL-3.0",
