@@ -13,17 +13,13 @@ class BalancerReadonlyReentrancy(AbstractDetector):
     ARGUMENT = "pess-balancer-readonly-reentrancy"  # slither will launch the detector with slither.py --detect mydetector
     HELP = "Balancer readonly-reentrancy"
     IMPACT = DetectorClassification.HIGH
-    CONFIDENCE = DetectorClassification.HIGH
+    CONFIDENCE = DetectorClassification.MEDIUM
 
-    WIKI = (
-        "https://docs.openzeppelin.com/contracts/4.x/extending-contracts#rules_of_hooks"
-    )
-    WIKI_TITLE = "Before Token Transfer"
-    WIKI_DESCRIPTION = "Follow OZ documentation using their contracts"
+    WIKI = "https://github.com/pessimistic-io/slitherin/blob/master/docs/balancer/readonly_reentrancy.md"
+    WIKI_TITLE = "Balancer Readonly Reentrancy"
+    WIKI_DESCRIPTION = "Check docs"
     WIKI_EXPLOIT_SCENARIO = "-"
-    WIKI_RECOMMENDATION = (
-        "Make sure that beforeTokenTransfer function is used in the correct way."
-    )
+    WIKI_RECOMMENDATION = "Check docs"
 
     VULNERABLE_FUNCTION_CALLS = ["getRate", "getPoolTokens"]
     visited = []
