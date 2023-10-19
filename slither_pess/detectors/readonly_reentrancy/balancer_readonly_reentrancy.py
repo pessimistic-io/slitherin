@@ -11,8 +11,8 @@ class BalancerReadonlyReentrancy(AbstractDetector):
     """
 
     ARGUMENT = "pess-balancer-readonly-reentrancy"  # slither will launch the detector with slither.py --detect mydetector
-    HELP = "beforeTokenTransfer function does not follow OZ documentation"
-    IMPACT = DetectorClassification.LOW
+    HELP = "Balancer readonly-reentrancy"
+    IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.HIGH
 
     WIKI = (
@@ -51,6 +51,8 @@ class BalancerReadonlyReentrancy(AbstractDetector):
 
         for c, n in node.high_level_calls:
             if isinstance(n, Function):
+                if not n.name:
+                    continue
                 if (
                     n.name == "ensureNotInVaultContext"
                     and c.name == "VaultReentrancyLib"
@@ -76,21 +78,41 @@ class BalancerReadonlyReentrancy(AbstractDetector):
             for c, fc in n.high_level_calls:
                 if isinstance(fc, Function):
                     if fc.name in self.VULNERABLE_FUNCTION_CALLS:
-                        dangerous_call = fc
+                        dangerous_call = n  # Saving only first dangerous call
                         has_dangerous_call = True
                         break
 
         if has_dangerous_call and not any(
             [self._has_reentrancy_check(node) for node in function.nodes]
         ):
-            print("READONLY_REENTRANCY!!!")
+            return [dangerous_call]
+        return []
 
     def _detect(self) -> List[Output]:
         """Main function"""
-        res = []
+        result = []
         for contract in self.compilation_unit.contracts_derived:
             if not self.is_balancer_integration(contract):
                 continue
+            res = []
             for f in contract.functions_and_modifiers_declared:
-                self._check_function(f)
-        return res
+                function_result = self._check_function(f)
+                if function_result:
+                    res.extend(function_result)
+            if res:
+                info = [
+                    "Balancer readonly-reentrancy in vulnerability detected in ",
+                    contract,
+                    ":\n",
+                ]
+                for r in res:
+                    info += [
+                        "\tThe answer of ",
+                        r,
+                        " call could be manipulated through readonly-reentrancy\n",
+                    ]
+                res = self.generate_result(info)
+                res.add(r)
+                result.append(res)
+
+        return result
