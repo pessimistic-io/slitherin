@@ -14,7 +14,9 @@ from slither_pess.detectors.multiple_storage_read import MultipleStorageRead
 from slither_pess.detectors.timelock_controller import TimelockController
 from slither_pess.detectors.tx_gasprice_warning import TxGaspriceWarning
 from slither_pess.detectors.unprotected_initialize import UnprotectedInitialize
-from slither_pess.detectors.read_only_reentrancy import ReadOnlyReentrancy
+from slither_pess.detectors.readonly_reentrancy.read_only_reentrancy import (
+    ReadOnlyReentrancy,
+)
 from slither_pess.detectors.event_setter import EventSetter
 from slither_pess.detectors.before_token_transfer import BeforeTokenTransfer
 from slither_pess.detectors.uni_v2 import UniswapV2
@@ -22,6 +24,9 @@ from slither_pess.detectors.token_fallback import TokenFallback
 from slither_pess.detectors.for_continue_increment import ForContinueIncrement
 from slither_pess.detectors.ecrecover import Ecrecover
 from slither_pess.detectors.public_vs_external import PublicVsExternal
+from slither_pess.detectors.readonly_reentrancy.balancer_readonly_reentrancy import (
+    BalancerReadonlyReentrancy,
+)
 
 
 def make_plugin():
@@ -48,6 +53,7 @@ def make_plugin():
         ArbitraryCall,
         Ecrecover,
         PublicVsExternal,
+        BalancerReadonlyReentrancy,
     ]
     plugin_printers = []
 
