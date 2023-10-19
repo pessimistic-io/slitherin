@@ -97,7 +97,7 @@ class BalancerReadonlyReentrancy(AbstractDetector):
                     res.extend(function_result)
             if res:
                 info = [
-                    "Balancer readonly-reentrancy in vulnerability detected in ",
+                    "Balancer readonly-reentrancy vulnerability detected in ",
                     contract,
                     ":\n",
                 ]
