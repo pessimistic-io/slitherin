@@ -41,7 +41,7 @@ class UnprotectedSetter(AbstractDetector):
 
     def has_access_control(self, fun):
         for m in fun.modifiers:
-            for m.name in ["initializer", "onlyOwner"]:
+            if m.name in ["initializer", "onlyOwner"] or m.name.startswith("only"):
                 return True
         if fun.visibility in ["internal", "private"]:
             return True

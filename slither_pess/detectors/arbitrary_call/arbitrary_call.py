@@ -69,6 +69,12 @@ class ArbitraryCall(AbstractDetector):
     WIKI_EXPLOIT_SCENARIO = "Attacker can manipulate on inputs"
     WIKI_RECOMMENDATION = "Do not allow arbitrary calls"
 
+    def _is_role_protected(self, function: FunctionContract):
+        for m in function.modifiers:
+            if m.name.startswith("only"):
+                return True
+        return False
+
     def analyze_function(
         self, function: FunctionContract
     ) -> Tuple[
@@ -157,6 +163,8 @@ class ArbitraryCall(AbstractDetector):
 
             for f in contract.functions:
                 if f.visibility not in ["external", "public"]:
+                    continue
+                if self._is_role_protected(f):
                     continue
 
                 fn_taints_args = False

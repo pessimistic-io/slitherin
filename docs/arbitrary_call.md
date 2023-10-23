@@ -25,7 +25,7 @@ This detector consists of multiple detectors, which will run with this detector.
 
 ### Potential Improvement
 
-Filter out role protected calls, divide detector to multiple detectors with different severity and confidence
+Filter out proxy results
 
 ## Vulnerable Scenario
 
