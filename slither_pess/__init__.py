@@ -24,31 +24,32 @@ from slither_pess.detectors.ecrecover import Ecrecover
 from slither_pess.detectors.public_vs_external import PublicVsExternal
 
 
-def make_plugin():
-    plugin_detectors = [
-        DoubleEntryTokenPossiblity,
-        UnprotectedSetter,
-        NftApproveWarning,
-        InconsistentNonreentrant,
-        StrangeSetter,
-        OnlyEOACheck,
-        MagicNumber,
-        DubiousTypecast,
-        CallForwardToProtected,
-        MultipleStorageRead,
-        TimelockController,
-        TxGaspriceWarning,
-        UnprotectedInitialize,
-        ReadOnlyReentrancy,
-        EventSetter,
-        BeforeTokenTransfer,
-        UniswapV2,
-        TokenFallback,
-        ForContinueIncrement,
-        ArbitraryCall,
-        Ecrecover,
-        PublicVsExternal,
-    ]
-    plugin_printers = []
+plugin_detectors = [
+    DoubleEntryTokenPossiblity,
+    UnprotectedSetter,
+    NftApproveWarning,
+    InconsistentNonreentrant,
+    StrangeSetter,
+    OnlyEOACheck,
+    MagicNumber,
+    DubiousTypecast,
+    CallForwardToProtected,
+    MultipleStorageRead,
+    TimelockController,
+    TxGaspriceWarning,
+    UnprotectedInitialize,
+    ReadOnlyReentrancy,
+    EventSetter,
+    BeforeTokenTransfer,
+    UniswapV2,
+    TokenFallback,
+    ForContinueIncrement,
+    ArbitraryCall,
+    Ecrecover,
+    PublicVsExternal,
+]
+plugin_printers = []
 
+
+def make_plugin():
     return plugin_detectors, plugin_printers
