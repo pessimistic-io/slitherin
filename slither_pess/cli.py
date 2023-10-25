@@ -4,19 +4,29 @@ from typing import List, Any, Optional
 import subprocess
 import os
 import shutil
+import pty
 from pathlib import Path
 import slither_pess
+from pkg_resources import iter_entry_points
 
 SLITHERIN_VERSION = "0.4.0"
 
 
 def slitherin_detectors_list_as_arguments() -> str:
-    return ", ".join([detector.ARGUMENT for detector in slither_pess.plugin_detectors])
+    return ",".join([detector.ARGUMENT for detector in slither_pess.plugin_detectors])
 
 
 logging.basicConfig()
 LOGGER = logging.getLogger("slitherinLogger")
 LOGGER.setLevel(logging.INFO)
+
+output_bytes = []
+
+
+def read(fd):
+    data = os.read(fd, 1024)
+    output_bytes.append(data)
+    return data
 
 
 # this is modified version from : https://github.com/crytic/crytic-compile/blob/master/crytic_compile/utils/subprocess.py#L14
@@ -37,30 +47,7 @@ def run(
         subprocess_cwd,
     )
 
-    try:
-        process = subprocess.run(
-            cmd,
-            executable=subprocess_exe,
-            cwd=subprocess_cwd,
-            check=True,
-            capture_output=True,
-            text=True,
-            **kwargs,
-        )
-        if process.stdout:
-            print(process.stdout)
-        if process.stderr:
-            print(process.stderr)
-    except FileNotFoundError:
-        print(f"Could not execute {cmd[0]}, is it installed and in PATH?")
-    except subprocess.CalledProcessError as e:
-        print(f"{cmd[0]} returned non-zero exit code { e.returncode}")
-        if e.stdout:
-            print(e.stdout)
-        if e.stderr:
-            print(e.stderr)
-    except OSError:
-        print("OS error executing:", exc_info=True)
+    pty.spawn(cmd, read)  # this allows to print continuously and with colors
 
 
 def handle_list() -> None:
@@ -90,7 +77,7 @@ def handle_parser(args: argparse.Namespace, slither_args) -> None:
         )
         print("Only slitherin results:")
         run(
-            slither_with_args + ["--detect", slitherin_detectors],
+            slither_with_args + ["--ignore-compile", "--detect", slitherin_detectors],
         )
     else:
         run(slither_with_args)
@@ -133,14 +120,6 @@ def generate_argument_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Run slither detectors, then slitherin",
     )
-
-    # parser.add_argument("slither-args", nargs=argparse.REMAINDER)
-
-    # subcommands = parser.add_subparsers(dest="subcommands")
-
-    # list_parser = subcommands.add_parser("list", help="List all slitherin detectors")
-    # list_parser.set_defaults(func=handle_list)
-
     return parser
 
 
@@ -148,14 +127,18 @@ def main() -> None:
     """
     Handler for the "slitherin" command.
     """
+
     parser = generate_argument_parser()
-    # parsed = parser.parse_args()
     parsed, unknown = parser.parse_known_args()
 
+    # It turned out that argparse has no solution to parse unkown args and subcommands,
+    # so u need to parse subcommands manually
     if unknown and unknown[0] == "list":
         handle_list()
+        return
     if not unknown and not parsed._get_args():
         parser.print_help()
+        return
     handle_parser(parsed, unknown)
 
 

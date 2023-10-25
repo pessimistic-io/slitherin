@@ -21,7 +21,7 @@ setup(
         "dev": ["twine>=4.0.2"],
     },
     entry_points={
-        "slither_analyzer.plugin": "slither my-plugin=slither_pess:make_plugin",
+        "slither_analyzer.plugin": "slither slitherin-plugins=slither_pess:make_plugin",
         "console_scripts": ["slitherin=slither_pess.cli:main"],
     },
 )
