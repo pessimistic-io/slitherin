@@ -24,4 +24,5 @@ setup(
         "slither_analyzer.plugin": "slither slitherin-plugins=slither_pess:make_plugin",
         "console_scripts": ["slitherin=slither_pess.cli:main"],
     },
+    include_package_data=True,
 )
