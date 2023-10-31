@@ -15,19 +15,21 @@ from slither.analyses.data_dependency.data_dependency import is_dependent
 
 class AAVEFlashloanCallbackDetector(AbstractDetector):
     """
-    Detects not checked results of ecrecover
+    Detects if the flashloan callback `executeOperation` has `initiator` and `msg.sender` validation
     """
 
     ARGUMENT = "pess-aave-flashloan-callback"  # slither will launch the detector with slither.py --detect mydetector
-    HELP = "signer = ecrecover(hash, v, r, s)"
+    HELP = "see `executeOperation`callback docs"
     IMPACT = DetectorClassification.HIGH
-    CONFIDENCE = DetectorClassification.MEDIUM
+    CONFIDENCE = DetectorClassification.HIGH
 
-    WIKI = "https://github.com/pessimistic-io/slitherin/blob/master/docs/ecrecover.md"
-    WIKI_TITLE = "Ecrecover"
+    WIKI = "https://github.com/pessimistic-io/slitherin/blob/master/docs/aave/flashloan_callback.md"
+    WIKI_TITLE = "AAVE Flashloan callback"
     WIKI_DESCRIPTION = "Check docs"
-    WIKI_EXPLOIT_SCENARIO = "Attacker can validate signatures from 0x0 address"
-    WIKI_RECOMMENDATION = "Check the result of ecrecover"
+    WIKI_EXPLOIT_SCENARIO = (
+        "Attacker can directly call or initiate flashloan to this address"
+    )
+    WIKI_RECOMMENDATION = "Validate the msg.sender and `initiator` argument"
 
     def _analyze_function(
         self,
