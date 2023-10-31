@@ -9,7 +9,7 @@ from pathlib import Path
 import slither_pess
 from pkg_resources import iter_entry_points
 
-SLITHERIN_VERSION = "0.4.0"
+SLITHERIN_VERSION = "0.4.1"
 
 
 def slitherin_detectors_list_as_arguments() -> str:
@@ -70,7 +70,7 @@ def handle_parser(args: argparse.Namespace, slither_args) -> None:
         run(
             slither_with_args + ["--exclude", slitherin_detectors],
         )
-    elif args.seperated:
+    elif args.separated:
         print("Only slither results:")
         run(
             slither_with_args + ["--exclude", slitherin_detectors],
@@ -116,7 +116,7 @@ def generate_argument_parser() -> argparse.ArgumentParser:
     )
 
     parser.add_argument(
-        "--seperated",
+        "--separated",
         action="store_true",
         help="Run slither detectors, then slitherin",
     )
