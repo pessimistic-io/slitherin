@@ -22,6 +22,7 @@ from slither_pess.detectors.token_fallback import TokenFallback
 from slither_pess.detectors.for_continue_increment import ForContinueIncrement
 from slither_pess.detectors.ecrecover import Ecrecover
 from slither_pess.detectors.public_vs_external import PublicVsExternal
+from slither_pess.detectors.aave.flashloan_callback import AAVEFlashloanCallbackDetector
 
 
 plugin_detectors = [
@@ -47,6 +48,7 @@ plugin_detectors = [
     ArbitraryCall,
     Ecrecover,
     PublicVsExternal,
+    AAVEFlashloanCallbackDetector,
 ]
 plugin_printers = []
 
