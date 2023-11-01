@@ -1,4 +1,5 @@
 from setuptools import setup, find_packages
+from slither_pess.cli import SLITHERIN_VERSION
 
 with open("./README.md", "r") as f:
     long_description = f.read()
@@ -10,8 +11,8 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/pessimistic-io/slitherin",
     author="Pessimistic.io",
-    version="0.4.0",
-    package_dir={"":"."},
+    version=SLITHERIN_VERSION,
+    package_dir={"": "."},
     packages=find_packages(),
     license="AGPL-3.0",
     python_requires=">=3.8",
@@ -20,6 +21,7 @@ setup(
         "dev": ["twine>=4.0.2"],
     },
     entry_points={
-        "slither_analyzer.plugin": "slither my-plugin=slither_pess:make_plugin",
+        "slither_analyzer.plugin": "slither slitherin-plugins=slither_pess:make_plugin",
+        "console_scripts": ["slitherin=slither_pess.cli:main"],
     },
 )

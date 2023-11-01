@@ -38,8 +38,7 @@ To install Pessimistic Detectors:
 python3 setup.py develop
 ```
 > Keep in mind that you don't have to reinstall the plugin after changes in the repository!
-4. Run the original Slither as usual.
-5. Dependencies must be installed in order to test the detectors on our test contracts:
+4. Dependencies must be installed in order to test the detectors on our test contracts:
 ```bash
 npm install
 ```
@@ -49,7 +48,25 @@ npm install
 ```bash
 pip install slitherin
 ```
-3. Run the original Slither as usual.
+
+## Usage
+### Slitherin-cli (Recommended)
+Use Slitherin-cli to run detectors on a Hardhat/Foundry/Dapp/Brownie application. You have the following options:
+* Run ONLY Slitherin detectors:
+```bash
+slitherin . --pess
+```
+* Run ONLY Slither detectors:
+```bash
+slitherin . --slither
+```
+* Run Slither detectors, then Slitherin detectors:
+```bash
+slitherin . --separated
+```
+> Keep in mind that Slitherin-cli supports all Slither run options.
+### Slither
+Slitherin detectors are included into original Slither after the installation. You can use Slither [as usual](https://github.com/crytic/slither#usage).
 
 ## **Detectors Table**
 
