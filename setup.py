@@ -12,7 +12,7 @@ setup(
     package_data={"slitherin": ["py.typed"]},
     url="https://github.com/pessimistic-io/slitherin",
     author="Pessimistic.io",
-    author_email="engineering@moonstream.to",
+    author_email="info@pessimistic.io",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Programming Language :: Python",
