@@ -15,4 +15,4 @@ jobs:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.BOT_TOKEN }}
         message: |
-         New version of Slitherin got realeased. Pull updates from here: https://github.com/pessimistic-io/slitherin or update a Python package: https://pypi.org/project/slitherin/. Release note: https://github.com/pessimistic-io/slitherin/releases
+         New version of Slitherin got released. Pull updates from here: https://github.com/pessimistic-io/slitherin or update a Python package: https://pypi.org/project/slitherin/. Release note: https://github.com/pessimistic-io/slitherin/releases
