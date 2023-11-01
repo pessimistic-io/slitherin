@@ -1,4 +1,4 @@
-from slitherin.detectors.arbitrary_call import ArbitraryCall
+from slitherin.detectors.arbitrary_call.arbitrary_call import ArbitraryCall
 from slitherin.detectors.double_entry_token_possibility import (
     DoubleEntryTokenPossiblity,
 )
