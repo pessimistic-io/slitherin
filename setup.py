@@ -28,8 +28,8 @@ setup(
         "dev": ["twine>=4.0.2"],
     },
     entry_points={
-        "slither_analyzer.plugin": "slither slitherin-plugins=slither_pess:make_plugin",
-        "console_scripts": ["slitherin=slither_pess.cli:main"],
+        "slither_analyzer.plugin": "slither slitherin-plugins=slitherin:make_plugin",
+        "console_scripts": ["slitherin=slitherin.cli:main"],
     },
     include_package_data=True,
 )
