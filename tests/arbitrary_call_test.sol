@@ -1,3 +1,11 @@
+interface IERC20 {
+    function transferFrom(
+        address from,
+        address to,
+        uint256 amount
+    ) external returns (bool);
+}
+
 contract Test {
     address toAddress;
     bytes callData;
@@ -155,5 +163,15 @@ contract Test {
                 revert(add(response, 0x20), size)
             }
         }
+    }
+}
+
+contract TestWithApprove {
+    function swap(IERC20 token) external {
+        token.transferFrom(msg.sender, address(this), 1);
+    }
+
+    function call(address to, bytes memory data) public {
+        to.call(data);
     }
 }

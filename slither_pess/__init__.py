@@ -1,4 +1,4 @@
-from slither_pess.detectors.arbitrary_call import ArbitraryCall
+from slither_pess.detectors.arbitrary_call.arbitrary_call import ArbitraryCall
 from slither_pess.detectors.double_entry_token_possibility import (
     DoubleEntryTokenPossiblity,
 )
@@ -22,33 +22,36 @@ from slither_pess.detectors.token_fallback import TokenFallback
 from slither_pess.detectors.for_continue_increment import ForContinueIncrement
 from slither_pess.detectors.ecrecover import Ecrecover
 from slither_pess.detectors.public_vs_external import PublicVsExternal
+from slither_pess.detectors.aave.flashloan_callback import AAVEFlashloanCallbackDetector
+
+
+plugin_detectors = [
+    DoubleEntryTokenPossiblity,
+    UnprotectedSetter,
+    NftApproveWarning,
+    InconsistentNonreentrant,
+    StrangeSetter,
+    OnlyEOACheck,
+    MagicNumber,
+    DubiousTypecast,
+    CallForwardToProtected,
+    MultipleStorageRead,
+    TimelockController,
+    TxGaspriceWarning,
+    UnprotectedInitialize,
+    ReadOnlyReentrancy,
+    EventSetter,
+    BeforeTokenTransfer,
+    UniswapV2,
+    TokenFallback,
+    ForContinueIncrement,
+    ArbitraryCall,
+    Ecrecover,
+    PublicVsExternal,
+    AAVEFlashloanCallbackDetector,
+]
+plugin_printers = []
 
 
 def make_plugin():
-    plugin_detectors = [
-        DoubleEntryTokenPossiblity,
-        UnprotectedSetter,
-        NftApproveWarning,
-        InconsistentNonreentrant,
-        StrangeSetter,
-        OnlyEOACheck,
-        MagicNumber,
-        DubiousTypecast,
-        CallForwardToProtected,
-        MultipleStorageRead,
-        TimelockController,
-        TxGaspriceWarning,
-        UnprotectedInitialize,
-        ReadOnlyReentrancy,
-        EventSetter,
-        BeforeTokenTransfer,
-        UniswapV2,
-        TokenFallback,
-        ForContinueIncrement,
-        ArbitraryCall,
-        Ecrecover,
-        PublicVsExternal,
-    ]
-    plugin_printers = []
-
     return plugin_detectors, plugin_printers

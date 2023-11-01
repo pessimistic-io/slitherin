@@ -38,8 +38,7 @@ To install Pessimistic Detectors:
 python3 setup.py develop
 ```
 > Keep in mind that you don't have to reinstall the plugin after changes in the repository!
-4. Run the original Slither as usual.
-5. Dependencies must be installed in order to test the detectors on our test contracts:
+4. Dependencies must be installed in order to test the detectors on our test contracts:
 ```bash
 npm install
 ```
@@ -49,7 +48,25 @@ npm install
 ```bash
 pip install slitherin
 ```
-3. Run the original Slither as usual.
+
+## Usage
+### Slitherin-cli (Recommended)
+Use Slitherin-cli to run detectors on a Hardhat/Foundry/Dapp/Brownie application. You have the following options:
+* Run ONLY Slitherin detectors:
+```bash
+slitherin . --pess
+```
+* Run ONLY Slither detectors:
+```bash
+slitherin . --slither
+```
+* Run Slither detectors, then Slitherin detectors:
+```bash
+slitherin . --separated
+```
+> Keep in mind that Slitherin-cli supports all Slither run options.
+### Slither
+Slitherin detectors are included into original Slither after the installation. You can use Slither [as usual](https://github.com/crytic/slither#usage).
 
 ## **Detectors Table**
 
@@ -161,6 +178,7 @@ Our team would like to express our deepest gratitude to the [Slither tool](https
 - [Blockthreat](https://newsletter.blockthreat.io/p/blockthreat-week-16-2023#:~:text=Slitherin%20a%20collection%20of%20Slither%20detection%20by%20Pessimistic.io%20team)
 - [Release article by officercia.eth](https://officercia.mirror.xyz/ucWYWnhBXmkKq54BIdJcH5GnrAB-nQkUsZ2F-ytEsR4)
 - [Defillama](https://t.me/defillama_tg/842)
+- [Essential Tools for Auditing Smart Contracts by Hexens](https://hexens.io/blog/toolkit-for-web3-security-engineers)
 - [ETH Belgrade](https://www.youtube.com/watch?v=CU9JAqGY5h8&t=3s) talk
 - Integrated into [AuditWizard](https://app.auditwizard.io/)
 
