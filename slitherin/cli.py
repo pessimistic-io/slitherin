@@ -6,14 +6,14 @@ import os
 import shutil
 import pty
 from pathlib import Path
-import slither_pess
+import slitherin
 from pkg_resources import iter_entry_points
 
 SLITHERIN_VERSION = "0.4.1"
 
 
 def slitherin_detectors_list_as_arguments() -> str:
-    return ",".join([detector.ARGUMENT for detector in slither_pess.plugin_detectors])
+    return ",".join([detector.ARGUMENT for detector in slitherin.plugin_detectors])
 
 
 logging.basicConfig()
@@ -51,7 +51,7 @@ def run(
 
 
 def handle_list() -> None:
-    detectors = slither_pess.plugin_detectors
+    detectors = slitherin.plugin_detectors
     for detector in detectors:
         print(detector.ARGUMENT)
 
