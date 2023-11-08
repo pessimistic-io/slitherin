@@ -9,7 +9,7 @@ from pathlib import Path
 import slitherin
 from pkg_resources import iter_entry_points
 
-SLITHERIN_VERSION = "0.4.1"
+SLITHERIN_VERSION = "0.4.2"
 
 
 def slitherin_detectors_list_as_arguments() -> str:
