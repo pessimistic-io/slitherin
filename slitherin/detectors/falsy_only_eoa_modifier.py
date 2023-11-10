@@ -33,8 +33,9 @@ class OnlyEOACheck(AbstractDetector):
                     if is_tx: 
                         varListTx.append(var)
                 for i in range(len(varListTx)):
-                    if(str(n).__contains__(f'{varListMsg[i]} == {varListTx[i]}') or str(n).__contains__(f'{varListTx[i]} == {varListMsg[i]}')):
-                        return "True"
+                    for j in range(len(varListMsg)):
+                        if(str(n).__contains__(f'{varListMsg[j]} == {varListTx[i]}') or str(n).__contains__(f'{varListTx[i]} == {varListMsg[j]}')):
+                            return "True"
         return "False"
 
     def _detect(self):
