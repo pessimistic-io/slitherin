@@ -7,7 +7,7 @@ contract DoubleEntryTokenTest_vuln {
     function vulnerable(IERC20[] calldata tokens0, address[] calldata tokens1) external {
         for (uint256 i = 0; i < tokens0.length; i++){
             uint256 bal = tokens0[i].balanceOf(address(this));
-            tokens0[i].transfer(tokens1[i], bal);
+            tokens0[].transfer(tokens1[i], bal);
         }
     }
 
