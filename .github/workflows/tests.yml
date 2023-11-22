@@ -40,6 +40,4 @@ jobs:
               run: |
                 set -e 
                 slitherin tests/ --separated
-              if: ${{ failure() }}
-              continue-on-error: true
             
