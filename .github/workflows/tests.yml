@@ -1,0 +1,35 @@
+name: Run Tests
+
+on:
+    pull_request:
+        branches:
+            - 'master'
+            - 'develop'
+
+jobs:
+    RunTests: 
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+            - name: Set up Python
+              uses: actions/setup-python@v4
+              with:
+                python-version: '3.x'
+            - name: Set up Node
+              uses: actions/setup-node@v4
+              with:
+                node-version: '18.x'
+            - name: Update pip
+              run: python -m pip install --upgrade pip
+            - name: Install solc-select
+              run: python -m pip install solc-select
+            - name: Install Slither
+              run: python -m pip install slither-analyzer
+            - name: Install Slitherin
+              run: python setup.py develop
+            - name: Install node dependencies
+              run: npm ci
+            - name: Run Tests
+              run: slitherin tests/ --separated
+            
