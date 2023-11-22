@@ -38,7 +38,5 @@ jobs:
               run: npm ci
             - name: Run Tests
               run: |
-                set -e 
                 slitherin tests/ --separated
-              if: ${{ failure() }}
             
