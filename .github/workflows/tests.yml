@@ -31,7 +31,7 @@ jobs:
             - name: Install Slitherin
               run: python setup.py develop
             - name: Set version via solc
-              run: python -m solc-select use 0.8.19
+              run: solc-select use 0.8.19
             - name: Install node dependencies
               run: npm ci
             - name: Run Tests
