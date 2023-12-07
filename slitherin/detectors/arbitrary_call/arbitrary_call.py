@@ -215,14 +215,13 @@ class ArbitraryCall(AbstractDetector):
                     text = f"The {part} could be manipulated"
                 info += [f"\t{text} through ", f, "\n"]
 
-            res = self.generate_result(info)
-            res.add(node)
+                res = self.generate_result(info)
+                res.add(node)
+                res.data["check"] = self.ARGUMENT + detectorParams.argument_suffix
+                res.data["impact"] = classification_txt[detectorParams.impact]
+                res.data["confidence"] = classification_txt[detectorParams.confidence]
 
-            res.data["check"] = self.ARGUMENT + detectorParams.argument_suffix
-            res.data["impact"] = classification_txt[detectorParams.impact]
-            res.data["confidence"] = classification_txt[detectorParams.confidence]
-
-            results.append(res)
+                results.append(res)
         return results
 
     def _detect(self):
