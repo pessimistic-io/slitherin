@@ -142,6 +142,7 @@ class ArbitraryCall(AbstractDetector):
 
     def analyze_contract(self, contract: Contract):
         stores_approve = False
+        detectorParams: DetectorParams = None
         all_tainted_calls: List[
             Tuple[FunctionContract, Node, LowLevelCall, bool, bool]
         ] = []
@@ -188,7 +189,6 @@ class ArbitraryCall(AbstractDetector):
                 if not (fn_taints_args or fn_taints_destination):
                     continue
 
-                detectorParams: DetectorParams = None
                 if fn_taints_args and fn_taints_destination:
                     if stores_approve:
                         text = "The call could be fully manipulated (arbitrary call). This contract also STORES APPROVES!!!"
@@ -217,12 +217,12 @@ class ArbitraryCall(AbstractDetector):
 
             res = self.generate_result(info)
             res.add(node)
+            if detectorParams:
+                res.data["check"] = self.ARGUMENT + detectorParams.argument_suffix
+                res.data["impact"] = classification_txt[detectorParams.impact]
+                res.data["confidence"] = classification_txt[detectorParams.confidence]
 
-            res.data["check"] = self.ARGUMENT + detectorParams.argument_suffix
-            res.data["impact"] = classification_txt[detectorParams.impact]
-            res.data["confidence"] = classification_txt[detectorParams.confidence]
-
-            results.append(res)
+                results.append(res)
         return results
 
     def _detect(self):
