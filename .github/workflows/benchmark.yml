@@ -44,7 +44,7 @@ jobs:
             - name: Install benchmark requirements
               run: |
                 cd slitherin-benchmark/
-                python -m pip -r requirements.txt
+                python -m pip install -r requirements.txt
             - name: Run Benchmark
               run: python3 runner.py -i contracts -o tmp.csv
             - name: 'Upload Artifact'
