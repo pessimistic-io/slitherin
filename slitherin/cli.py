@@ -5,11 +5,12 @@ import subprocess
 import os
 import shutil
 import pty
+import sys
 from pathlib import Path
 import slitherin
 from pkg_resources import iter_entry_points
 
-SLITHERIN_VERSION = "0.5.0"
+SLITHERIN_VERSION = "0.5.1"
 
 
 def slitherin_detectors_list_as_arguments() -> str:
@@ -47,7 +48,34 @@ def run(
         subprocess_cwd,
     )
 
-    pty.spawn(cmd, read)  # this allows to print continuously and with colors
+    master, slave = pty.openpty()
+
+    try:
+        process = subprocess.Popen(cmd, stdout=slave, stderr=slave, text=False)
+        os.close(slave)
+
+        while True:
+            try:
+                output = os.read(master, 1024)
+            except OSError as e:
+                if e.errno == 5:  # Errno 5 corresponds to Input/output error
+                    break
+                else:
+                    raise
+            if not output:
+                break
+            decoded_output = output.decode(sys.stdout.encoding, errors="replace")
+            print(decoded_output, end="")
+
+        return_code = process.wait()
+        if return_code != 0:
+            raise Exception(
+                f"Errored out with code: {return_code}, while running slither"
+            )
+
+    except Exception as e:
+        print(f"Failed to run slither: {str(e)}")
+        raise e
 
 
 def handle_list() -> None:
@@ -61,7 +89,11 @@ def handle_list() -> None:
 
 def handle_parser(args: argparse.Namespace, slither_args) -> None:
     slitherin_detectors = slitherin_detectors_list_as_arguments()
-    slither_with_args = ["slither"] + slither_args
+    slither_with_args = [
+        "slither",
+        "--fail-none",
+    ] + slither_args  # using fail-none flag, so slither will return 0 even though there are findings
+
     if args.pess:
         run(
             slither_with_args + ["--detect", slitherin_detectors],
