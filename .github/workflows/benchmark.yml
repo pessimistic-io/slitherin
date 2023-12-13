@@ -41,10 +41,12 @@ jobs:
                 solc-select use 0.8.19
             - name: Install node dependencies
               run: npm ci
-            - name: Run Benchmark
+            - name: Install benchmark requirements
               run: |
                 cd slitherin-benchmark/
-                python3 runner.py -i contracts -o tmp.csv
+                python -m pip -r requirements.txt
+            - name: Run Benchmark
+              run: python3 runner.py -i contracts -o tmp.csv
             - name: 'Upload Artifact'
               uses: actions/upload-artifact@v3
               with:
