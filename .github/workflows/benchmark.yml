@@ -46,9 +46,11 @@ jobs:
                 cd slitherin-benchmark/
                 python -m pip install -r requirements.txt
             - name: Run Benchmark
-              run: python3 runner.py -i contracts -o tmp.csv
+              run: |
+                cd slitherin-benchmark/
+                python3 runner.py -i contracts -o tmp.csv
             - name: 'Upload Artifact'
               uses: actions/upload-artifact@v3
               with:
                 name: benchmark
-                path: tmp.csv
+                path: slitherin-benchmark/tmp.csv
