@@ -48,7 +48,7 @@ jobs:
             - name: Run Benchmark
               run: |
                 cd slitherin-benchmark/
-                python3 runner.py -i contracts -o tmp.csv
+                python3 runner.py -i contracts/mainnet -o tmp.csv
             - name: 'Upload Artifact'
               uses: actions/upload-artifact@v3
               with:
