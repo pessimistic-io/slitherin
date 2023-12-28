@@ -5,9 +5,6 @@ on:
         branches:
             - 'master'
             - 'develop'
-    push:
-      branches:
-        - 'submodule_benchmark'
 jobs:
     RunBenchmark: 
         runs-on: ubuntu-latest
@@ -48,9 +45,9 @@ jobs:
             - name: Run Benchmark
               run: |
                 cd slitherin-benchmark/
-                python3 runner.py -i contracts/mainnet -o tmp.csv
+                python3 runner.py -i contracts/mainnet -o mainnet.csv --limit 5000
             - name: 'Upload Artifact'
               uses: actions/upload-artifact@v3
               with:
                 name: benchmark
-                path: slitherin-benchmark/tmp.csv
+                path: slitherin-benchmark/mainnet.csv
