@@ -42,3 +42,9 @@ contract ConstructorTest {
 
     }
 }
+
+contract ConstructorTest2 {
+    constructor(uint256 a, uint8 b) {
+        
+    }
+}
