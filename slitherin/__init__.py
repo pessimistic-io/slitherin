@@ -23,6 +23,7 @@ from slitherin.detectors.for_continue_increment import ForContinueIncrement
 from slitherin.detectors.ecrecover import Ecrecover
 from slitherin.detectors.public_vs_external import PublicVsExternal
 from slitherin.detectors.aave.flashloan_callback import AAVEFlashloanCallbackDetector
+from slitherin.detectors.arbitrum_prevrandao_difficulty import ArbitrumPrevrandaoDifficulty
 
 
 plugin_detectors = [
@@ -49,6 +50,7 @@ plugin_detectors = [
     Ecrecover,
     PublicVsExternal,
     AAVEFlashloanCallbackDetector,
+    ArbitrumPrevrandaoDifficulty
 ]
 plugin_printers = []
 
