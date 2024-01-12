@@ -36,3 +36,9 @@ contract MinimalTest2 {
         uint256 k = fucntion_public_negative3();
     }
 }
+
+contract ConstructorTest {
+    constructor() {
+
+    }
+}

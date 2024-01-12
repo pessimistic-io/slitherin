@@ -29,7 +29,7 @@ class PublicVsExternal(AbstractDetector):
                     used_functions.add(call.name)
 
         for f in contract.functions_and_modifiers_declared:
-            if f.visibility == "public" and f.name not in used_functions:
+            if f.visibility == "public" and f.name not in used_functions and not f.is_constructor:
                 res.append(f)
         return res
 
