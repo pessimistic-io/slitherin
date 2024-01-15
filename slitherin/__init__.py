@@ -23,8 +23,10 @@ from slitherin.detectors.for_continue_increment import ForContinueIncrement
 from slitherin.detectors.ecrecover import Ecrecover
 from slitherin.detectors.public_vs_external import PublicVsExternal
 from slitherin.detectors.aave.flashloan_callback import AAVEFlashloanCallbackDetector
-from slitherin.detectors.arbitrum_prevrandao_difficulty import ArbitrumPrevrandaoDifficulty
-
+from slitherin.detectors.arbitrum.arbitrum_prevrandao_difficulty import (
+    ArbitrumPrevrandaoDifficulty,
+)
+from slitherin.detectors.arbitrum.solidity_version import ArbitrumSolidityVersion
 
 plugin_detectors = [
     DoubleEntryTokenPossiblity,
@@ -50,7 +52,8 @@ plugin_detectors = [
     Ecrecover,
     PublicVsExternal,
     AAVEFlashloanCallbackDetector,
-    ArbitrumPrevrandaoDifficulty
+    ArbitrumPrevrandaoDifficulty,
+    ArbitrumSolidityVersion,
 ]
 plugin_printers = []
 
