@@ -32,10 +32,10 @@ jobs:
               run: python -m pip install setuptools
             - name: Install Slitherin
               run: python setup.py develop
-            - name: Set version via solc
+            - name: Configure
               run: |
-                solc-select install 0.8.19
-                solc-select use 0.8.19
+                cd slitherin-benchmark/
+                mv example.config.py config.py
             - name: Install node dependencies
               run: npm ci
             - name: Install benchmark requirements
