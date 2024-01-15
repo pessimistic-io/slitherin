@@ -1,0 +1,53 @@
+name: Run Benchmark
+
+on:
+    pull_request:
+        branches:
+            - 'master'
+            - 'develop'
+jobs:
+    RunBenchmark: 
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                ref: 'submodule_benchmark'
+                submodules: 'true'
+            - name: Set up Python
+              uses: actions/setup-python@v4
+              with:
+                python-version: '3.x'
+            - name: Set up Node
+              uses: actions/setup-node@v4
+              with:
+                node-version: '18.x'
+            - name: Update pip
+              run: python -m pip install --upgrade pip
+            - name: Install solc-select
+              run: python -m pip install solc-select
+            - name: Install Slither
+              run: python -m pip install slither-analyzer
+            - name: Install Setuptools
+              run: python -m pip install setuptools
+            - name: Install Slitherin
+              run: python setup.py develop
+            - name: Configure
+              run: |
+                cd slitherin-benchmark/
+                mv example.config.py config.py
+            - name: Install node dependencies
+              run: npm ci
+            - name: Install benchmark requirements
+              run: |
+                cd slitherin-benchmark/
+                python -m pip install -r requirements.txt
+            - name: Run Benchmark
+              run: |
+                cd slitherin-benchmark/
+                python3 runner.py -i contracts/mainnet -o mainnet.csv --limit 5000
+            - name: 'Upload Artifact'
+              uses: actions/upload-artifact@v3
+              with:
+                name: benchmark
+                path: slitherin-benchmark/mainnet.csv
