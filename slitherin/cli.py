@@ -5,15 +5,20 @@ import subprocess
 import os
 import shutil
 import pty
+import sys
 from pathlib import Path
 import slitherin
 from pkg_resources import iter_entry_points
 
-SLITHERIN_VERSION = "0.5.0"
+from .consts import *
 
 
 def slitherin_detectors_list_as_arguments() -> str:
     return ",".join([detector.ARGUMENT for detector in slitherin.plugin_detectors])
+
+
+def arbitrum_detectors_list_as_arguments() -> str:
+    return ",".join([detector.ARGUMENT for detector in slitherin.artbitrum_detectors])
 
 
 logging.basicConfig()
@@ -47,7 +52,34 @@ def run(
         subprocess_cwd,
     )
 
-    pty.spawn(cmd, read)  # this allows to print continuously and with colors
+    master, slave = pty.openpty()
+
+    try:
+        process = subprocess.Popen(cmd, stdout=slave, stderr=slave, text=False)
+        os.close(slave)
+
+        while True:
+            try:
+                output = os.read(master, 1024)
+            except OSError as e:
+                if e.errno == 5:  # Errno 5 corresponds to Input/output error
+                    break
+                else:
+                    raise
+            if not output:
+                break
+            decoded_output = output.decode(sys.stdout.encoding, errors="replace")
+            print(decoded_output, end="")
+
+        return_code = process.wait()
+        if return_code != 0:
+            raise Exception(
+                f"Errored out with code: {return_code}, while running slither"
+            )
+
+    except Exception as e:
+        print(f"Failed to run slither: {str(e)}")
+        raise e
 
 
 def handle_list() -> None:
@@ -61,7 +93,11 @@ def handle_list() -> None:
 
 def handle_parser(args: argparse.Namespace, slither_args) -> None:
     slitherin_detectors = slitherin_detectors_list_as_arguments()
-    slither_with_args = ["slither"] + slither_args
+    slither_with_args = [
+        "slither",
+        "--fail-none",
+    ] + slither_args  # using fail-none flag, so slither will return 0 even though there are findings
+
     if args.pess:
         run(
             slither_with_args + ["--detect", slitherin_detectors],
@@ -79,6 +115,11 @@ def handle_parser(args: argparse.Namespace, slither_args) -> None:
         run(
             slither_with_args + ["--ignore-compile", "--detect", slitherin_detectors],
         )
+    elif args.arbitrum:
+        os.environ["SLITHERIN_ARBITRUM"] = "True"
+        run(slither_with_args + ["--detect", arbitrum_detectors_list_as_arguments()])
+        del os.environ["SLITHERIN_ARBITRUM"]
+
     else:
         run(slither_with_args)
 
@@ -119,6 +160,12 @@ def generate_argument_parser() -> argparse.ArgumentParser:
         "--separated",
         action="store_true",
         help="Run slither detectors, then slitherin",
+    )
+
+    parser.add_argument(
+        "--arbitrum",
+        action="store_true",
+        help="Run arbitrum detectors",
     )
     return parser
 
