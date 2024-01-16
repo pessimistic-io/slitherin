@@ -17,6 +17,10 @@ def slitherin_detectors_list_as_arguments() -> str:
     return ",".join([detector.ARGUMENT for detector in slitherin.plugin_detectors])
 
 
+def arbitrum_detectors_list_as_arguments() -> str:
+    return ",".join([detector.ARGUMENT for detector in slitherin.artbitrum_detectors])
+
+
 logging.basicConfig()
 LOGGER = logging.getLogger("slitherinLogger")
 LOGGER.setLevel(logging.INFO)
@@ -111,6 +115,11 @@ def handle_parser(args: argparse.Namespace, slither_args) -> None:
         run(
             slither_with_args + ["--ignore-compile", "--detect", slitherin_detectors],
         )
+    elif args.arbitrum:
+        os.environ["SLITHERIN_ARBITRUM"] = "True"
+        run(slither_with_args + ["--detect", arbitrum_detectors_list_as_arguments()])
+        del os.environ["SLITHERIN_ARBITRUM"]
+
     else:
         run(slither_with_args)
 
@@ -151,6 +160,12 @@ def generate_argument_parser() -> argparse.ArgumentParser:
         "--separated",
         action="store_true",
         help="Run slither detectors, then slitherin",
+    )
+
+    parser.add_argument(
+        "--arbitrum",
+        action="store_true",
+        help="Run arbitrum detectors",
     )
     return parser
 

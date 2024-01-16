@@ -29,7 +29,7 @@ class ArbitrumPrevrandaoDifficulty(AbstractDetector):
 
     WIKI = "https://github.com/pessimistic-io/slitherin/blob/master/docs/arb_difficulty_randao.md"
     WIKI_TITLE = "Usage of prevRandao/difficulty inside the Arbitrum contract"
-    WIKI_DESCRIPTION = "Setter-functions must emit events"
+    WIKI_DESCRIPTION = "Arbitrum prevRandao/difficulty"
     WIKI_EXPLOIT_SCENARIO = "N/A"
     WIKI_RECOMMENDATION = (
         "Do not use prevRandao/difficulty inside the code of an Arbitrum contract"

@@ -15,25 +15,23 @@ from slither.core.declarations.solidity_variables import (
 from ...consts import ARBITRUM_KEY
 
 
-class ArbitrumPrevrandaoDifficulty(AbstractDetector):
+class ArbitrumBlockNumberTimestamp(AbstractDetector):
     """
     Sees if `block.number` or `block.timtestamp` is used inside an Arbitrum contract
     """
 
     ARGUMENT = "pess-arb-block-number-timestamp"  # slither will launch the detector with slither.py --detect mydetector
-    HELP = (
-        "PrevRandao or difficulty is used in contract that will be deployed to Arbitrum"
-    )
-    IMPACT = DetectorClassification.MEDIUM
+    HELP = "`block.number` or `block.timtestamp` is used inside an Arbitrum contract"
+    IMPACT = DetectorClassification.LOW
     CONFIDENCE = DetectorClassification.HIGH
 
-    WIKI = "https://github.com/pessimistic-io/slitherin/blob/master/docs/arb_difficulty_randao.md"
-    WIKI_TITLE = "Usage of prevRandao/difficulty inside the Arbitrum contract"
-    WIKI_DESCRIPTION = "Setter-functions must emit events"
-    WIKI_EXPLOIT_SCENARIO = "N/A"
-    WIKI_RECOMMENDATION = (
-        "Do not use prevRandao/difficulty inside the code of an Arbitrum contract"
+    WIKI = "https://github.com/pessimistic-io/slitherin/blob/master/docs/arb_block_number_timestamp.md"
+    WIKI_TITLE = (
+        "Usage of `block.number` or `block.timtestamp` inside the Arbitrum contract"
     )
+    WIKI_DESCRIPTION = "# Arbitrum block.number/block.timestamp"
+    WIKI_EXPLOIT_SCENARIO = "N/A"
+    WIKI_RECOMMENDATION = "Look at docs for details"
 
     def _find_randao_or_difficulty(self, f: Function) -> List[Node]:
         ret = set()
@@ -42,7 +40,7 @@ class ArbitrumPrevrandaoDifficulty(AbstractDetector):
                 if is_dependent(
                     var, SolidityVariableComposed("block.number"), node
                 ) or is_dependent(
-                    var, SolidityVariableComposed("block.timtestamp"), node
+                    var, SolidityVariableComposed("block.timestamp"), node
                 ):
                     ret.add(node)
             for ir in node.irs:
@@ -68,8 +66,10 @@ class ArbitrumPrevrandaoDifficulty(AbstractDetector):
                 if nodes:
                     info = [
                         f,
-                        " function uses prevRandao/difficulty inside the code of the Arbitrum contract\n",
-                        "\tDangerous usages:\n",
+                        " function uses block.number/block.timestamp inside the code of the Arbitrum contract\n"
+                        "They behave different than on Ethereum, for details: (https://docs.arbitrum.io/for-devs/concepts/differences-between-arbitrum-ethereum/block-numbers-and-time)\n",
+                        "Verify, that contract's logic does not break because of these differences\n"
+                        "\t Usages:\n",
                     ]
 
                     nodes.sort(key=lambda x: x.node_id)

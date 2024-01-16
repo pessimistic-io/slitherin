@@ -27,8 +27,17 @@ from slitherin.detectors.arbitrum.arbitrum_prevrandao_difficulty import (
     ArbitrumPrevrandaoDifficulty,
 )
 from slitherin.detectors.arbitrum.solidity_version import ArbitrumSolidityVersion
+from slitherin.detectors.arbitrum.block_number_timestamp import (
+    ArbitrumBlockNumberTimestamp,
+)
 
-plugin_detectors = [
+artbitrum_detectors = [
+    ArbitrumPrevrandaoDifficulty,
+    ArbitrumSolidityVersion,
+    ArbitrumBlockNumberTimestamp,
+]
+
+plugin_detectors = artbitrum_detectors + [
     DoubleEntryTokenPossiblity,
     UnprotectedSetter,
     NftApproveWarning,
@@ -52,8 +61,6 @@ plugin_detectors = [
     Ecrecover,
     PublicVsExternal,
     AAVEFlashloanCallbackDetector,
-    ArbitrumPrevrandaoDifficulty,
-    ArbitrumSolidityVersion,
 ]
 plugin_printers = []
 

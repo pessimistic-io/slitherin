@@ -21,43 +21,21 @@ from ...consts import ARBITRUM_KEY
 
 class ArbitrumSolidityVersion(AbstractDetector):
     """
-    Sees if `block.number` or `block.timtestamp` is used inside an Arbitrum contract
+    Checks that sol version >= 0.8.20 is not used inside an Arbitrum contract
     """
 
     ARGUMENT = "pess-arb-solidity-version"  # slither will launch the detector with slither.py --detect mydetector
-    HELP = (
-        "PrevRandao or difficulty is used in contract that will be deployed to Arbitrum"
-    )
-    IMPACT = DetectorClassification.MEDIUM
-    CONFIDENCE = DetectorClassification.HIGH
+    HELP = "sol version >= 0.8.20 is used in contract that will be deployed to Arbitrum (Potential usage of PUSH0, which is not supported)"
+    IMPACT = DetectorClassification.HIGH
+    CONFIDENCE = DetectorClassification.LOW
 
     WIKI = "https://github.com/pessimistic-io/slitherin/blob/master/docs/arb_difficulty_randao.md"
     WIKI_TITLE = "Usage of prevRandao/difficulty inside the Arbitrum contract"
-    WIKI_DESCRIPTION = "Setter-functions must emit events"
+    WIKI_DESCRIPTION = "Potential usage of PUSH0 opcode"
     WIKI_EXPLOIT_SCENARIO = "N/A"
     WIKI_RECOMMENDATION = (
-        "Do not use prevRandao/difficulty inside the code of an Arbitrum contract"
+        "Either, use versions 0.8.19 and below, or EVM versions below shanghai"
     )
-
-    def _find_randao_or_difficulty(self, f: Function) -> List[Node]:
-        ret = set()
-        for node in f.nodes:
-            for var in node.variables_read:
-                if is_dependent(
-                    var, SolidityVariableComposed("block.number"), node
-                ) or is_dependent(
-                    var, SolidityVariableComposed("block.timtestamp"), node
-                ):
-                    ret.add(node)
-            for ir in node.irs:
-                if (
-                    isinstance(ir, SolidityCall)
-                    and ir.function == SolidityFunction("number()")
-                    or isinstance(ir, SolidityCall)
-                    and ir.function == SolidityFunction("timestamp()")
-                ):
-                    ret.add(node)
-        return list(ret)
 
     def _detect(self) -> List[Output]:
         """Main function"""
@@ -73,7 +51,7 @@ class ArbitrumSolidityVersion(AbstractDetector):
             results.append(
                 self.generate_result(
                     [
-                        "Usage of solidity version >= 0.8.20 detected. Solidity in these versions will utilize PUSH0 opcode, ",
+                        "Potential usage of solidity version >= 0.8.20 detected. Solidity in these versions will utilize PUSH0 opcode, ",
                         "which is not supported on Arbitrum. ",
                         "Either, use versions 0.8.19 and below, or EVM versions below shanghai",
                     ]
