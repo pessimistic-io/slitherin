@@ -30,7 +30,7 @@ class ArbitrumSolidityVersion(AbstractDetector):
     CONFIDENCE = DetectorClassification.LOW
 
     WIKI = "https://github.com/pessimistic-io/slitherin/blob/master/docs/arb_difficulty_randao.md"
-    WIKI_TITLE = "Usage of prevRandao/difficulty inside the Arbitrum contract"
+    WIKI_TITLE = "Arbitrum solidity version"
     WIKI_DESCRIPTION = "Potential usage of PUSH0 opcode"
     WIKI_EXPLOIT_SCENARIO = "N/A"
     WIKI_RECOMMENDATION = (

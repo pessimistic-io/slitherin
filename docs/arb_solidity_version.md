@@ -1,4 +1,4 @@
-# Arbitrum prevRandao/difficulty
+# Arbitrum solidity version
 
 ## Configuration
 
