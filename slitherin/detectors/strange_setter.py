@@ -53,33 +53,7 @@ class StrangeSetter(AbstractDetector):
                     if str(arg) == str(param):
                         used_params.add(param)
         intersection_len = len(set(fun.parameters) & used_params)
-        print(intersection_len, len(fun.parameters), fun.name)
         return intersection_len != len(fun.parameters)
-
-    # def _is_strange_setter(self, fun: Function) -> bool:
-    #     """Checks if setter sets smth to a storage variable and if function parameters are used when setting"""
-    #     if not isinstance(fun, Function):
-    #         return True
-
-    #     if not fun.parameters:
-    #         # nothing is in the params, so we don't care
-    #         return False
-    #     for (
-    #         fin
-    #     ) in fun.internal_calls:  # branch with for-loop for setters in internal calls
-    #         if isinstance(fin, Function):
-    #             for param in fin.parameters:
-    #                 for n in fin.nodes:
-    #                     if n.state_variables_written and str(param) in str(
-    #                         n
-    #                     ):  # check if there's a state variable setter using function parameters
-    #                         return False
-    #     for param in fun.parameters:
-    #         if fun.state_variables_written:
-    #             for n in fun.nodes:
-    #                 if str(param) in str(n):
-    #                     return False
-    #     return True
 
     def _is_strange_constructor(self, fun: Function) -> bool:
         """Checks if constructor sets nothing"""
