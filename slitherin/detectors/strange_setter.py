@@ -2,11 +2,12 @@ from typing import List
 from slither.utils.output import Output
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
 from slither.core.declarations import Function
+from slither.analyses.data_dependency.data_dependency import is_dependent, is_tainted
 
 
 class StrangeSetter(AbstractDetector):
     """
-    Sees if contract contains a setter, that does not change contract storage variables.
+    Sees if contract contains a setter, that does not change contract storage variables or that does not use arguments for an external call.
     """
 
     ARGUMENT = "pess-strange-setter"  # slither will launch the detector with slither.py --detect mydetector
@@ -18,7 +19,7 @@ class StrangeSetter(AbstractDetector):
         "https://github.com/pessimistic-io/slitherin/blob/master/docs/strange_setter.md"
     )
     WIKI_TITLE = "Strange Setter"
-    WIKI_DESCRIPTION = "Setter must write to storage variables"
+    WIKI_DESCRIPTION = "Setter must write to storage variables or pass arguments to external calls"
     WIKI_EXPLOIT_SCENARIO = "-"
     WIKI_RECOMMENDATION = "Make sure that your setter actually sets something"
 
@@ -30,6 +31,7 @@ class StrangeSetter(AbstractDetector):
         if not fun.parameters:
             # nothing is in the params, so we don't care
             return False
+        used_params = set()
         for (
             fin
         ) in fun.internal_calls:  # branch with for-loop for setters in internal calls
@@ -39,13 +41,19 @@ class StrangeSetter(AbstractDetector):
                         if n.state_variables_written and str(param) in str(
                             n
                         ):  # check if there's a state variable setter using function parameters
-                            return False
+                            used_params.add(param)
         for param in fun.parameters:
             if fun.state_variables_written:
                 for n in fun.nodes:
                     if str(param) in str(n):
-                        return False
-        return True
+                        used_params.add(param)
+        for param in fun.parameters:
+            for external in fun.external_calls_as_expressions:
+                for arg in [*external.arguments, external._called._expression]:
+                    if str(arg) == str(param):
+                        used_params.add(param)
+        intersection_len = len(set(fun.parameters) & used_params)
+        return intersection_len != len(fun.parameters)
 
     def _is_strange_constructor(self, fun: Function) -> bool:
         """Checks if constructor sets nothing"""
