@@ -2,7 +2,7 @@ from typing import List
 from slither.utils.output import Output
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
 from slither.core.declarations import Function
-from slither.analyses.data_dependency.data_dependency import is_dependent, is_tainted
+import slither.core.expressions.new_array as na
 
 
 class StrangeSetter(AbstractDetector):
@@ -49,6 +49,8 @@ class StrangeSetter(AbstractDetector):
                         used_params.add(param)
         for param in fun.parameters:
             for external in fun.external_calls_as_expressions:
+                if isinstance(external._called, na.NewArray):
+                    continue
                 for arg in [*external.arguments, external._called._expression]:
                     if str(arg) == str(param):
                         used_params.add(param)
