@@ -44,7 +44,7 @@ jobs:
             - name: Run Benchmark
               run: |
                 cd slitherin-benchmark/
-                python3 runner.py -i contracts/mainnet -o mainnet.csv --limit 7000
+                python runner.py -i contracts/mainnet -o mainnet.csv --limit 7000
             - name: 'Upload Artifact'
               uses: actions/upload-artifact@v3
               with:
@@ -56,7 +56,6 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
               with:
-                ref: 'submodule_benchmark'
                 submodules: 'true'
             - name: Set up Python
               uses: actions/setup-python@v4
@@ -89,7 +88,7 @@ jobs:
             - name: Run Benchmark
               run: |
                 cd slitherin-benchmark/
-                python3 runner.py -i contracts/openzeppelin -o oz.csv -eo oz_extra.csv
+                python runner.py -i contracts/openzeppelin -o oz.csv -eo oz_extra.csv
             - name: 'Upload Artifact'
               uses: actions/upload-artifact@v3
               with:
