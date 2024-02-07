@@ -43,6 +43,14 @@ class UnprotectedInitialize(AbstractDetector):
                         if str(variable.type) == "address":
                             return True
         return False
+    
+    def _has_if_with_reverts(self, fun: Function) -> bool:
+        for node in fun.nodes:
+            if node.contains_if():
+                for child in node.sons:
+                    if "revert()" in str(child) or "revert(string)" in str(child):
+                        return True
+        return False
 
     def _detect(self) -> List[Output]:
         """Main function"""
@@ -55,7 +63,8 @@ class UnprotectedInitialize(AbstractDetector):
                 if x:
                     is_safe = self._has_modifiers(f)
                     is_safe2 = self._has_require(f)
-                    if not is_safe and not is_safe2:
+                    is_safe3 = self._has_if_with_reverts(f)
+                    if not is_safe and not is_safe2 and not is_safe3:
                         res.append(
                             self.generate_result(
                                 [
