@@ -37,10 +37,6 @@ class PotentialArithmOverflow(AbstractDetector):
             result_type = str(op.lvalue.type)
             [l_check_res, l_check_list, l_sub_expr] = self._has_op_overflowing_sub_expression(op.variable_left, high_level_bits_needed)
             [r_check_res, r_check_list, r_sub_expr] = self._has_op_overflowing_sub_expression(op.variable_right, high_level_bits_needed)
-
-            
-            if l_check_res or r_check_res: # overflow possible in sub expression (left or right part)
-                return (True, [])
                 
             cur_expr = f"{l_sub_expr} {op._type.value} {r_sub_expr}"
             if op._type is ops.BinaryType.ADDITION or op._type is ops.BinaryType.MULTIPLICATION or op._type is ops.BinaryType.POWER:
