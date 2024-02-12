@@ -65,3 +65,27 @@ contract TestERC1155 {
     }
 }
 
+
+library SafeERC20 {
+    function safeTransferFrom(IERC20 token, address from, address to, uint256 value) internal {
+        // _callOptionalReturn(token, abi.encodeCall(token.transferFrom, (from, to, value)));
+    }
+}
+
+contract TestSafeERC20LibCall {
+    function vuln1_safeErc20TransferFrom(IERC20 token, address from, address to, uint256 value) external {
+        SafeERC20.safeTransferFrom(token, from, to, value);
+    }
+
+    function ok1_safeErc20TransferFrom(IERC20 token, address to, uint256 value) external {
+        SafeERC20.safeTransferFrom(token, msg.sender, to, value);
+    }
+
+    function vuln2_safeErc20TransferFrom(address from, address to, uint256 value) external {
+        SafeERC20.safeTransferFrom(IERC20(msg.sender), from, to, value);
+    }
+
+    function ok2_safeErc20TransferFrom(address to, uint256 value) external {
+        SafeERC20.safeTransferFrom(IERC20(msg.sender), msg.sender, to, value);
+    }
+}
