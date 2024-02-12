@@ -1,3 +1,4 @@
+//SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
 interface I {
@@ -41,6 +42,13 @@ contract unprotected_initialize {
     }
 
     function init_vuln(uint256 setter) external {
+        toSet = setter;
+    }
+
+    function init_ok3(uint256 setter) external {
+        if (msg.sender != owner) {
+            revert("Not owner");
+        }
         toSet = setter;
     }
 }

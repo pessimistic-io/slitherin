@@ -30,6 +30,7 @@ from slitherin.detectors.arbitrum.solidity_version import ArbitrumSolidityVersio
 from slitherin.detectors.arbitrum.block_number_timestamp import (
     ArbitrumBlockNumberTimestamp,
 )
+from slitherin.detectors.potential_arith_overflow import PotentialArithmOverflow
 
 artbitrum_detectors = [
     ArbitrumPrevrandaoDifficulty,
@@ -61,6 +62,7 @@ plugin_detectors = artbitrum_detectors + [
     Ecrecover,
     PublicVsExternal,
     AAVEFlashloanCallbackDetector,
+    PotentialArithmOverflow
 ]
 plugin_printers = []
 
