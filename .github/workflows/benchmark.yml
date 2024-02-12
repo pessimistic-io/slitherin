@@ -44,7 +44,7 @@ jobs:
             - name: Run Benchmark
               run: |
                 cd slitherin-benchmark/
-                python runner.py -i contracts/mainnet -o mainnet.csv --limit 10000 --skip-duplicates --skip-libs
+                python runner.py -i contracts/mainnet -o mainnet.csv --limit 8000 --skip-duplicates --skip-libs
             - name: Upload sheet
               run: |
                 echo $GOOGLE_JWT > service_account.json
