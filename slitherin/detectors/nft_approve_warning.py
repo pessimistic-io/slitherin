@@ -21,7 +21,8 @@ class NftApproveWarning(AbstractDetector):
     WIKI_EXPLOIT_SCENARIO = '-'
     WIKI_RECOMMENDATION = 'from parameter must be related to msg.sender'
 
-    _signatures=["transferFrom(address,address,uint256)", "safeTransferFrom(address,address,uint256,bytes)", "safeTransferFrom(address,address,uint256)"]
+    _signatures=["transferFrom(address,address,uint256)", "safeTransferFrom(address,address,uint256,bytes)", "safeTransferFrom(address,address,uint256)", 
+                 "safeTransferFrom(address,address,uint256,uint256,bytes)", "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"] # ERC1155
 
     def _detect_arbitrary_from(self, f: Function):
         all_high_level_calls = [

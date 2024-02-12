@@ -36,3 +36,32 @@ contract Test
     }
 }
 
+interface IERC1155 {
+    function safeTransferFrom(address from, address to, uint256 id, uint256 value, bytes memory data) external;
+    function safeBatchTransferFrom(
+        address from,
+        address to,
+        uint256[] memory ids,
+        uint256[] memory values,
+        bytes memory data
+    ) external;
+}
+
+contract TestERC1155 {
+    function vuln_safeTransferFrom(address target, address from, address to) external {
+        IERC1155(target).safeTransferFrom(from, to, 1, 1, "");
+    }
+
+    function ok_safeTransferFrom(address target, address to) external {
+        IERC1155(target).safeTransferFrom(msg.sender, to, 1, 1, "");
+    }
+
+    function vuln_safeBatchTransferFrom(address target, address from, address to) external {
+        IERC1155(target).safeBatchTransferFrom(from, to, new uint256[](2), new uint256[](2), "");
+    }
+
+    function ok_safeBatchTransferFrom(address target, address to) external {
+        IERC1155(target).safeBatchTransferFrom(msg.sender, to, new uint256[](2), new uint256[](2), "");
+    }
+}
+
