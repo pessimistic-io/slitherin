@@ -34,6 +34,7 @@ jobs:
             - name: Configure
               run: |
                 cd slitherin-benchmark/
+                ls
                 mv example.config.py config.py
             - name: Install node dependencies
               run: npm ci
@@ -44,7 +45,15 @@ jobs:
             - name: Run Benchmark
               run: |
                 cd slitherin-benchmark/
-                python runner.py -i contracts/mainnet -o mainnet.csv --limit 7000
+                python runner.py -i contracts/mainnet -o mainnet.csv --limit 8000 --skip-duplicates --skip-libs
+            - name: Upload sheet
+              run: |
+                cd slitherin-benchmark/
+                echo $GOOGLE_JWT > service_account.json
+                python save_sheet.py -i mainnet.csv -sa service_account.json -si $GOOGLE_SHEET_ID -ln mainnet
+              env:
+                GOOGLE_JWT : ${{secrets.SERVICE_ACCOUNT}}
+                GOOGLE_SHEET_ID : ${{ secrets.GOOGLE_SHEET_ID }}
             - name: 'Upload Artifact'
               uses: actions/upload-artifact@v3
               with:
@@ -89,6 +98,14 @@ jobs:
               run: |
                 cd slitherin-benchmark/
                 python runner.py -i contracts/openzeppelin -o oz.csv -eo oz_extra.csv
+            - name: Upload sheet
+              run: |
+                cd slitherin-benchmark/
+                echo $GOOGLE_JWT > service_account.json
+                python save_sheet.py -i oz.csv -sa service_account.json -si $GOOGLE_SHEET_ID -ln OZ
+              env:
+                GOOGLE_JWT : ${{secrets.SERVICE_ACCOUNT}}
+                GOOGLE_SHEET_ID : ${{ secrets.GOOGLE_SHEET_ID }}
             - name: 'Upload Artifact'
               uses: actions/upload-artifact@v3
               with:
@@ -99,4 +116,3 @@ jobs:
               with:
                 name: oz_extra
                 path: slitherin-benchmark/oz_extra.csv
-
