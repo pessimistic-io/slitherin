@@ -34,6 +34,7 @@ jobs:
             - name: Configure
               run: |
                 cd slitherin-benchmark/
+                ls
                 mv example.config.py config.py
             - name: Install node dependencies
               run: npm ci
@@ -86,6 +87,7 @@ jobs:
             - name: Configure
               run: |
                 cd slitherin-benchmark/
+                ls
                 mv example.config.py config.py
             - name: Install node dependencies
               run: npm ci
