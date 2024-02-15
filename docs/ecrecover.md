@@ -12,7 +12,8 @@
 
 ### Potential Improvement
 
-As for now, the detector might not work on asm level.
+- As for now, the detector might not work on asm level.
+- `ecrecover_negative5` in [test scenarios](../tests/ecrecover.sol) should be found since the result of the check is unused. However, currently such scenarious are not covered.
 
 ## Vulnerable Scenario
 

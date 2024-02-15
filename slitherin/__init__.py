@@ -23,9 +23,22 @@ from slitherin.detectors.for_continue_increment import ForContinueIncrement
 from slitherin.detectors.ecrecover import Ecrecover
 from slitherin.detectors.public_vs_external import PublicVsExternal
 from slitherin.detectors.aave.flashloan_callback import AAVEFlashloanCallbackDetector
+from slitherin.detectors.arbitrum.arbitrum_prevrandao_difficulty import (
+    ArbitrumPrevrandaoDifficulty,
+)
+from slitherin.detectors.arbitrum.solidity_version import ArbitrumSolidityVersion
+from slitherin.detectors.arbitrum.block_number_timestamp import (
+    ArbitrumBlockNumberTimestamp,
+)
+from slitherin.detectors.potential_arith_overflow import PotentialArithmOverflow
 
+artbitrum_detectors = [
+    ArbitrumPrevrandaoDifficulty,
+    ArbitrumSolidityVersion,
+    ArbitrumBlockNumberTimestamp,
+]
 
-plugin_detectors = [
+plugin_detectors = artbitrum_detectors + [
     DoubleEntryTokenPossiblity,
     UnprotectedSetter,
     NftApproveWarning,
@@ -49,6 +62,7 @@ plugin_detectors = [
     Ecrecover,
     PublicVsExternal,
     AAVEFlashloanCallbackDetector,
+    PotentialArithmOverflow
 ]
 plugin_printers = []
 
