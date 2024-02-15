@@ -64,6 +64,10 @@ slitherin . --slither
 ```bash
 slitherin . --separated
 ```
+* Run Arbitrum-specific Slitherin detectors:
+```bash
+slitherin . --arbitrum
+```
 > Keep in mind that Slitherin-cli supports all Slither run options.
 ### Slither
 Slitherin detectors are included into original Slither after the installation. You can use Slither [as usual](https://github.com/crytic/slither#usage).
