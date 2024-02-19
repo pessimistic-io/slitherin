@@ -1,13 +1,12 @@
 name: Run Benchmark
 
 on:
-    pull_request:
-        branches:
-            - 'master'
-            - 'develop'
+     workflow_dispatch:  # Ручной запуск через UI Гитхаба
 jobs:
-    RunBenchmarkMainnet: 
+    RunBenchmarkOld: 
         runs-on: ubuntu-latest
+        env:
+          slitherin_version: 0.1.0
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
@@ -30,13 +29,11 @@ jobs:
             - name: Install Setuptools
               run: python -m pip install setuptools
             - name: Install Slitherin
-              run: python setup.py develop
+              run: python -m pip install slitherin==$slitherin_version
             - name: Configure
               run: |
                 cd slitherin-benchmark/
                 mv example.config.py config.py
-            - name: Install node dependencies
-              run: npm ci
             - name: Install benchmark requirements
               run: |
                 cd slitherin-benchmark/
@@ -44,12 +41,12 @@ jobs:
             - name: Run Benchmark
               run: |
                 cd slitherin-benchmark/
-                python runner.py -i contracts/mainnet -o mainnet.csv --limit 8000 --skip-duplicates --skip-libs
+                python runner.py -i contracts/mainnet -o mainnet.csv --limit 8000 --skip-duplicates --skip-libs --use-slither
             - name: Upload sheet
               run: |
                 cd slitherin-benchmark/
                 echo $GOOGLE_JWT > service_account.json
-                python save_sheet.py -i mainnet.csv -sa service_account.json -si $GOOGLE_SHEET_ID -ln mainnet
+                python save_sheet.py -i mainnet.csv -sa service_account.json -si $GOOGLE_SHEET_ID -ln mainnet -sv "slitherin $slitherin_version"
               env:
                 GOOGLE_JWT : ${{secrets.SERVICE_ACCOUNT}}
                 GOOGLE_SHEET_ID : ${{ secrets.GOOGLE_SHEET_ID }}
@@ -58,8 +55,10 @@ jobs:
               with:
                 name: mainnet
                 path: slitherin-benchmark/mainnet.csv
-    RunBenchmarkOZ: 
+    RunBenchmarkOZOld: 
         runs-on: ubuntu-latest
+        env:
+          slitherin_version: 0.1.0
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
@@ -82,7 +81,7 @@ jobs:
             - name: Install Setuptools
               run: python -m pip install setuptools
             - name: Install Slitherin
-              run: python setup.py develop
+              run: python -m pip install slitherin==$slitherin_version
             - name: Configure
               run: |
                 cd slitherin-benchmark/
@@ -96,12 +95,13 @@ jobs:
             - name: Run Benchmark
               run: |
                 cd slitherin-benchmark/
-                python runner.py -i contracts/openzeppelin -o oz.csv -eo oz_extra.csv
+                python runner.py -i contracts/openzeppelin -o oz.csv -eo oz_extra.csv --use-slither
             - name: Upload sheet
               run: |
                 cd slitherin-benchmark/
                 echo $GOOGLE_JWT > service_account.json
-                python save_sheet.py -i oz.csv -sa service_account.json -si $GOOGLE_SHEET_ID -ln OZ
+                ls
+                python save_sheet.py -i oz.csv -sa service_account.json -si $GOOGLE_SHEET_ID -ln OZ -sv "slitherin $slitherin_version"
               env:
                 GOOGLE_JWT : ${{secrets.SERVICE_ACCOUNT}}
                 GOOGLE_SHEET_ID : ${{ secrets.GOOGLE_SHEET_ID }}
