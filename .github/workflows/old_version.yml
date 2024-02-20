@@ -1,7 +1,9 @@
 name: Run Benchmark
 
 on:
-     workflow_dispatch:  # Ручной запуск через UI Гитхаба
+    pull_request:
+        branches:
+            - 'benchmark_run'
 jobs:
     RunBenchmarkOld: 
         runs-on: ubuntu-latest
