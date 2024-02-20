@@ -1,7 +1,9 @@
 name: Run Benchmark
 
 on:
-     workflow_dispatch:  # Ручной запуск через UI Гитхаба
+    pull_request:
+        branches:
+            - 'benchmark_run'
 jobs:
     RunBenchmarkOld: 
         runs-on: ubuntu-latest
@@ -115,4 +117,5 @@ jobs:
               with:
                 name: oz_extra
                 path: slitherin-benchmark/oz_extra.csv
+
 
