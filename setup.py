@@ -20,8 +20,10 @@ setup(
         "Topic :: Software Development :: Libraries",
     ],
     version=SLITHERIN_VERSION,
+    packages=find_packages(),
     license="AGPL-3.0",
     python_requires=">=3.8",
+    install_requires=["slither-analyzer>=0.10.0"],
     extras_requires={
         "dev": ["twine>=4.0.2"],
     },
