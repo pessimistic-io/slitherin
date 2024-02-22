@@ -1,5 +1,5 @@
 import napalm.package
-import slitherin.detectors
+import slitherin as slitherin
 
 
 def entry_point():
@@ -9,4 +9,10 @@ def entry_point():
 
     It returns a dictionary of Collections, keyed by the name of the collection.
     """
-    return napalm.package.entry_point(slitherin.detectors)
+    _include = ("detectors",)
+
+    return [
+        collection
+        for collection in napalm.package.entry_point(slitherin)
+        if collection.collection_name in _include
+    ]
