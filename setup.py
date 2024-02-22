@@ -20,16 +20,15 @@ setup(
         "Topic :: Software Development :: Libraries",
     ],
     version=SLITHERIN_VERSION,
-    packages=find_packages(),
     license="AGPL-3.0",
     python_requires=">=3.8",
-    install_requires=["slither-analyzer>=0.10.0"],
     extras_requires={
         "dev": ["twine>=4.0.2"],
     },
     entry_points={
         "slither_analyzer.plugin": "slither slitherin-plugins=slitherin:make_plugin",
         "console_scripts": ["slitherin=slitherin.cli:main"],
+        "napalm.collection": ["slitherin=slitherin.napalm:entry_point"],
     },
     include_package_data=True,
 )
