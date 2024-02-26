@@ -26,7 +26,6 @@ from slitherin.detectors.aave.flashloan_callback import AAVEFlashloanCallbackDet
 from slitherin.detectors.arbitrum.arbitrum_prevrandao_difficulty import (
     ArbitrumPrevrandaoDifficulty,
 )
-from slitherin.detectors.arbitrum.solidity_version import ArbitrumSolidityVersion
 from slitherin.detectors.arbitrum.block_number_timestamp import (
     ArbitrumBlockNumberTimestamp,
 )
@@ -34,7 +33,6 @@ from slitherin.detectors.potential_arith_overflow import PotentialArithmOverflow
 
 artbitrum_detectors = [
     ArbitrumPrevrandaoDifficulty,
-    ArbitrumSolidityVersion,
     ArbitrumBlockNumberTimestamp,
 ]
 
