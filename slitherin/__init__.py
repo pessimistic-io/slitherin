@@ -30,12 +30,14 @@ from slitherin.detectors.arbitrum.solidity_version import ArbitrumSolidityVersio
 from slitherin.detectors.arbitrum.block_number_timestamp import (
     ArbitrumBlockNumberTimestamp,
 )
+from slitherin.detectors.arbitrum.arbitrum_chainlink_price_feed import ArbitrumChainlinkPriceFeed
 from slitherin.detectors.potential_arith_overflow import PotentialArithmOverflow
 
 artbitrum_detectors = [
     ArbitrumPrevrandaoDifficulty,
     ArbitrumSolidityVersion,
     ArbitrumBlockNumberTimestamp,
+    ArbitrumChainlinkPriceFeed
 ]
 
 plugin_detectors = artbitrum_detectors + [
