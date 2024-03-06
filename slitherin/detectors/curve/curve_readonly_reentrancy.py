@@ -16,7 +16,7 @@ class CurveReadonlyReentrancy(AbstractDetector):
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.MEDIUM
 
-    WIKI = "https://github.com/pessimistic-io/slitherin/blob/master/docs/balancer/readonly_reentrancy.md"
+    WIKI = "https://github.com/pessimistic-io/slitherin/blob/master/docs/curve_readonly_reentrancy.md"
     WIKI_TITLE = "Curve Readonly Reentrancy"
     WIKI_DESCRIPTION = "Check docs"
     WIKI_EXPLOIT_SCENARIO = "-"
