@@ -16,7 +16,7 @@ from slither.core.declarations.solidity_variables import (
     SolidityFunction,
 )
 
-from ...consts import ARBITRUM_KEY
+from slitherin.consts import ARBITRUM_KEY
 
 
 class ArbitrumSolidityVersion(AbstractDetector):
