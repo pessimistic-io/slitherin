@@ -31,6 +31,7 @@ from slitherin.detectors.arbitrum.block_number_timestamp import (
 )
 from slitherin.detectors.arbitrum.arbitrum_chainlink_price_feed import ArbitrumChainlinkPriceFeed
 from slitherin.detectors.potential_arith_overflow import PotentialArithmOverflow
+from slitherin.detectors.curve.curve_readonly_reentrancy import CurveReadonlyReentrancy
 
 artbitrum_detectors = [
     ArbitrumPrevrandaoDifficulty,
@@ -62,7 +63,8 @@ plugin_detectors = artbitrum_detectors + [
     Ecrecover,
     PublicVsExternal,
     AAVEFlashloanCallbackDetector,
-    PotentialArithmOverflow
+    PotentialArithmOverflow,
+    CurveReadonlyReentrancy,
 ]
 plugin_printers = []
 
