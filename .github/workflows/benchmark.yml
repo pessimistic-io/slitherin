@@ -45,20 +45,26 @@ jobs:
             - name: Run Benchmark
               run: |
                 cd slitherin-benchmark/
-                python runner.py -i contracts/mainnet -o mainnet.csv --limit 8000 --skip-duplicates --skip-libs
+                python runner.py -i contracts/mainnet -o mainnet.csv -eo mainnet_extra.csv --limit 8000 --skip-duplicates --skip-libs
             - name: Upload sheet
               run: |
                 cd slitherin-benchmark/
                 echo $GOOGLE_JWT > service_account.json
-                python save_sheet.py -i mainnet.csv -sa service_account.json -si $GOOGLE_SHEET_ID -ln mainnet
+                python save_sheet.py -i mainnet.csv -sa service_account.json -si $GOOGLE_SHEET_ID -ln mainnet -pr $PR_NUMBER
               env:
                 GOOGLE_JWT : ${{secrets.SERVICE_ACCOUNT}}
                 GOOGLE_SHEET_ID : ${{ secrets.GOOGLE_SHEET_ID }}
+                PR_NUMBER: ${{ github.event.number }}
             - name: 'Upload Artifact'
               uses: actions/upload-artifact@v3
               with:
                 name: mainnet
                 path: slitherin-benchmark/mainnet.csv
+            - name: 'Upload Artifact Extra'
+              uses: actions/upload-artifact@v3
+              with:
+                name: mainnet
+                path: slitherin-benchmark/mainnet_extra.csv
     RunBenchmarkOZ: 
         runs-on: ubuntu-latest
         steps:
@@ -102,10 +108,11 @@ jobs:
               run: |
                 cd slitherin-benchmark/
                 echo $GOOGLE_JWT > service_account.json
-                python save_sheet.py -i oz.csv -sa service_account.json -si $GOOGLE_SHEET_ID -ln OZ
+                python save_sheet.py -i oz.csv -sa service_account.json -si $GOOGLE_SHEET_ID -ln OZ -pr $PR_NUMBER
               env:
                 GOOGLE_JWT : ${{secrets.SERVICE_ACCOUNT}}
                 GOOGLE_SHEET_ID : ${{ secrets.GOOGLE_SHEET_ID }}
+                PR_NUMBER: ${{ github.event.number }}
             - name: 'Upload Artifact'
               uses: actions/upload-artifact@v3
               with:
