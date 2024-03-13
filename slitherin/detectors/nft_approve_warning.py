@@ -2,9 +2,10 @@ from slither.detectors.abstract_detector import AbstractDetector, DetectorClassi
 from typing import List
 from slither.core.cfg.node import Node
 from slither.core.declarations import Function, SolidityVariableComposed
+from slither.core.declarations.function_contract import FunctionContract
 from slither.analyses.data_dependency.data_dependency import is_dependent
 
-
+SAFE_ERC20_LIB_SIG = "safeTransferFrom(address,address,address,uint256)"
 class NftApproveWarning(AbstractDetector):
     """
     Sees if contract contains erc721.[safe]TransferFrom(from, ...) where from parameter is not related to msg.sender
@@ -16,12 +17,14 @@ class NftApproveWarning(AbstractDetector):
     CONFIDENCE = DetectorClassification.LOW
 
     WIKI = 'https://ventral.digital/posts/2022/8/18/sznsdaos-bountyboard-unauthorized-transferfrom-vulnerability'
-    WIKI_TITLE = 'NFT Approve Warning'
+    WIKI_TITLE = 'Token Approve Warning'
     WIKI_DESCRIPTION = "In [safe]TransferFrom() from parameter must be related to msg.sender"
     WIKI_EXPLOIT_SCENARIO = '-'
     WIKI_RECOMMENDATION = 'from parameter must be related to msg.sender'
 
-    _signatures=["transferFrom(address,address,uint256)", "safeTransferFrom(address,address,uint256,bytes)", "safeTransferFrom(address,address,uint256)"]
+    _signatures=["transferFrom(address,address,uint256)", "safeTransferFrom(address,address,uint256,bytes)", "safeTransferFrom(address,address,uint256)", 
+                 SAFE_ERC20_LIB_SIG, # SafeERC20.safeTransferFrom
+                 "safeTransferFrom(address,address,uint256,uint256,bytes)", "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"] # ERC1155 
 
     def _detect_arbitrary_from(self, f: Function):
         all_high_level_calls = [
@@ -48,7 +51,8 @@ class NftApproveWarning(AbstractDetector):
                     and hasattr(ir.function, 'solidity_signature')
                     and ir.function.solidity_signature in self._signatures
                 ):
-                    is_from_sender = is_dependent(ir.arguments[0], SolidityVariableComposed("msg.sender"), node.function.contract)
+                    is_from_sender = ir.function.solidity_signature !=  SAFE_ERC20_LIB_SIG and is_dependent(ir.arguments[0], SolidityVariableComposed("msg.sender"), node.function.contract) or \
+                                    ir.function.solidity_signature ==  SAFE_ERC20_LIB_SIG and is_dependent(ir.arguments[1], SolidityVariableComposed("msg.sender"), node.function.contract)
                     # is_from_self = is_dependent(ir.arguments[0], SolidityVariable("this"), node.function.contract)
                     if (not is_from_sender): # and not is_from_self
                         irList.append(ir.node)
