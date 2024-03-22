@@ -20,7 +20,7 @@ Please let us know if you have discovered an [issue/bug/vulnerability](https://t
 | Section                      | Link                                                                                            |
 | ---------------------------- | ----------------------------------------------------------------------------------------------- |
 | Docs                         | [Docs for each detector](https://github.com/pessimistic-io/slitherin/tree/master/docs)          |
-| Slither_pess                 | [Detectors code](https://github.com/pessimistic-io/slitherin/tree/master/slither_pess)          |
+| Slitherin                    | [Detectors code](https://github.com/pessimistic-io/slitherin/tree/master/slitherin)             |
 | Tests                        | [Test contracts for detectors](https://github.com/pessimistic-io/slitherin/tree/master/tests)   |
 | Utils                        | [Auxiliary files](https://github.com/pessimistic-io/slitherin/tree/master/utils)                |
 | Issues                       | [Suggest an idea](https://github.com/pessimistic-io/slitherin/issues)                           |
