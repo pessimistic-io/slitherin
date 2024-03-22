@@ -1,7 +1,13 @@
+from enum import Enum
 from typing import List, Tuple
+from collections import namedtuple
 
-from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
-from slither.slithir.operations import SolidityCall
+from slither.detectors.abstract_detector import (
+    AbstractDetector,
+    DetectorClassification,
+    classification_txt,
+)
+from slither.slithir.operations import SolidityCall, HighLevelCall
 from slither.core.declarations import (
     Contract,
     SolidityVariableComposed,
@@ -15,6 +21,33 @@ from slither.analyses.data_dependency.data_dependency import is_dependent, is_ta
 # TODO/Possible improvements:
 # look for transferFroms if there is any transferFrom and contract contains whole arbitrary call - it is screwed
 # Filter out role protected
+
+DetectorParams = namedtuple(
+    "DetectorParams", ["argument_suffix", "impact", "confidence"]
+)
+
+
+class ArbitraryCallDetectors:
+    ArbitraryCallWithApproveStored = DetectorParams(
+        "-with-stored-erc20-approves",
+        DetectorClassification.HIGH,
+        DetectorClassification.HIGH,
+    )
+    ArbitraryCall = DetectorParams(
+        "",
+        DetectorClassification.HIGH,
+        DetectorClassification.HIGH,
+    )
+    ArbitraryCallDestinationTainted = DetectorParams(
+        "-destination-tainted",
+        DetectorClassification.MEDIUM,
+        DetectorClassification.MEDIUM,
+    )
+    ArbitraryCallCalldataTainted = DetectorParams(
+        "-calldata-tainted",
+        DetectorClassification.MEDIUM,
+        DetectorClassification.MEDIUM,
+    )
 
 
 class ArbitraryCall(AbstractDetector):
@@ -36,10 +69,19 @@ class ArbitraryCall(AbstractDetector):
     WIKI_EXPLOIT_SCENARIO = "Attacker can manipulate on inputs"
     WIKI_RECOMMENDATION = "Do not allow arbitrary calls"
 
+    def _is_role_protected(self, function: FunctionContract):
+        for m in function.modifiers:
+            if m.name.startswith("only"):
+                return True
+        return False
+
     def analyze_function(
         self, function: FunctionContract
-    ) -> List[Tuple[FunctionContract, Node, LowLevelCall, bool, bool]]:
+    ) -> Tuple[
+        List[Tuple[FunctionContract, Node, LowLevelCall, bool, bool]], bool
+    ]:  # TODO(yhtiyar): make return type as named tuple/class
         results = []
+        stores_approve = False
         for node in function.nodes:
             for ir in node.irs:
                 try:
@@ -76,6 +118,12 @@ class ArbitraryCall(AbstractDetector):
                         destination_tainted = is_tainted(ir.arguments[1], node, True)
                         args_tainted = is_tainted(ir.arguments[3], node, True)
 
+                    elif (
+                        isinstance(ir, HighLevelCall)
+                        and ir.function.name == "transferFrom"
+                    ):
+                        stores_approve = True
+
                     if args_tainted or destination_tainted:
                         results.append(
                             (
@@ -90,7 +138,7 @@ class ArbitraryCall(AbstractDetector):
                     print("ArbitraryCall:Failed to check types", e)
                     print(ir)
 
-        return results
+        return (results, stores_approve)
 
     def analyze_contract(self, contract: Contract):
         stores_approve = False
@@ -99,7 +147,8 @@ class ArbitraryCall(AbstractDetector):
         ] = []
         results = []
         for f in contract.functions:
-            res = self.analyze_function(f)
+            (res, _stores_approve) = self.analyze_function(f)
+            stores_approve |= _stores_approve
             if res:
                 all_tainted_calls.extend(res)
 
@@ -114,6 +163,8 @@ class ArbitraryCall(AbstractDetector):
 
             for f in contract.functions:
                 if f.visibility not in ["external", "public"]:
+                    continue
+                if self._is_role_protected(f):
                     continue
 
                 fn_taints_args = False
@@ -137,16 +188,40 @@ class ArbitraryCall(AbstractDetector):
                 if not (fn_taints_args or fn_taints_destination):
                     continue
 
+                detectorParams: DetectorParams = None
                 if fn_taints_args and fn_taints_destination:
-                    text = "The call could be fully manipulated (arbitrary call)"
+                    if stores_approve:
+                        text = "The call could be fully manipulated (arbitrary call). This contract also STORES APPROVES!!!"
+                        detectorParams = (
+                            ArbitraryCallDetectors.ArbitraryCallWithApproveStored
+                        )
+
+                    else:
+                        text = "The call could be fully manipulated (arbitrary call)"
+                        detectorParams = ArbitraryCallDetectors.ArbitraryCall
                 else:
-                    part = "calldata" if fn_taints_args else "destination"
+                    if fn_taints_args:
+                        part = "calldata"
+                        detectorParams = (
+                            ArbitraryCallDetectors.ArbitraryCallCalldataTainted
+                        )
+
+                    else:
+                        part = "destination"
+                        detectorParams = (
+                            ArbitraryCallDetectors.ArbitraryCallDestinationTainted
+                        )
+
                     text = f"The {part} could be manipulated"
                 info += [f"\t{text} through ", f, "\n"]
 
-            res = self.generate_result(info)
-            res.add(node)
-            results.append(res)
+                res = self.generate_result(info)
+                res.add(node)
+                res.data["check"] = self.ARGUMENT + detectorParams.argument_suffix
+                res.data["impact"] = classification_txt[detectorParams.impact]
+                res.data["confidence"] = classification_txt[detectorParams.confidence]
+
+                results.append(res)
         return results
 
     def _detect(self):

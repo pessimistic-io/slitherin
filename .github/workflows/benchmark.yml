@@ -1,0 +1,125 @@
+name: Run Benchmark
+
+on:
+    pull_request:
+        branches:
+            - 'master'
+            - 'develop'
+jobs:
+    RunBenchmarkMainnet: 
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                submodules: 'true'
+            - name: Set up Python
+              uses: actions/setup-python@v4
+              with:
+                python-version: '3.x'
+            - name: Set up Node
+              uses: actions/setup-node@v4
+              with:
+                node-version: '18.x'
+            - name: Update pip
+              run: python -m pip install --upgrade pip
+            - name: Install solc-select
+              run: python -m pip install solc-select
+            - name: Install Slither
+              run: python -m pip install slither-analyzer
+            - name: Install Setuptools
+              run: python -m pip install setuptools
+            - name: Install Slitherin
+              run: python setup.py develop
+            - name: Configure
+              run: |
+                cd slitherin-benchmark/
+                ls
+                mv example.config.py config.py
+            - name: Install node dependencies
+              run: npm ci
+            - name: Install benchmark requirements
+              run: |
+                cd slitherin-benchmark/
+                python -m pip install -r requirements.txt
+            - name: Run Benchmark
+              run: |
+                cd slitherin-benchmark/
+                python runner.py -i contracts/mainnet -o mainnet.csv -eo mainnet_extra.csv --limit 8000 --skip-duplicates --skip-libs
+            - name: Upload sheet
+              run: |
+                cd slitherin-benchmark/
+                echo $GOOGLE_JWT > service_account.json
+                python save_sheet.py -i mainnet.csv -sa service_account.json -si $GOOGLE_SHEET_ID -ln mainnet -pr $PR_NUMBER
+              env:
+                GOOGLE_JWT : ${{secrets.SERVICE_ACCOUNT}}
+                GOOGLE_SHEET_ID : ${{ secrets.GOOGLE_SHEET_ID }}
+                PR_NUMBER: ${{ github.event.number }}
+            - name: 'Upload Artifact'
+              uses: actions/upload-artifact@v3
+              with:
+                name: mainnet
+                path: slitherin-benchmark/mainnet.csv
+            - name: 'Upload Artifact Extra'
+              uses: actions/upload-artifact@v3
+              with:
+                name: mainnet
+                path: slitherin-benchmark/mainnet_extra.csv
+    RunBenchmarkOZ: 
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                submodules: 'true'
+            - name: Set up Python
+              uses: actions/setup-python@v4
+              with:
+                python-version: '3.x'
+            - name: Set up Node
+              uses: actions/setup-node@v4
+              with:
+                node-version: '18.x'
+            - name: Update pip
+              run: python -m pip install --upgrade pip
+            - name: Install solc-select
+              run: python -m pip install solc-select
+            - name: Install Slither
+              run: python -m pip install slither-analyzer
+            - name: Install Setuptools
+              run: python -m pip install setuptools
+            - name: Install Slitherin
+              run: python setup.py develop
+            - name: Configure
+              run: |
+                cd slitherin-benchmark/
+                mv example.config.py config.py
+            - name: Install node dependencies
+              run: npm ci
+            - name: Install benchmark requirements
+              run: |
+                cd slitherin-benchmark/
+                python -m pip install -r requirements.txt
+            - name: Run Benchmark
+              run: |
+                cd slitherin-benchmark/
+                python runner.py -i contracts/openzeppelin -o oz.csv -eo oz_extra.csv
+            - name: Upload sheet
+              run: |
+                cd slitherin-benchmark/
+                echo $GOOGLE_JWT > service_account.json
+                python save_sheet.py -i oz.csv -sa service_account.json -si $GOOGLE_SHEET_ID -ln OZ -pr $PR_NUMBER
+              env:
+                GOOGLE_JWT : ${{secrets.SERVICE_ACCOUNT}}
+                GOOGLE_SHEET_ID : ${{ secrets.GOOGLE_SHEET_ID }}
+                PR_NUMBER: ${{ github.event.number }}
+            - name: 'Upload Artifact'
+              uses: actions/upload-artifact@v3
+              with:
+                name: oz
+                path: slitherin-benchmark/oz.csv
+            - name: 'Upload Artifact'
+              uses: actions/upload-artifact@v3
+              with:
+                name: oz_extra
+                path: slitherin-benchmark/oz_extra.csv

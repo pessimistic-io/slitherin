@@ -1,4 +1,5 @@
 from setuptools import setup, find_packages
+from slitherin.cli import SLITHERIN_VERSION
 
 with open("./README.md", "r") as f:
     long_description = f.read()
@@ -8,18 +9,27 @@ setup(
     description="Pessimistic security Slither detectors",
     long_description=long_description,
     long_description_content_type="text/markdown",
+    package_data={"slitherin": ["py.typed"]},
     url="https://github.com/pessimistic-io/slitherin",
     author="Pessimistic.io",
-    version="0.4.0",
-    package_dir={"":"."},
+    author_email="info@pessimistic.io",
+    classifiers=[
+        "Development Status :: 3 - Alpha",
+        "Programming Language :: Python",
+        "License :: OSI Approved :: Apache Software License",
+        "Topic :: Software Development :: Libraries",
+    ],
+    version=SLITHERIN_VERSION,
     packages=find_packages(),
     license="AGPL-3.0",
     python_requires=">=3.8",
-    install_requires=["slither-analyzer>=0.8.3"],
+    install_requires=["slither-analyzer>=0.10.0"],
     extras_requires={
         "dev": ["twine>=4.0.2"],
     },
     entry_points={
-        "slither_analyzer.plugin": "slither my-plugin=slither_pess:make_plugin",
+        "slither_analyzer.plugin": "slither slitherin-plugins=slitherin:make_plugin",
+        "console_scripts": ["slitherin=slitherin.cli:main"],
     },
+    include_package_data=True,
 )

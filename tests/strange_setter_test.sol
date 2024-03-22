@@ -1,5 +1,8 @@
 pragma solidity ^0.8.0;
 
+interface ExternalContract {
+    function set(bool arg) external;
+}
 // What it should detect:
 // If smth is set in the function, and the function contains parameters,
 // and this parameters were not uset to set.
@@ -37,8 +40,16 @@ contract StrangeSetter {
     }
 
     function setWithInt(bytes32 nameHash, address builder) public onlyOwner {
-        uint256 x = 0; //TODO this is not detected. There are params which are not used
+        uint256 x = 0;
         vulnurable_internal(x);
+    }
+
+    function setSwapEnabledExternal_ok(ExternalContract target, bool swapEnabled) external onlyOwner {
+        target.set(swapEnabled);
+    }
+
+    function setUseOnlyOneArg_vulnerable(uint256 arg1, bool isProtectedArg) external onlyOwner {
+        isProtected = isProtectedArg;
     }
 
     function set_ok(uint256 setter) public onlyOwner {

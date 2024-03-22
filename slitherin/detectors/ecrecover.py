@@ -9,7 +9,7 @@ from slither.slithir.operations import (
 from slither.core.declarations import (
     FunctionContract,
 )
-from slither.core.cfg.node import Node
+from slither.core.cfg.node import Node, NodeType
 from slither.slithir.operations import LowLevelCall
 from slither.analyses.data_dependency.data_dependency import is_dependent
 
@@ -47,6 +47,7 @@ class Ecrecover(AbstractDetector):
                             == "ecrecover(bytes32,uint8,bytes32,bytes32)"
                         ):
                             unchecked_results.add(ir.lvalue)
+                            # print(ir.lvalue, node)
                             var_to_node[ir.lvalue] = node
                         elif (
                             ir.function.name == "require(bool,string)"
@@ -70,6 +71,18 @@ class Ecrecover(AbstractDetector):
 
                 except Exception as e:
                     print("failed", e)
+        
+        for node in function.nodes:
+            if node._node_type == NodeType.RETURN:
+                node_contains_0 = re.search(
+                        r"address\((0|0x0*)\)", str(node)
+                    )  # check if the node contains address(0|0x0..)
+                if not node_contains_0:
+                    continue
+                temp_unchecked = set(unchecked_results)
+                for ur in temp_unchecked:
+                    if is_dependent(ur, ur, node):
+                        unchecked_results.remove(ur)
 
         return [var_to_node[ur] for ur in unchecked_results]
 

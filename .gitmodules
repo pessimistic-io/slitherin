@@ -1,0 +1,3 @@
+[submodule "slitherin-benchmark"]
+	path = slitherin-benchmark
+	url = https://github.com/pessimistic-io/slitherin-benchmark.git

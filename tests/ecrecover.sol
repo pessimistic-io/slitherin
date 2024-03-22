@@ -30,4 +30,19 @@ contract EcrecoverTest {
             revert("smth");
         }
     }
+    
+    function ecrecover_negative4() external returns (bool) {
+        address signer = ecrecover("", 0, 0, 0);
+        return signer == address(0);
+    }
+
+    // @todo Result is checked inside `ecrecover_negative5_part2` but the value from internal call is unused
+    function ecrecover_negative5_part1() external {
+        bool unusedResult = ecrecover_negative5_part2();
+    }
+
+    function ecrecover_negative5_part2() internal returns (bool) {
+        address signer = ecrecover("", 0, 0, 0);
+        return signer == address(0);
+    }
 }
