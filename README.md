@@ -6,7 +6,7 @@
 
 **Welcome!** We are the [pessimistic.io](https://pessimistic.io/) team, and in recent months we have been actively developing our [own **Slither detectors**](https://github.com/pessimistic-io/slitherin/tree/develop/slitherin/detectors) to help with code review and audit process. This repository contains everything you may require to work with them!
 
-We increased the sensitivity of our detectors since they are _quite straightforward_ and not written in the "original style." As a result, they produce FPs ([False Positives](https://en.wikipedia.org/wiki/False_positives_and_false_negatives)) more frequently than original ones. So that, our detectors are a kind of automation of the checks implemented in the checklist, their main purpose is to look for issues and assist the code auditor.
+We increased the sensitivity of our detectors since they are *quite straightforward* and not written in the "original style." As a result, they produce FPs ([False Positives](https://en.wikipedia.org/wiki/False_positives_and_false_negatives)) more frequently than original ones. So that, our detectors are a kind of automation of the checks implemented in the checklist, their main purpose is to look for issues and assist the code auditor.
 
 Please let us know if you have discovered an [issue/bug/vulnerability](https://telegra.ph/BountyCTF-Platforms-Web3-04-19) via our custom Slither detectors. You may contact us via opening a [PR/Issue](https://github.com/pessimistic-io/slitherin/issues) or [directly](mailto:gm@pessimistic.io), whichever is more convenient for you. If you have any further questions or suggestions, please [join our Discord Server](https://discord.gg/vPxkR8B9p7) or [Telegram chat](https://t.me/+G96ejJ7Pmgk1NDZi)! We hope to see you there, and we intend to support the community and its initiatives!
 
@@ -17,27 +17,23 @@ Please let us know if you have discovered an [issue/bug/vulnerability](https://t
 
 #### **Table of Contents:**
 
-| Section                      | Link                                                                                            |
-| ---------------------------- | ----------------------------------------------------------------------------------------------- |
-| Docs                         | [Docs for each detector](https://github.com/pessimistic-io/slitherin/tree/master/docs)          |
-| Slitherin                    | [Detectors code](https://github.com/pessimistic-io/slitherin/tree/master/slitherin)             |
-| Tests                        | [Test contracts for detectors](https://github.com/pessimistic-io/slitherin/tree/master/tests)   |
-| Utils                        | [Auxiliary files](https://github.com/pessimistic-io/slitherin/tree/master/utils)                |
-| Issues                       | [Suggest an idea](https://github.com/pessimistic-io/slitherin/issues)                           |
-| Installation Process         | [Step-by-Step guide](https://github.com/pessimistic-io/slitherin#installation-process)          |
-| Detectors                    | [Detectors table](https://github.com/pessimistic-io/slitherin#detectors-table)                  |
-| Enhancements & New Detectors | [Project Improvements](https://github.com/pessimistic-io/slitherin#enhancements--new-detectors) |
+| Section                      | Link                                                                                                          |
+|------------------------------|---------------------------------------------------------------------------------------------------------------|
+| Docs                         | [Docs for each detector](https://github.com/pessimistic-io/slitherin/tree/master/docs)                        |
+| Slitherin                    | [Detectors code](https://github.com/pessimistic-io/slitherin/tree/master/slitherin/detectors)                 |
+| Tests                        | [Test contracts for detectors](https://github.com/pessimistic-io/slitherin/tree/master/tests)                 |
+| Utils                        | [Auxiliary files](https://github.com/pessimistic-io/slitherin/tree/master/slitherin/utils)                    |
+| Issues                       | [Suggest an idea](https://github.com/pessimistic-io/slitherin/issues)                                         |
+| Installation Process         | [Step-by-Step guide](https://github.com/pessimistic-io/slitherin#installation-process)                        |
+| Detectors                    | [Detectors table](https://github.com/pessimistic-io/slitherin#detectors-table)                                |
+| Enhancements & New Detectors | [Project Improvements](https://github.com/pessimistic-io/slitherin#enhancements--new-detectors)               |
 
 ## Installation Process
-
 ### Using Git
-
-To install Pessimistic Detectors:
-
+To install Pessimistic Detectors: 
 1. Install the [original Slither](https://github.com/crytic/slither#how-to-install);
 2. Clone our repository;
 3. Run the following command in our repository folder to add new detectors to Slither:
-
 ```bash
 python3 setup.py develop
 ```
@@ -46,12 +42,9 @@ python3 setup.py develop
 ```bash
 npm install
 ```
-
 ### Using Pip
-
 1. Install the [original Slither](https://github.com/crytic/slither#how-to-install);
 2. Install the pip [package](https://pypi.org/project/slitherin/):
-
 ```bash
 pip install slitherin
 ```
@@ -109,29 +102,27 @@ Slitherin detectors are included into original Slither after the installation. Y
 
 **Please note:**
 
-- \*Valid - issues included in reports and fixed by developers (January 2023 - June 2023).
+- *Valid - issues included in reports and fixed by developers (January 2023 - June 2023).
 
 - There are two detectors which have several checks inside: [pess-uni-v2](https://github.com/pessimistic-io/slitherin/blob/master/slitherin/detectors/uni_v2.py) and [arbitrary-call](https://github.com/pessimistic-io/slitherin/blob/master/slitherin/detectors/arbitrary_call/arbitrary_call.py).
 
 ## Enhancements & New Detectors
 
-Here we indicate our updates, workflows and mark completed tasks and improvements!
+Here we indicate our updates, workflows and mark completed tasks and improvements! 
 
-> You can add your own _detector/idea/enhancement_ by [opening the Issue at the following link](https://github.com/pessimistic-io/slitherin/issues).
+> You can add your own *detector/idea/enhancement* by [opening the Issue at the following link](https://github.com/pessimistic-io/slitherin/issues).
 
-Prior to adding a custom _detector_, ensure that:
+Prior to adding a custom *detector*, ensure that:
 
 1. In a documentation file, your detector is comprehensively described;
 2. The detector test contract is presented and correctly compiles;
 3. The detector code is presented and works properly.
 
-Prior to adding an _idea_, ensure that:
-
+Prior to adding an *idea*, ensure that:
 1. Your concept or idea is well articulated;
 2. A vulnerability example (or PoC) is provided;
 
-Prior to adding an _enhancement_, ensure that:
-
+Prior to adding an *enhancement*, ensure that:
 1. Your enhancement does **not** make the base code worse;
 2. Your enhancement is commented.
 
@@ -170,11 +161,10 @@ Our team would like to express our deepest gratitude to the [Slither tool](https
 [![Mail](https://img.shields.io/badge/Mail-gm%40pessimistic.io-orange?style=flat-square&logo=appveyor?logo=data:https://pessimistic.io/favicon.ico)](mailto:gm@pessimistic.io)
 
 ---
-
 > Pessimistic delivers trusted security audits since 2017.
-> \
+\
 > Require expert oversight of your safety?
-> \
+\
 > Explore our services at [pessimistic.io](https://pessimistic.io/).
 
 #
