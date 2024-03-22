@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "@openzeppelin/contracts": "^4.9.3"
+    "@openzeppelin/contracts": "^4.9.3",
+    "@balancer-labs/v2-interfaces": "^0.4.0",
+    "@balancer-labs/v2-pool-utils": "^4.0.0"
+
   }
 }

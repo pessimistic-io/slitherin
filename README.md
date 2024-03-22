@@ -1,4 +1,4 @@
-#  Slitherin by Pessimistic.io
+# Slitherin by Pessimistic.io
 
 [![Blog](https://img.shields.io/badge/Blog-Link-blue?style=flat-square&logo=appveyor?logo=data:https://pessimistic.io/favicon.ico)](https://blog.pessimistic.io/)
 [![Our Website](https://img.shields.io/badge/By-pessimistic.io-green?style=flat-square&logo=appveyor?logo=data:https://pessimistic.io/favicon.ico)](https://pessimistic.io/)
@@ -99,6 +99,7 @@ Slitherin detectors are included into original Slither after the installation. Y
 | [Arbitrary Call](https://github.com/pessimistic-io/slitherin/blob/master/slitherin/detectors/arbitrary_call/arbitrary_call.py)                        | [Explore](https://github.com/pessimistic-io/slitherin/blob/master/docs/arbitrary_call.md)                 | [Test](https://github.com/pessimistic-io/slitherin/blob/master/tests/arbitrary_call_test.sol)                                                         | 0                                                                                                                |
 | [Elliptic Curve Recover](https://github.com/pessimistic-io/slitherin/blob/master/slitherin/detectors/ecrecover.py)                        | [Explore](https://github.com/pessimistic-io/slitherin/blob/master/docs/ecrecover.md)                 | [Test](https://github.com/pessimistic-io/slitherin/blob/master/tests/ecrecover.sol)                                                         | 0                                                                                                                |
 | [Public vs External](https://github.com/pessimistic-io/slitherin/blob/master/slitherin/detectors/public_vs_external.py)                        | [Explore](https://github.com/pessimistic-io/slitherin/blob/master/docs/public_vs_external.md)                 | [Test](https://github.com/pessimistic-io/slitherin/blob/master/tests/public_vs_external_test.sol)                                                         | 0                                                                                                                |
+| [Balancer Read-only Reentrancy](https://github.com/pessimistic-io/slitherin/blob/master/slitherin/detectors/balancer/balancer_readonly_reentrancy.py)                        | [Explore](https://github.com/pessimistic-io/slitherin/blob/master/docs/balancer/readonly_reentrancy.md)                 | [Test](https://github.com/pessimistic-io/slitherin/blob/master/tests/balancer/readonly_reentrancy_test.sol)                                                         | 0                                                                                                                |
 
 **Please note:**
 

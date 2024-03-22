@@ -1,0 +1,1 @@
+slither tests/balancer/readonly_reentrancy_test.sol --detect pess-balancer-readonly-reentrancy --solc-remaps @=node_modules/@
