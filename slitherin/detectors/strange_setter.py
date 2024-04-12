@@ -66,7 +66,7 @@ class StrangeSetter(AbstractDetector):
         return intersection_len != len(fun.parameters)
 
     def _is_strange_constructor(self, fun: Function) -> bool:
-        """Checks if constructor setqs nothing"""
+        """Checks if constructor sets nothing"""
         return self._is_strange_setter(fun)
 
     def _detect(self) -> List[Output]:
