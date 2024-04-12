@@ -87,3 +87,7 @@ contract OkConstructor {
         init = true;
     }
 }
+
+contract TestInheritance is StrangeSetter{
+    constructor(uint256 _toSet) StrangeSetter(_toSet) {}
+}
