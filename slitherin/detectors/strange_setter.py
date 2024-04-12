@@ -3,6 +3,7 @@ from slither.utils.output import Output
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
 from slither.core.declarations import Function
 import slither.core.expressions.new_array as na
+import slither.core.expressions.new_contract as nc
 from slither.analyses.data_dependency.data_dependency import is_dependent
 
 
@@ -51,6 +52,8 @@ class StrangeSetter(AbstractDetector):
         for param in fun.parameters:
             for external in fun.external_calls_as_expressions:
                 if isinstance(external._called, na.NewArray):
+                    continue
+                if isinstance(external._called, nc.NewContract): # skip new contract calls, idk how to get arguments passed to creation
                     continue
                 for arg in [*external.arguments, external._called._expression]:
                     if str(arg) == str(param):
