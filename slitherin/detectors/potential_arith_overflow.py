@@ -86,7 +86,7 @@ class PotentialArithmOverflow(AbstractDetector):
                         errors.extend(response_errors)
                     if has_problems:
                         final_results.append((node, str(irs[-1].lvalue._type), errors))
-                if len(irs) > 0 and isinstance(irs[-1], ops.Return) and len(fun.return_type) == 1 and str(fun.return_type[0]) in INT_TYPES: # @todo currently works only with single returns
+                if len(irs) > 0 and isinstance(irs[-1], ops.Return) and fun.return_type is not None and len(fun.return_type) == 1 and str(fun.return_type[0]) in INT_TYPES: # @todo currently works only with single returns
                     expected_bits_cut = str(fun.return_type[0]).removeprefix("uint").removeprefix("int")
                     expected_bits = int(256 if not expected_bits_cut else expected_bits_cut)
                     has_problems = False
