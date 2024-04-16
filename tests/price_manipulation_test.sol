@@ -33,6 +33,10 @@ contract Test1 {
         price = getBalance() + mySupply() + 1;
     }
 
+    function test_vuln_7() external returns(uint256 price) {
+        price = address(token).balance / mySupply();
+    }
+
     function getBalance() public returns(uint256 bal) {
         bal = token.balanceOf(msg.sender);
     }

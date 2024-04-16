@@ -1,11 +1,10 @@
 from typing import List
 from slither.utils.output import Output
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
-from slither.core.declarations import Function
-from slither.slithir.operations.event_call import EventCall
 from slither.slithir.operations.high_level_call import HighLevelCall
 from slither.slithir.operations.internal_call import InternalCall
-from slither.slithir.operations.binary import Binary, BinaryType
+from slither.slithir.operations.solidity_call import SolidityCall
+from slither.slithir.operations.binary import Binary
 from slither.analyses.data_dependency.data_dependency import is_dependent
 
 
@@ -30,6 +29,9 @@ class PriceManipulationDetector(AbstractDetector):
                 for func in contract.functions:
                     for n in func.nodes:
                         for x in n.irs:
+                            if isinstance(x, SolidityCall):
+                                if x.function.name == "balance(address)" or x.function.name == "self.balance" or x.function.name == "this.balance()":
+                                    all_balance_vars.append((n, x._lvalue))
                             if isinstance(x, HighLevelCall):
                                 if str(x.function_name).lower() == "balanceof":
                                     all_balance_vars.append((n, x._lvalue))
