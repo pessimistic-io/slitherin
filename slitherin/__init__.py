@@ -33,6 +33,8 @@ from slitherin.detectors.arbitrum.arbitrum_chainlink_price_feed import ArbitrumC
 from slitherin.detectors.potential_arith_overflow import PotentialArithmOverflow
 from slitherin.detectors.curve.curve_readonly_reentrancy import CurveReadonlyReentrancy
 from slitherin.detectors.balancer.balancer_readonly_reentrancy import BalancerReadonlyReentrancy
+from slitherin.detectors.vyper.reentrancy_curve_vyper_version import CurveVyperReentrancy
+from slitherin.detectors.price_manipulation import PriceManipulationDetector
 
 artbitrum_detectors = [
     ArbitrumPrevrandaoDifficulty,
@@ -67,6 +69,8 @@ plugin_detectors = artbitrum_detectors + [
     PotentialArithmOverflow,
     CurveReadonlyReentrancy,
     BalancerReadonlyReentrancy
+    CurveVyperReentrancy,
+    PriceManipulationDetector
 ]
 plugin_printers = []
 
