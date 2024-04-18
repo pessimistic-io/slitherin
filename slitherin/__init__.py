@@ -68,7 +68,7 @@ plugin_detectors = artbitrum_detectors + [
     AAVEFlashloanCallbackDetector,
     PotentialArithmOverflow,
     CurveReadonlyReentrancy,
-    BalancerReadonlyReentrancy
+    BalancerReadonlyReentrancy,
     CurveVyperReentrancy,
     PriceManipulationDetector
 ]
