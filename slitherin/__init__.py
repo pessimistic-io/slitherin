@@ -32,6 +32,7 @@ from slitherin.detectors.arbitrum.block_number_timestamp import (
 from slitherin.detectors.arbitrum.arbitrum_chainlink_price_feed import ArbitrumChainlinkPriceFeed
 from slitherin.detectors.potential_arith_overflow import PotentialArithmOverflow
 from slitherin.detectors.curve.curve_readonly_reentrancy import CurveReadonlyReentrancy
+from slitherin.detectors.vyper.reentrancy_curve_vyper_version import CurveVyperReentrancy
 from slitherin.detectors.price_manipulation import PriceManipulationDetector
 
 artbitrum_detectors = [
@@ -66,6 +67,7 @@ plugin_detectors = artbitrum_detectors + [
     AAVEFlashloanCallbackDetector,
     PotentialArithmOverflow,
     CurveReadonlyReentrancy,
+    CurveVyperReentrancy,
     PriceManipulationDetector
 ]
 plugin_printers = []
