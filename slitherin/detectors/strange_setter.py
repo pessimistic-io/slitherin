@@ -3,6 +3,8 @@ from slither.utils.output import Output
 from slither.detectors.abstract_detector import AbstractDetector, DetectorClassification
 from slither.core.declarations import Function
 import slither.core.expressions.new_array as na
+import slither.core.expressions.new_contract as nc
+from slither.analyses.data_dependency.data_dependency import is_dependent
 
 
 class StrangeSetter(AbstractDetector):
@@ -51,9 +53,18 @@ class StrangeSetter(AbstractDetector):
             for external in fun.external_calls_as_expressions:
                 if isinstance(external._called, na.NewArray):
                     continue
+                if isinstance(external._called, nc.NewContract): # skip new contract calls, idk how to get arguments passed to creation
+                    continue
                 for arg in [*external.arguments, external._called._expression]:
                     if str(arg) == str(param):
                         used_params.add(param)
+        if fun.name == "constructor":
+            for base_call in fun.explicit_base_constructor_calls:
+                if not self._is_strange_constructor(base_call):
+                    for param_cur in fun.parameters:
+                        for param_base in base_call.parameters:
+                            if is_dependent(param_base, param_cur, base_call):
+                                used_params.add(param_cur)
         intersection_len = len(set(fun.parameters) & used_params)
         return intersection_len != len(fun.parameters)
 
