@@ -9,7 +9,7 @@ from slither.core.variables.variable import Variable
 from slither.core.declarations import Function
 from slither.core.cfg.node import NodeType, Node, Contract
 from slither.detectors.abstract_detector import DetectorClassification
-from .reentrancy.reentrancy import (
+from slitherin.detectors.reentrancy.reentrancy import (
     Reentrancy,
     to_hashable,
     AbstractState,

@@ -30,6 +30,7 @@ setup(
     entry_points={
         "slither_analyzer.plugin": "slither slitherin-plugins=slitherin:make_plugin",
         "console_scripts": ["slitherin=slitherin.cli:main"],
+        "napalm.collection": ["slitherin=slitherin.napalm:entry_point"],
     },
     include_package_data=True,
 )
