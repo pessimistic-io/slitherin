@@ -1,4 +1,4 @@
-# Curve Readonly Reentrancy
+# Curve Vyper Reentrancy
 
 ## Configuration
 
