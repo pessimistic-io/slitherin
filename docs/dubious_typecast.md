@@ -8,7 +8,7 @@
 
 ## Description
 
-Highlights nonstandard typecasts. E.g: `uint256(uint8(K))`
+Highlights explicit typecasts, where the result value can differ from the original one. E.g., `uint8(uint256(1e18))`, `uint256(int256(-1))`.
 
 ## Vulnerable Scenario
 
