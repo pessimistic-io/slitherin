@@ -50,7 +50,7 @@ class CallForwardToProtected(AbstractDetector):
                         return True
         return False
     
-    def _pess_is_excluded_from_detector(self, contract: "Contract") -> bool:
+    def _pess_is_excluded_from_detector(self, contract) -> bool:
         path = Path(contract.source_mapping.filename.absolute).parts
         is_zep = "openzeppelin-solidity" in path or \
                     ("@openzeppelin" in path and path[path.index("@openzeppelin") + 1] == "contracts") or \
