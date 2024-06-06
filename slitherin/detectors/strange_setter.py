@@ -5,6 +5,7 @@ from slither.core.declarations import Function
 import slither.core.expressions.new_array as na
 import slither.core.expressions.new_contract as nc
 from slither.analyses.data_dependency.data_dependency import is_dependent
+from slither.slithir.operations.internal_call import InternalCall
 
 
 class StrangeSetter(AbstractDetector):
@@ -21,7 +22,9 @@ class StrangeSetter(AbstractDetector):
         "https://github.com/pessimistic-io/slitherin/blob/master/docs/strange_setter.md"
     )
     WIKI_TITLE = "Strange Setter"
-    WIKI_DESCRIPTION = "Setter must write to storage variables or pass arguments to external calls"
+    WIKI_DESCRIPTION = (
+        "Setter must write to storage variables or pass arguments to external calls"
+    )
     WIKI_EXPLOIT_SCENARIO = "-"
     WIKI_RECOMMENDATION = "Make sure that your setter actually sets something"
 
@@ -34,26 +37,26 @@ class StrangeSetter(AbstractDetector):
             # nothing is in the params, so we don't care
             return False
         used_params = set()
-        for (
-            fin
-        ) in fun.internal_calls:  # branch with for-loop for setters in internal calls
-            if isinstance(fin, Function):
-                for param in fin.parameters:
-                    for n in fin.nodes:
-                        if n.state_variables_written and str(param) in str(
-                            n
-                        ):  # check if there's a state variable setter using function parameters
-                            used_params.add(param)
+
+        for node in fun.nodes:
+            for ir in node.irs:
+                if isinstance(ir, InternalCall):
+                    for arg in ir.arguments:
+                        used_params.add(arg)
+
         for param in fun.parameters:
             if fun.state_variables_written:
                 for n in fun.nodes:
                     if str(param) in str(n):
                         used_params.add(param)
+
         for param in fun.parameters:
             for external in fun.external_calls_as_expressions:
                 if isinstance(external._called, na.NewArray):
                     continue
-                if isinstance(external._called, nc.NewContract): # skip new contract calls, idk how to get arguments passed to creation
+                if isinstance(
+                    external._called, nc.NewContract
+                ):  # skip new contract calls, idk how to get arguments passed to creation
                     continue
                 for arg in [*external.arguments, external._called._expression]:
                     if str(arg) == str(param):
@@ -76,7 +79,7 @@ class StrangeSetter(AbstractDetector):
         """Main function"""
         res = []
         for contract in self.compilation_unit.contracts_derived:
-            if not contract.is_interface:
+            if not contract.is_interface and not contract.is_library:
                 overriden_funtions = []  # functions that are overridden
                 for f in contract.functions:
                     if f.parameters:

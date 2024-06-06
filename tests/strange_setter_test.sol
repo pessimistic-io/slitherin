@@ -44,16 +44,26 @@ contract StrangeSetter {
         vulnurable_internal(x);
     }
 
-    function setSwapEnabledExternal_ok(ExternalContract target, bool swapEnabled) external onlyOwner {
+    function setSwapEnabledExternal_ok(
+        ExternalContract target,
+        bool swapEnabled
+    ) external onlyOwner {
         target.set(swapEnabled);
     }
 
-    function setUseOnlyOneArg_vulnerable(uint256 arg1, bool isProtectedArg) external onlyOwner {
+    function setUseOnlyOneArg_vulnerable(
+        uint256 arg1,
+        bool isProtectedArg
+    ) external onlyOwner {
         isProtected = isProtectedArg;
     }
 
     function set_ok(uint256 setter) public onlyOwner {
         toSet = setter;
+    }
+
+    function set_ok2(uint val) public onlyOwner {
+        vulnurable_internal(val);
     }
 
     function set_ok_with_temp_war(uint256 setter) public onlyOwner {
@@ -88,7 +98,7 @@ contract OkConstructor {
     }
 }
 
-contract TestInheritance is StrangeSetter{
+contract TestInheritance is StrangeSetter {
     constructor(uint256 _toSet) StrangeSetter(_toSet) {}
 }
 
