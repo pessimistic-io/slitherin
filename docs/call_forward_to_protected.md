@@ -6,6 +6,7 @@
 * Confidence: `Low` 
 
 ## Description
+**The detector is obsolete since Slitherin 0.7.1.**
 Sees if a contract function has low level calls to a custom address.
 
 ## Vulnerable Scenario
