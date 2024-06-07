@@ -26,6 +26,7 @@ class MagicNumber(AbstractDetector):
 
     EXCEPTION = {"0", "1", "2", "1000", "1e18"}
     used_count = defaultdict(lambda: {"count": 0, "nodes": []})
+    WHITELIST = ["SafeCast", "Math"]
 
     def _check_if_pow_10(self, str: str) -> bool:
         reg = re.fullmatch(r"^10*$|^10*e\d+$", str)  # 1(0..) or 1(0..)eX
@@ -63,6 +64,8 @@ class MagicNumber(AbstractDetector):
         res = []
         all_used_counts = []
         for contract in self.compilation_unit.contracts_derived:
+            if contract.name in self.WHITELIST:
+                continue
             self.used_count = defaultdict(lambda: {"count": 0, "nodes": []})
             for f in contract.functions:
                 self._getLiterals(f)
@@ -71,7 +74,7 @@ class MagicNumber(AbstractDetector):
         for contract_used_count in all_used_counts:
             for num, data in contract_used_count.items():
                 if num:
-                    if data["count"] < 2:
+                    if data["count"] <= 2:
                         continue
                     info = [f"Magic number {num} is used multiple times in:\n"]
                     for n in data["nodes"]:

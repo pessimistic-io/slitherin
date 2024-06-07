@@ -71,6 +71,8 @@ class DubiousTypecast(AbstractDetector):
     )
     WIKI_RECOMMENDATION = "Use clear constants"
 
+    WHITELIST = ["SafeCast", "SignedMath"]  # OZ
+
     def analyze_irs(self, irs: List[Operation]) -> List[Tuple[str, str]]:
         results = []
         for i in irs:
@@ -98,6 +100,8 @@ class DubiousTypecast(AbstractDetector):
     def _detect(self):
         results = []
         for contract in self.compilation_unit.contracts_derived:
+            if contract.name in self.WHITELIST:
+                continue
             for f in contract.functions:
                 func_res = self.get_dubious_typecasts(f)
                 if func_res:
