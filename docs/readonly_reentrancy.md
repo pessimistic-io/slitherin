@@ -6,6 +6,7 @@
 * Confidence: `Low`
 
 ## Description
+**The detector is obsolete since Slitherin 0.7.1.**
 Highlights the use of getter functions that return a value that theoretically could be manipulated during the execution.
 
 ## Vulnerable Scenario
