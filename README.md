@@ -52,7 +52,7 @@ pip install slitherin
 ### Using Pipx
 1. Install the pip [package](https://pypi.org/project/slitherin/):
 ```bash 
-install slitherin
+pipx install slitherin
 ```
 2. Add slitherin's bin to path:
 ```bash
