@@ -71,7 +71,12 @@ class DubiousTypecast(AbstractDetector):
     )
     WIKI_RECOMMENDATION = "Use clear constants"
 
-    WHITELIST = ["SafeCast", "SignedMath"]  # OZ
+    WHITELIST = [
+        "SafeCast",
+        "SignedMath",
+        "SafeCastUpgradeable",
+        "SignedMathUpgradeable",
+    ]  # OZ
 
     def analyze_irs(self, irs: List[Operation]) -> List[Tuple[str, str]]:
         results = []
