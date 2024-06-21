@@ -41,8 +41,8 @@ from slitherin.detectors.curve.curve_readonly_reentrancy import CurveReadonlyRee
 from slitherin.detectors.balancer.balancer_readonly_reentrancy import (
     BalancerReadonlyReentrancy,
 )
-from slitherin.detectors.vyper.reentrancy_curve_vyper_version import (
-    CurveVyperReentrancy,
+from slitherin.detectors.vyper.reentrancy_vyper_version import (
+    VyperVersionReentrancy,
 )
 from slitherin.detectors.price_manipulation import PriceManipulationDetector
 from .consts import OBSOLETE_FLAG
@@ -80,7 +80,7 @@ plugin_detectors = artbitrum_detectors + [
     PotentialArithmOverflow,
     CurveReadonlyReentrancy,
     BalancerReadonlyReentrancy,
-    CurveVyperReentrancy,
+    VyperVersionReentrancy,
     PriceManipulationDetector,
 ]
 
