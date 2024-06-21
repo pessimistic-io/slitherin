@@ -2,7 +2,7 @@
 
 ## Configuration
 
-- Check: `pess-curve-vyper-reentrancy`
+- Check: `pess-vyper-version-reentrancy`
 - Severity: `High`
 - Confidence: `High`
 

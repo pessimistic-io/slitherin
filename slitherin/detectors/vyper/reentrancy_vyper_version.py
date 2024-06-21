@@ -5,8 +5,8 @@ from slither.core.declarations import Function
 from slither.slithir.operations.event_call import EventCall
 
 VULNERABLE_VERSIONS = ['0.2.15', '0.2.16', '0.3.0']
-class CurveVyperReentrancy(AbstractDetector):
-    ARGUMENT = 'pess-curve-vyper-reentrancy' # slither will launch the detector with slither.py --detect mydetector
+class VyperVersionReentrancy(AbstractDetector):
+    ARGUMENT = 'pess-vyper-version-reentrancy' # slither will launch the detector with slither.py --detect mydetector
     HELP = f'Vyper compiler versions {", ".join(VULNERABLE_VERSIONS)} are vulnerable to malfunctioning re-entrancy guards. Upgrade your compiler version.'
     IMPACT = DetectorClassification.HIGH
     CONFIDENCE = DetectorClassification.HIGH

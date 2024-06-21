@@ -30,7 +30,11 @@ class UnprotectedInitialize(AbstractDetector):
     def _has_modifiers(self, fun: Function) -> bool:
         """Checks if function has modifier protection"""
         for modifier in fun.modifiers:
-            if str(modifier) == "onlyOwner" or str(modifier) == "initializer":
+            if str(modifier).startswith("only") or str(modifier) in [
+                "initializer",
+                "onlyInitializing",
+                "reinitializer",
+            ]:
                 return True
         return False
 
@@ -43,7 +47,7 @@ class UnprotectedInitialize(AbstractDetector):
                         if str(variable.type) == "address":
                             return True
         return False
-    
+
     def _has_if_with_reverts(self, fun: Function) -> bool:
         for node in fun.nodes:
             if node.contains_if():

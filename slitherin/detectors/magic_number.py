@@ -26,7 +26,7 @@ class MagicNumber(AbstractDetector):
 
     EXCEPTION = {"0", "1", "2", "1000", "1e18"}
     used_count = defaultdict(lambda: {"count": 0, "nodes": []})
-    WHITELIST = ["SafeCast", "Math"]
+    WHITELIST = ["SafeCast", "Math", "MathUpgradeable", "SafeCastUpgradeable"]
 
     def _check_if_pow_10(self, str: str) -> bool:
         reg = re.fullmatch(r"^10*$|^10*e\d+$", str)  # 1(0..) or 1(0..)eX
